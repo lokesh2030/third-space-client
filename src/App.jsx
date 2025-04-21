@@ -9,9 +9,27 @@ export default function App() {
   const [mode, setMode] = useState("triage");
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setOutput("");
+  e.preventDefault();
+  setLoading(true);
+  setOutput("");
+
+  let payload = {};
+  if (mode === "triage") payload = { alert: input };
+  else if (mode === "threat-intel") payload = { keyword: input };
+  else if (mode === "ticket") payload = { incident: input };
+  else if (mode === "kb") payload = { question: input };
+
+  const res = await fetch(`${BACKEND_URL}/api/${mode}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+
+  const data = await res.json();
+  setOutput(data.result || "Something went wrong.");
+  setLoading(false);
+};
+
 
     const res = await fetch(`${BACKEND_URL}/api/${mode}`, {
       method: "POST",
