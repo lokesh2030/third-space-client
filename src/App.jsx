@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 
 const BACKEND_URL = "https://third-space-backend.onrender.com";
@@ -10,28 +9,29 @@ export default function App() {
   const [mode, setMode] = useState("triage");
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  setLoading(true);
-  setOutput("");
+    e.preventDefault();
+    setLoading(true);
+    setOutput("");
 
-  let payload = {};
-  if (mode === "triage") payload = { alert: input };
-  else if (mode === "threat-intel") payload = { keyword: input };
-  else if (mode === "ticket") payload = { incident: input };
-  else if (mode === "kb") payload = { question: input };
+    let payload = {};
+    if (mode === "triage") payload = { alert: input };
+    else if (mode === "threat-intel") payload = { keyword: input };
+    else if (mode === "ticket") payload = { incident: input };
+    else if (mode === "kb") payload = { question: input };
 
-  const res = await fetch(`${BACKEND_URL}/api/${mode}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  });
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/${mode}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
 
-  const data = await res.json();
-  setOutput(data.result || "Something went wrong.");
-  setLoading(false);
-};
-    const data = await res.json();
-    setOutput(data.result || "Something went wrong.");
+      const data = await res.json();
+      setOutput(data.result || "Something went wrong.");
+    } catch (err) {
+      setOutput("Error: " + err.message);
+    }
+
     setLoading(false);
   };
 
@@ -64,10 +64,24 @@ export default function App() {
       <form onSubmit={handleSubmit}>
         <textarea
           rows={6}
-          placeholder={`Paste your ${mode === "triage" ? "alert" : mode === "ticket" ? "incident" : mode === "kb" ? "question" : "keyword"} here...`}
+          placeholder={`Paste your ${
+            mode === "triage"
+              ? "alert"
+              : mode === "ticket"
+              ? "incident"
+              : mode === "kb"
+              ? "question"
+              : "keyword"
+          } here...`}
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          style={{ width: "100%", padding: 16, fontSize: 16, borderRadius: 6, marginBottom: 20 }}
+          style={{
+            width: "100%",
+            padding: 16,
+            fontSize: 16,
+            borderRadius: 6,
+            marginBottom: 20,
+          }}
         />
         <button
           type="submit"
@@ -91,9 +105,6 @@ export default function App() {
           <pre style={{ whiteSpace: "pre-wrap" }}>{output}</pre>
         </div>
       )}
-    </div>
-  );
-}
     </div>
   );
 }
