@@ -1,83 +1,51 @@
 import { useState } from "react";
+import Triage from "./components/Triage";
+import ThreatIntel from "./components/ThreatIntel";
+import KnowledgeBase from "./components/KnowledgeBase";
+import Ticketing from "./components/Ticketing";
+import CVELookup from "./components/CVELookup";
 
-const BACKEND_URL = "https://third-space-backend.onrender.com";
+const tabs = ["Triage", "Threat Intel", "Knowledge Base", "Ticketing", "CVE Lookup"];
 
 function App() {
-  const [cveId, setCveId] = useState("");
-  const [result, setResult] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [activeTab, setActiveTab] = useState("Triage");
 
-  const handleLookup = async () => {
-    if (!cveId) {
-      setError("Please enter a CVE ID.");
-      return;
-    }
-
-    setLoading(true);
-    setError("");
-    setResult(null);
-
-    try {
-      const res = await fetch(`${BACKEND_URL}/api/cve-info?cve_id=${cveId}`);
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.error || "Something went wrong");
-      }
-
-      const data = await res.json();
-      setResult(data);
-    } catch (err) {
-      setError(err.message || "Failed to fetch CVE info.");
-    } finally {
-      setLoading(false);
+  const renderContent = () => {
+    switch (activeTab) {
+      case "Triage":
+        return <Triage />;
+      case "Threat Intel":
+        return <ThreatIntel />;
+      case "Knowledge Base":
+        return <KnowledgeBase />;
+      case "Ticketing":
+        return <Ticketing />;
+      case "CVE Lookup":
+        return <CVELookup />;
+      default:
+        return null;
     }
   };
 
   return (
-    <div className="p-8 max-w-2xl mx-auto">
-      <h1 className="text-3xl font-bold mb-4">Third Space — CVE Lookup</h1>
+    <div className="min-h-screen bg-gray-100 p-6">
+      <h1 className="text-3xl font-bold mb-6 text-center">Third Space</h1>
+      
+      <div className="flex justify-center gap-4 mb-6 flex-wrap">
+        {tabs.map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={`px-4 py-2 rounded ${
+              activeTab === tab ? "bg-blue-600 text-white" : "bg-white text-blue-600 border"
+            }`}
+          >
+            {tab}
+          </button>
+        ))}
+      </div>
 
-      <input
-        type="text"
-        value={cveId}
-        onChange={(e) => setCveId(e.target.value)}
-        placeholder="Enter CVE ID (e.g., CVE-2019-9134)"
-        className="border border-gray-400 p-2 w-full mb-4 rounded"
-      />
-
-      <button
-        onClick={handleLookup}
-        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-      >
-        {loading ? "Looking up..." : "Lookup"}
-      </button>
-
-      {error && <p className="text-red-600 mt-4">{error}</p>}
-
-      {result && (
-        <div className="mt-6 p-4 border rounded bg-gray-50">
-          <p><strong>CVE ID:</strong> {result.cve_id}</p>
-          <p><strong>CVSS:</strong> {result.cvss}</p>
-          <p><strong>Description:</strong> {result.description}</p>
-          <p className="mt-2"><strong>AI Summary:</strong></p>
-          <p>{result.summary}</p>
-          {result.references && result.references.length > 0 && (
-            <div className="mt-4">
-              <p><strong>References:</strong></p>
-              <ul className="list-disc list-inside">
-                {result.references.map((ref, i) => (
-                  <li key={i}>
-                    <a href={ref} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
-                      {ref}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
-      )}
+      <div className="bg-white p-6 rounded shadow">{renderContent()}</div>
     </div>
   );
 }
