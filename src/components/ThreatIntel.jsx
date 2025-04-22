@@ -1,26 +1,26 @@
 import { useState } from 'react';
 
 export default function ThreatIntel() {
-  const [input, setInput] = useState('');
+  const [query, setQuery] = useState('');
   const [result, setResult] = useState('');
 
   const handleThreatIntelSubmit = async () => {
-    console.log("Input value:", input); // for debug
+    console.log("Sending query to backend:", query);
 
     try {
       const res = await fetch('https://third-space-backend.onrender.com/api/threat-intel', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query: input }),
+        body: JSON.stringify({ query }), // ✅ must match backend key exactly
       });
 
       const data = await res.json();
-      console.log("Backend response:", data); // for debug
+      console.log("Backend returned:", data);
       setResult(`🧠 Threat Intel: ${data.response}`);
-      setInput('');
+      setQuery('');
     } catch (error) {
-      console.error("ERROR during fetch:", error);
-      setResult('❌ Error: Could not fetch threat intelligence.');
+      console.error("ERROR fetching threat intel:", error);
+      setResult('❌ Could not fetch threat intel.');
     }
   };
 
@@ -29,13 +29,12 @@ export default function ThreatIntel() {
       <h2>🕵️‍♂️ Threat Intelligence</h2>
       <input
         type="text"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        placeholder="e.g. Malware, Cobalt Strike, APT28"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder="e.g. Cobalt Strike, APT28, Ransomware"
         style={{ width: '300px', marginRight: '10px' }}
       />
       <button onClick={handleThreatIntelSubmit}>Submit</button>
-
       <div style={{ marginTop: '1rem' }}>
         <strong>Result:</strong>
         <p>{result}</p>
