@@ -1,48 +1,27 @@
 import { useState } from 'react';
 
 export default function ThreatIntel() {
-  const [query, setQuery] = useState('');
+  const [input, setInput] = useState('');
   const [result, setResult] = useState('');
-  const [raw, setRaw] = useState('');
 
   const handleThreatIntelSubmit = async () => {
-    if (!query.trim()) {
+    if (!input.trim()) {
       setResult('⚠️ Please enter a keyword.');
       return;
     }
 
-    setResult('⏳ Contacting GPT-4...');
-    setRaw('');
-
     try {
-      console.log("Sending to backend:", query);
-
       const res = await fetch('https://third-space-backend.onrender.com/api/threat-intel', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query }),
+        body: JSON.stringify({ query: input }), // ✅ key is "query", value is input
       });
 
-      const text = await res.text(); // read full text response
-      console.log("Raw backend response:", text);
-
-      setRaw(text); // show raw data just in case
-
-      if (!res.ok) {
-        setResult(`❌ Server Error (${res.status})`);
-        return;
-      }
-
-      const data = JSON.parse(text); // manually parse
-      if (!data.response) {
-        setResult('❌ Missing expected response key.');
-        return;
-      }
-
+      const data = await res.json();
       setResult(`🧠 Threat Intel:\n\n${data.response}`);
     } catch (error) {
-      console.error("Error caught:", error);
-      setResult('❌ Could not connect to backend.');
+      console.error("Error:", error);
+      setResult('❌ Could not fetch threat intel.');
     }
   };
 
@@ -52,25 +31,17 @@ export default function ThreatIntel() {
 
       <input
         type="text"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        placeholder="e.g. Malware, Cobalt Strike"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        placeholder="e.g. Malware, APT28"
         style={{ width: '300px', marginRight: '10px' }}
       />
-
       <button onClick={handleThreatIntelSubmit}>Submit</button>
 
       <div style={{ marginTop: '1rem', whiteSpace: 'pre-wrap' }}>
         <strong>Result:</strong>
         <p>{result}</p>
       </div>
-
-      {raw && (
-        <div style={{ marginTop: '1rem', fontSize: '0.9em', color: 'gray' }}>
-          <strong>🔍 Raw Response:</strong>
-          <pre>{raw}</pre>
-        </div>
-      )}
     </div>
   );
 }
