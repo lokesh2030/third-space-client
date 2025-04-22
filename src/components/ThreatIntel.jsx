@@ -10,21 +10,30 @@ export default function ThreatIntel() {
       return;
     }
 
-    console.log("🔍 Submitting keyword:", input); // Debug
+    console.log("✅ User input captured:", input);
+
+    const bodyPayload = JSON.stringify({ query: input });
+    console.log("🚀 Payload being sent:", bodyPayload);
 
     try {
       const res = await fetch('https://third-space-backend.onrender.com/api/threat-intel', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query: input }), // ✅ Send key "query"
+        body: bodyPayload,
       });
 
-      const data = await res.json();
-      console.log("✅ Backend response:", data); // Debug
+      const responseText = await res.text();
+      console.log("📦 Raw backend response:", responseText);
+
+      const data = JSON.parse(responseText);
+      if (!data.response) {
+        setResult('❌ Invalid response from backend.');
+        return;
+      }
 
       setResult(`🧠 Threat Intel:\n\n${data.response}`);
     } catch (error) {
-      console.error("❌ Error fetching threat intel:", error);
+      console.error("❌ Error during fetch:", error);
       setResult('❌ Could not fetch threat intel.');
     }
   };
@@ -36,8 +45,11 @@ export default function ThreatIntel() {
       <input
         type="text"
         value={input}
-        onChange={(e) => setInput(e.target.value)} // ✅ Hook into input
-        placeholder="e.g. Cobalt Strike, APT29, Ransomware"
+        onChange={(e) => {
+          console.log("✍️ Input changed:", e.target.value);
+          setInput(e.target.value);
+        }}
+        placeholder="e.g. Malware, APT28"
         style={{ width: '300px', marginRight: '10px' }}
       />
       <button onClick={handleThreatIntelSubmit}>Submit</button>
