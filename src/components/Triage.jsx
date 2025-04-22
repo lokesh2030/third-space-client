@@ -25,6 +25,11 @@ export default function Triage() {
     }
   };
 
+  const handleDemoAlert = () => {
+    setInput('Unusual outbound traffic to rare domain');
+    setResult('');
+  };
+
   return (
     <div style={{ padding: '1rem' }}>
       <h2>🚨 Triage</h2>
@@ -37,6 +42,9 @@ export default function Triage() {
         style={{ width: '300px', marginRight: '10px' }}
       />
       <button onClick={handleTriageSubmit}>Submit</button>
+      <button onClick={handleDemoAlert} style={{ marginLeft: '10px' }}>
+        Load Demo Alert
+      </button>
 
       <div style={{ marginTop: '1rem', whiteSpace: 'pre-wrap' }}>
         <strong>🔍 Result:</strong>
