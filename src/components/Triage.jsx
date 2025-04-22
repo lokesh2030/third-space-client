@@ -5,6 +5,11 @@ export default function Triage() {
   const [result, setResult] = useState('');
 
   const handleTriageSubmit = async () => {
+    if (!input.trim()) {
+      setResult('⚠️ Please enter an alert to analyze.');
+      return;
+    }
+
     try {
       const res = await fetch('https://third-space-backend.onrender.com/api/triage', {
         method: 'POST',
@@ -13,29 +18,35 @@ export default function Triage() {
       });
 
       const data = await res.json();
-      setResult(`🔍 Triage Analysis: ${data.response}`);
+      setResult(data.result || '❌ No analysis returned.');
     } catch (error) {
-      setResult('❌ Error: Could not connect to AI backend.');
-      console.error(error);
+      console.error("Triage fetch error:", error);
+      setResult('❌ Error analyzing alert.');
     }
   };
 
   return (
     <div style={{ padding: '1rem' }}>
       <h2>🚨 Triage</h2>
+
       <input
         type="text"
         value={input}
         onChange={(e) => setInput(e.target.value)}
-        placeholder="Enter alert here"
+        placeholder="e.g. Suspicious login from foreign IP"
         style={{ width: '300px', marginRight: '10px' }}
       />
       <button onClick={handleTriageSubmit}>Submit</button>
-      <div style={{ marginTop: '1rem' }}>
-        <strong>Result:</strong>
+
+      <div style={{ marginTop: '1rem', whiteSpace: 'pre-wrap' }}>
+        <strong>🔍 Result:</strong>
         <p>{result}</p>
+        {result && (
+          <p style={{ fontSize: '0.85em', color: 'gray' }}>
+            💡 AI-generated first pass — use with analyst validation.
+          </p>
+        )}
       </div>
     </div>
   );
 }
-
