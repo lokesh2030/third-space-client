@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const BACKEND_URL = "https://third-space-backend.onrender.com";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export default function App() {
   const [input, setInput] = useState("");
