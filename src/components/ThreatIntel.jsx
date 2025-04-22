@@ -3,7 +3,7 @@ import { useState } from 'react';
 export default function ThreatIntel() {
   const [query, setQuery] = useState('');
   const [result, setResult] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [raw, setRaw] = useState('');
 
   const handleThreatIntelSubmit = async () => {
     if (!query.trim()) {
@@ -11,33 +11,38 @@ export default function ThreatIntel() {
       return;
     }
 
-    setLoading(true);
-    setResult('');
+    setResult('⏳ Contacting GPT-4...');
+    setRaw('');
 
     try {
+      console.log("Sending to backend:", query);
+
       const res = await fetch('https://third-space-backend.onrender.com/api/threat-intel', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query }),
       });
 
+      const text = await res.text(); // read full text response
+      console.log("Raw backend response:", text);
+
+      setRaw(text); // show raw data just in case
+
       if (!res.ok) {
-        const errorText = await res.text();
-        console.error("Backend returned error:", res.status, errorText);
-        setResult(`❌ Error ${res.status}: ${errorText}`);
-        setLoading(false);
+        setResult(`❌ Server Error (${res.status})`);
         return;
       }
 
-      const data = await res.json();
-      console.log("Backend response:", data);
+      const data = JSON.parse(text); // manually parse
+      if (!data.response) {
+        setResult('❌ Missing expected response key.');
+        return;
+      }
+
       setResult(`🧠 Threat Intel:\n\n${data.response}`);
     } catch (error) {
-      console.error("Fetch error:", error);
-      setResult('❌ Could not fetch threat intel. Check your connection or backend.');
-    } finally {
-      setLoading(false);
-      setQuery('');
+      console.error("Error caught:", error);
+      setResult('❌ Could not connect to backend.');
     }
   };
 
@@ -49,18 +54,23 @@ export default function ThreatIntel() {
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="e.g. Malware, APT29, Cobalt Strike"
+        placeholder="e.g. Malware, Cobalt Strike"
         style={{ width: '300px', marginRight: '10px' }}
       />
 
-      <button onClick={handleThreatIntelSubmit} disabled={loading}>
-        {loading ? 'Analyzing...' : 'Submit'}
-      </button>
+      <button onClick={handleThreatIntelSubmit}>Submit</button>
 
       <div style={{ marginTop: '1rem', whiteSpace: 'pre-wrap' }}>
         <strong>Result:</strong>
         <p>{result}</p>
       </div>
+
+      {raw && (
+        <div style={{ marginTop: '1rem', fontSize: '0.9em', color: 'gray' }}>
+          <strong>🔍 Raw Response:</strong>
+          <pre>{raw}</pre>
+        </div>
+      )}
     </div>
   );
 }
