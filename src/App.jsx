@@ -1,103 +1,112 @@
-import { useState } from "react";
-import { FaBug, FaBrain, FaBook, FaTicketAlt, FaSearch } from "react-icons/fa";
 
-const tabs = [
-  { name: "Triage", icon: <FaBug /> },
-  { name: "Threat Intel", icon: <FaBrain /> },
-  { name: "Knowledge Base", icon: <FaBook /> },
-  { name: "Ticketing", icon: <FaTicketAlt /> },
-  { name: "CVE Lookup", icon: <FaSearch /> },
-];
+      import { useState } from "react";
 
 const BACKEND_URL = "https://third-space-backend.onrender.com";
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState("Triage");
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [mode, setMode] = useState("triage");
 
-  const handleSubmit = async () => {
-    setError("");
-    setOutput("");
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+  setOutput("");
 
-    if (!input.trim()) {
-      setError("Please enter something.");
-      return;
-    }
+  let payload = {};
+  if (mode === "triage") payload = { alert: input };
+  else if (mode === "threat-intel") payload = { keyword: input };
+  else if (mode === "ticket") payload = { incident: input };
+  else if (mode === "kb") payload = { question: input };
 
-    setLoading(true);
+  const res = await fetch(`${BACKEND_URL}/api/${mode}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
 
-    try {
-      if (activeTab === "CVE Lookup") {
-        const res = await fetch(`${BACKEND_URL}/api/cve-info?cve_id=${input}`);
-        const data = await res.json();
-        if (data.error) throw new Error(data.error);
+  const data = await res.json();
+  setOutput(data.result || "Something went wrong.");
+  setLoading(false);
+};
 
-        setOutput(data.summary || "No summary available.");
-      } else {
-        setOutput(`🔧 Simulating "${activeTab}" with input: "${input}"`);
-      }
-    } catch (err) {
-      setError(err.message || "Something went wrong.");
-    } finally {
-      setLoading(false);
-    }
+
+    const res = await fetch(`${BACKEND_URL}/api/${mode}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        alert: input,
+        keyword: input,
+        incident: input,
+        question: input,
+      }),
+    });
+
+    const data = await res.json();
+    setOutput(data.result || "Something went wrong.");
+    setLoading(false);
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-900 font-sans px-4 py-6">
-      <h1 className="text-4xl font-bold text-center mb-8">Third Space Copilot</h1>
+    <div style={{ background: "#0f172a", color: "white", minHeight: "100vh", padding: 40, fontFamily: "Arial" }}>
+      <h1 style={{ fontSize: 28, marginBottom: 20 }}>🛡️ Third Space Co-Pilot</h1>
 
-      <div className="flex justify-center flex-wrap gap-4 mb-6">
-        {tabs.map((tab) => (
-          <button
-            key={tab.name}
-            onClick={() => {
-              setActiveTab(tab.name);
-              setInput("");
-              setOutput("");
-              setError("");
-            }}
-            className={`flex items-center gap-2 px-5 py-3 rounded-xl font-medium text-lg transition-all ${
-              activeTab === tab.name
-                ? "bg-blue-600 text-white shadow-md"
-                : "bg-white border border-blue-300 text-blue-600 hover:bg-blue-50"
-            }`}
-          >
-            {tab.icon}
-            {tab.name}
-          </button>
-        ))}
+      <div style={{ marginBottom: 20 }}>
+        <strong>Choose Mode:</strong>
+        <div style={{ marginTop: 10, display: "flex", gap: 10 }}>
+          {["triage", "threat-intel", "ticket", "kb"].map((m) => (
+            <button
+              key={m}
+              onClick={() => setMode(m)}
+              style={{
+                padding: "8px 16px",
+                backgroundColor: mode === m ? "#3b82f6" : "#1e293b",
+                border: "none",
+                color: "white",
+                borderRadius: 6,
+                cursor: "pointer",
+              }}
+            >
+              {m.replace("-", " ").toUpperCase()}
+            </button>
+          ))}
+        </div>
       </div>
 
-      <div className="max-w-2xl mx-auto bg-white p-6 rounded-xl shadow-md">
-        <h2 className="text-xl font-semibold mb-4">{activeTab}</h2>
-
-        <input
-          type="text"
-          className="w-full border border-gray-300 p-3 rounded mb-4"
-          placeholder={`Enter input for ${activeTab}`}
+      <form onSubmit={handleSubmit}>
+        <textarea
+          rows={6}
+          placeholder={`Paste your ${mode === "triage" ? "alert" : mode === "ticket" ? "incident" : mode === "kb" ? "question" : "keyword"} here...`}
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          style={{ width: "100%", padding: 16, fontSize: 16, borderRadius: 6, marginBottom: 20 }}
         />
-
         <button
-          onClick={handleSubmit}
-          className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
+          type="submit"
+          style={{
+            backgroundColor: "#3b82f6",
+            color: "white",
+            padding: "12px 24px",
+            fontSize: 16,
+            border: "none",
+            borderRadius: 6,
+            cursor: "pointer",
+          }}
         >
           {loading ? "Working..." : "Submit"}
         </button>
+      </form>
 
-        {error && <p className="text-red-600 mt-4">{error}</p>}
-        {output && (
-          <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded">
-            <strong>Output:</strong>
-            <p>{output}</p>
-          </div>
-        )}
-      </div>
+      {output && (
+        <div style={{ marginTop: 40, background: "#1e293b", padding: 20, borderRadius: 8 }}>
+          <h3 style={{ marginBottom: 10 }}>🔍 Result:</h3>
+          <pre style={{ whiteSpace: "pre-wrap" }}>{output}</pre>
+        </div>
+      )}
+    </div>
+  );
+}
     </div>
   );
 }
