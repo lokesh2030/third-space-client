@@ -10,30 +10,17 @@ export default function ThreatIntel() {
       return;
     }
 
-    console.log("✅ User input captured:", input);
-
-    const bodyPayload = JSON.stringify({ query: input });
-    console.log("🚀 Payload being sent:", bodyPayload);
-
     try {
       const res = await fetch('https://third-space-backend.onrender.com/api/threat-intel', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: bodyPayload,
+        body: JSON.stringify({ query: input }), // must be exactly like this
       });
 
-      const responseText = await res.text();
-      console.log("📦 Raw backend response:", responseText);
-
-      const data = JSON.parse(responseText);
-      if (!data.response) {
-        setResult('❌ Invalid response from backend.');
-        return;
-      }
-
+      const data = await res.json();
       setResult(`🧠 Threat Intel:\n\n${data.response}`);
     } catch (error) {
-      console.error("❌ Error during fetch:", error);
+      console.error("❌ Fetch failed:", error);
       setResult('❌ Could not fetch threat intel.');
     }
   };
@@ -45,13 +32,11 @@ export default function ThreatIntel() {
       <input
         type="text"
         value={input}
-        onChange={(e) => {
-          console.log("✍️ Input changed:", e.target.value);
-          setInput(e.target.value);
-        }}
-        placeholder="e.g. Malware, APT28"
+        onChange={(e) => setInput(e.target.value)}
+        placeholder="e.g. Malware, APT29"
         style={{ width: '300px', marginRight: '10px' }}
       />
+
       <button onClick={handleThreatIntelSubmit}>Submit</button>
 
       <div style={{ marginTop: '1rem', whiteSpace: 'pre-wrap' }}>
