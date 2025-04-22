@@ -1,5 +1,5 @@
 
-      import { useState } from "react";
+import { useState } from "react";
 
 const BACKEND_URL = "https://third-space-backend.onrender.com";
 
@@ -30,19 +30,6 @@ export default function App() {
   setOutput(data.result || "Something went wrong.");
   setLoading(false);
 };
-
-
-    const res = await fetch(`${BACKEND_URL}/api/${mode}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        alert: input,
-        keyword: input,
-        incident: input,
-        question: input,
-      }),
-    });
-
     const data = await res.json();
     setOutput(data.result || "Something went wrong.");
     setLoading(false);
