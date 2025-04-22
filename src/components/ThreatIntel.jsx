@@ -10,14 +10,30 @@ export default function ThreatIntel() {
       return;
     }
 
+    console.log("🟢 Submitting:", input);
+
     try {
       const res = await fetch('https://third-space-backend.onrender.com/api/threat-intel', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query: input }), // must be exactly like this
+        body: JSON.stringify({ query: input }),
       });
 
-      const data = await res.json();
+      const text = await res.text(); // read raw response
+      console.log("📦 Raw backend response:", text);
+
+      if (!res.ok) {
+        setResult(`❌ Server error (${res.status}): ${text}`);
+        return;
+      }
+
+      const data = JSON.parse(text);
+
+      if (!data.response) {
+        setResult('❌ No response key in backend result.');
+        return;
+      }
+
       setResult(`🧠 Threat Intel:\n\n${data.response}`);
     } catch (error) {
       console.error("❌ Fetch failed:", error);
@@ -32,7 +48,10 @@ export default function ThreatIntel() {
       <input
         type="text"
         value={input}
-        onChange={(e) => setInput(e.target.value)}
+        onChange={(e) => {
+          console.log("✍️ Typing:", e.target.value);
+          setInput(e.target.value);
+        }}
         placeholder="e.g. Malware, APT29"
         style={{ width: '300px', marginRight: '10px' }}
       />
