@@ -13,7 +13,7 @@ export default function ThreatIntel() {
       });
 
       const data = await res.json();
-      setResult(`🧠 Threat Intel: ${data.result}`);
+      setResult(`🧠 Threat Intel: ${data.response}`);
     } catch (error) {
       setResult('❌ Error: Could not fetch threat intelligence.');
       console.error(error);
