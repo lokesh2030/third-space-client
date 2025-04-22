@@ -4,10 +4,17 @@ import ThreatIntel from "./components/ThreatIntel";
 import KnowledgeBase from "./components/KnowledgeBase";
 import Ticketing from "./components/Ticketing";
 import CVELookup from "./components/CVELookup";
+import { FaBug, FaBrain, FaBook, FaTicketAlt, FaSearch } from "react-icons/fa";
 
-const tabs = ["Triage", "Threat Intel", "Knowledge Base", "Ticketing", "CVE Lookup"];
+const tabs = [
+  { name: "Triage", icon: <FaBug /> },
+  { name: "Threat Intel", icon: <FaBrain /> },
+  { name: "Knowledge Base", icon: <FaBook /> },
+  { name: "Ticketing", icon: <FaTicketAlt /> },
+  { name: "CVE Lookup", icon: <FaSearch /> },
+];
 
-function App() {
+export default function App() {
   const [activeTab, setActiveTab] = useState("Triage");
 
   const renderContent = () => {
@@ -28,26 +35,35 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <h1 className="text-3xl font-bold mb-6 text-center">Third Space</h1>
-      
-      <div className="flex justify-center gap-4 mb-6 flex-wrap">
+    <div className="min-h-screen bg-gray-900 text-white font-sans">
+      <header className="py-6 px-4 border-b border-gray-800 text-center">
+        <h1 className="text-4xl font-bold tracking-tight">Third Space Security Copilot</h1>
+        <p className="text-gray-400 mt-2 text-sm">AI-powered assistant for faster, smarter security operations</p>
+      </header>
+
+      <nav className="flex justify-center gap-4 mt-6 flex-wrap px-4">
         {tabs.map((tab) => (
           <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
-            className={`px-4 py-2 rounded ${
-              activeTab === tab ? "bg-blue-600 text-white" : "bg-white text-blue-600 border"
-            }`}
+            key={tab.name}
+            onClick={() => setActiveTab(tab.name)}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-200 
+              ${
+                activeTab === tab.name
+                  ? "bg-blue-600 text-white shadow"
+                  : "bg-gray-800 text-gray-300 hover:bg-gray-700"
+              }`}
           >
-            {tab}
+            {tab.icon}
+            <span>{tab.name}</span>
           </button>
         ))}
-      </div>
+      </nav>
 
-      <div className="bg-white p-6 rounded shadow">{renderContent()}</div>
+      <main className="mt-8 px-4 max-w-5xl mx-auto">
+        <div className="bg-gray-800 p-6 rounded-2xl shadow-lg">
+          {renderContent()}
+        </div>
+      </main>
     </div>
   );
 }
-
-export default App;
