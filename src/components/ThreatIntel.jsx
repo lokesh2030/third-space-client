@@ -53,11 +53,13 @@ export default function ThreatIntel() {
 
       <div style={{ marginTop: '1.5rem' }}>
         {loading ? (
-          <p>🔄 Fetching threat intelligence...</p>
+          <div style={{ textAlign: "center", marginTop: "20px" }}>
+            <p style={{ fontSize: "18px" }}>🔄 Fetching threat intelligence, please wait...</p>
+          </div>
         ) : result ? (
           <>
             <div style={{ marginBottom: '10px' }}>
-              <button onClick={handleCopy}>
+              <button onClick={handleCopy} style={{ padding: '8px 12px', cursor: 'pointer' }}>
                 {copied ? '✅ Copied!' : '📋 Copy to Clipboard'}
               </button>
             </div>
