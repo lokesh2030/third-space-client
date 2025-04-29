@@ -1,5 +1,3 @@
-// /src/components/phishing.jsx
-
 import React, { useState } from 'react';
 
 const PhishingDetection = () => {
@@ -75,5 +73,3 @@ const PhishingDetection = () => {
 };
 
 export default PhishingDetection;
-
-        
