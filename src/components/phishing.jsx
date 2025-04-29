@@ -1,7 +1,6 @@
 // /src/components/phishing.jsx
 
 import React, { useState } from 'react';
-import axios from 'axios';
 
 const PhishingDetection = () => {
   const [text, setText] = useState('');
@@ -17,11 +16,16 @@ const PhishingDetection = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post(
-        'https://third-space-backend.onrender.com/api/phishing',
-        { text }
-      );
-      setResult(response.data);
+      const response = await fetch('https://third-space-backend.onrender.com/api/phishing', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ text })
+      });
+
+      const data = await response.json();
+      setResult(data);
     } catch (error) {
       console.error('Error checking phishing:', error);
       alert('Error checking phishing link.');
@@ -71,3 +75,5 @@ const PhishingDetection = () => {
 };
 
 export default PhishingDetection;
+
+        
