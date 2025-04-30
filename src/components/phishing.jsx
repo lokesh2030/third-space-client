@@ -14,7 +14,7 @@ const PhishingDetection = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('https://third-space-backend.onrender.com/api/phishing', {
+      const response = await fetch('https://third-space-backend.onrender.com/api/phishing-detect/detect', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -23,7 +23,16 @@ const PhishingDetection = () => {
       });
 
       const data = await response.json();
-      setResult(data);
+
+      // Parse result from GPT
+      const lines = data.result.split('\n').filter(Boolean);
+      const parsed = {
+        suspicious: lines.find(line => line.toLowerCase().includes('suspicious'))?.split(':')[1]?.trim(),
+        confidence: lines.find(line => line.toLowerCase().includes('confidence'))?.split(':')[1]?.trim(),
+        reason: lines.find(line => line.toLowerCase().includes('reason'))?.split(':')[1]?.trim(),
+      };
+
+      setResult(parsed);
     } catch (error) {
       console.error('Error checking phishing:', error);
       alert('Error checking phishing link.');
@@ -34,7 +43,7 @@ const PhishingDetection = () => {
 
   return (
     <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">Phishing Link Detection</h2>
+      <h2 className="text-xl font-bold mb-4">🛡️ AI-Powered Phishing Detection</h2>
 
       <textarea
         className="w-full p-2 border rounded mb-4"
@@ -53,19 +62,11 @@ const PhishingDetection = () => {
       </button>
 
       {result && (
-        <div className="mt-6">
+        <div className="mt-6 p-4 border rounded bg-gray-50">
           <h3 className="text-lg font-semibold mb-2">Result:</h3>
-          <p>Suspicious: {result.suspicious ? 'Yes 🚨' : 'No ✅'}</p>
-          <p>Reason: {result.reason}</p>
-
-          <div className="mt-3">
-            <h4 className="font-semibold">Extracted URLs:</h4>
-            <ul className="list-disc list-inside">
-              {result.urls.map((url, index) => (
-                <li key={index}>{url}</li>
-              ))}
-            </ul>
-          </div>
+          <p><strong>Suspicious:</strong> {result.suspicious || 'N/A'}</p>
+          <p><strong>Confidence:</strong> {result.confidence || 'N/A'}</p>
+          <p><strong>Reason:</strong> {result.reason || 'N/A'}</p>
         </div>
       )}
     </div>
