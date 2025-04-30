@@ -26,10 +26,17 @@ const PhishingDetection = () => {
 
       // Parse result from GPT
       const lines = data.result.split('\n').filter(Boolean);
+      const lowerResult = data.result.toLowerCase();
+
       const parsed = {
-        suspicious: lines.find(line => line.toLowerCase().includes('suspicious'))?.split(':')[1]?.trim(),
+        suspicious:
+          lowerResult.includes('suspicious: yes') ||
+          lowerResult.includes('phishing') ||
+          lowerResult.includes('red flag')
+            ? 'Yes 🚨'
+            : 'No ✅',
         confidence: lines.find(line => line.toLowerCase().includes('confidence'))?.split(':')[1]?.trim(),
-        reason: lines.find(line => line.toLowerCase().includes('reason'))?.split(':')[1]?.trim(),
+        reason: lines.find(line => line.toLowerCase().includes('reason'))?.split(':')[1]?.trim() || lines.slice(1).join(' ')
       };
 
       setResult(parsed);
@@ -64,7 +71,7 @@ const PhishingDetection = () => {
       {result && (
         <div className="mt-6 p-4 border rounded bg-gray-50">
           <h3 className="text-lg font-semibold mb-2">Result:</h3>
-          <p><strong>Suspicious:</strong> {result.suspicious || 'N/A'}</p>
+          <p><strong>Suspicious:</strong> {result.suspicious}</p>
           <p><strong>Confidence:</strong> {result.confidence || 'N/A'}</p>
           <p><strong>Reason:</strong> {result.reason || 'N/A'}</p>
         </div>
