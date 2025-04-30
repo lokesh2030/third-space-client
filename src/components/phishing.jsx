@@ -32,7 +32,10 @@ const PhishingDetection = () => {
         suspicious:
           lowerResult.includes('suspicious: yes') ||
           lowerResult.includes('phishing') ||
-          lowerResult.includes('red flag')
+          lowerResult.includes('fake') ||
+          lowerResult.includes('not a legitimate') ||
+          lowerResult.includes('red flag') ||
+          lowerResult.includes('trick users')
             ? 'Yes 🚨'
             : 'No ✅',
         confidence: lines.find(line => line.toLowerCase().includes('confidence'))?.split(':')[1]?.trim(),
