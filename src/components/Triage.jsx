@@ -11,6 +11,9 @@ export default function Triage() {
       return;
     }
 
+    setResult("");
+    setTimeSavedMsg("");
+
     const start = Date.now();
 
     try {
@@ -21,9 +24,9 @@ export default function Triage() {
       });
 
       const durationMs = Date.now() - start;
-      console.log("⏱️ Triage GPT call took", durationMs / 1000, "seconds");
+      console.log("⏱️ GPT call duration:", durationMs / 1000, "seconds");
 
-      // Dynamic calculation
+      // Simulate time saved (baseline = 6 minutes)
       const baselineMs = 6 * 60 * 1000;
       const savedMs = Math.max(0, baselineMs - durationMs);
       const savedMin = Math.round(savedMs / 60000);
