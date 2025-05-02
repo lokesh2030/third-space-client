@@ -51,49 +51,51 @@ const PhishingDetection = () => {
   };
 
   return (
-    <div className="p-6 max-w-3xl mx-auto bg-white rounded-xl shadow-md space-y-6">
-      <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+    <div className="p-6 max-w-2xl mx-auto bg-white rounded-lg shadow-md space-y-6">
+      <h2 className="text-xl font-semibold text-gray-800 flex items-center gap-2">
         🛡️ AI-Powered Phishing Detection
       </h2>
 
       <textarea
-        className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none transition"
+        className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:outline-none transition"
         placeholder="Paste email or suspicious text here..."
         rows="5"
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
 
-      <button
-        className="inline-flex items-center px-6 py-3 bg-emerald-600 text-white font-semibold rounded-lg shadow-md hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-opacity-75 transition duration-300 disabled:opacity-60"
-        onClick={handleCheckPhishing}
-        disabled={loading}
-      >
-        {!loading && (
-          <svg
-            className="w-5 h-5 mr-2"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M16 12a4 4 0 01-8 0m8 0a4 4 0 01-8 0m8 0V8a4 4 0 00-8 0v4m8 0v4a4 4 0 01-8 0v-4"
-            />
-          </svg>
-        )}
-        {loading ? 'Checking...' : 'Check for Phishing'}
-      </button>
+      <div>
+        <button
+          className="inline-flex items-center px-4 py-2 bg-emerald-600 text-white text-sm font-medium rounded-md shadow-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-opacity-50 transition disabled:opacity-50"
+          onClick={handleCheckPhishing}
+          disabled={loading}
+        >
+          {!loading && (
+            <svg
+              className="w-4 h-4 mr-2"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M16 12a4 4 0 01-8 0m8 0a4 4 0 01-8 0m8 0V8a4 4 0 00-8 0v4m8 0v4a4 4 0 01-8 0v-4"
+              />
+            </svg>
+          )}
+          {loading ? 'Checking...' : 'Check for Phishing'}
+        </button>
+      </div>
 
       {result && (
-        <div className="mt-6 p-5 border border-gray-300 rounded-lg bg-gray-50 space-y-2">
-          <h3 className="text-lg font-semibold text-gray-800">🔍 Result</h3>
-          <p><span className="font-medium">Suspicious:</span> {result.suspicious}</p>
-          <p><span className="font-medium">Confidence:</span> {result.confidence || 'N/A'}</p>
-          <p><span className="font-medium">Reason:</span> {result.reason || 'N/A'}</p>
+        <div className="mt-4 p-4 bg-gray-50 border border-gray-300 rounded-md space-y-2">
+          <h3 className="text-lg font-medium text-gray-700">🔍 Result</h3>
+          <p><strong>Suspicious:</strong> {result.suspicious}</p>
+          <p><strong>Confidence:</strong> {result.confidence || 'N/A'}</p>
+          <p><strong>Reason:</strong> {result.reason || 'N/A'}</p>
         </div>
       )}
     </div>
