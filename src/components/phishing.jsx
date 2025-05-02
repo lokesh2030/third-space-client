@@ -7,7 +7,7 @@ export default function PhishingDetection() {
 
   const handleCheckPhishing = async () => {
     if (!text.trim()) {
-      setResult('⚠️ Please enter text to check.');
+      setResult({ error: '⚠️ Please enter some text to analyze.' });
       return;
     }
 
@@ -40,51 +40,52 @@ export default function PhishingDetection() {
 
       setResult(parsed);
     } catch (error) {
-      console.error("Phishing check error:", error);
-      setResult({ error: '❌ Error checking phishing link.' });
+      console.error('Phishing check error:', error);
+      setResult({ error: '❌ Something went wrong while checking for phishing.' });
     } finally {
       setLoading(false);
     }
   };
 
-  const handleDemoText = () => {
-    setText('Received a login link from http://secure-login.tk');
-    setResult(null);
-  };
-
   return (
-    <div style={{ padding: '1rem' }}>
-      <h2>🎣 Phishing Detection</h2>
+    <div className="p-6 max-w-3xl mx-auto space-y-4">
+      <h2 className="text-2xl font-semibold text-gray-800">🎣 Phishing Detection</h2>
 
-      <input
-        type="text"
+      <textarea
+        className="w-full resize-none rounded-md border border-gray-300 bg-white p-4 text-sm shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+        placeholder="Paste suspicious email content or link here..."
+        rows={5}
         value={text}
         onChange={(e) => setText(e.target.value)}
-        placeholder="Paste suspicious message or link here"
-        style={{ width: '300px', marginRight: '10px' }}
       />
 
-      <button onClick={handleCheckPhishing} disabled={loading}>
-        {loading ? 'Checking...' : 'Check for Phishing'}
-      </button>
-
-      <button onClick={handleDemoText} style={{ marginLeft: '10px' }}>
-        Load Demo
-      </button>
-
-      <div style={{ marginTop: '1rem', whiteSpace: 'pre-wrap' }}>
-        {result && (
-          <>
-            <strong>🔍 Result:</strong>
-            <p><strong>Suspicious:</strong> {result.suspicious || result.error}</p>
-            <p><strong>Confidence:</strong> {result.confidence || 'N/A'}</p>
-            <p><strong>Reason:</strong> {result.reason || 'N/A'}</p>
-            <p style={{ fontSize: '0.85em', color: 'gray' }}>
-              💡 AI-generated — always verify with an analyst.
-            </p>
-          </>
-        )}
+      <div className="flex justify-end">
+        <button
+          onClick={handleCheckPhishing}
+          disabled={loading}
+          className="inline-flex items-center justify-center rounded-md bg-emerald-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-1 disabled:opacity-50"
+        >
+          {loading ? 'Checking...' : 'Check for Phishing'}
+        </button>
       </div>
+
+      {result && (
+        <div className="mt-4 rounded-md border border-gray-300 bg-gray-50 p-4 space-y-2 text-sm">
+          <h3 className="text-base font-medium text-gray-700">🔍 Result</h3>
+          {result.error ? (
+            <p className="text-red-600">{result.error}</p>
+          ) : (
+            <>
+              <p><strong>Suspicious:</strong> {result.suspicious}</p>
+              <p><strong>Confidence:</strong> {result.confidence || 'N/A'}</p>
+              <p><strong>Reason:</strong> {result.reason || 'N/A'}</p>
+              <p className="text-gray-500 text-xs">
+                💡 AI-generated analysis — always verify with a human analyst.
+              </p>
+            </>
+          )}
+        </div>
+      )}
     </div>
   );
 }
