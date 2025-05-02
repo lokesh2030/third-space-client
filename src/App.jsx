@@ -7,8 +7,8 @@ export default function App() {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [mode, setMode] = useState("triage"); // default tab
-  const [selectedTab, setSelectedTab] = useState("CoPilot"); // CoPilot or Phishing
+  const [mode, setMode] = useState("triage");
+  const [selectedTab, setSelectedTab] = useState("CoPilot");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,7 +41,7 @@ export default function App() {
     <div style={{ background: "#0f172a", color: "white", minHeight: "100vh", padding: 40, fontFamily: "Arial" }}>
       <h1 style={{ fontSize: 28, marginBottom: 20 }}>🛡️ Third Space Co-Pilot</h1>
 
-      {/* Top level tab selector: CoPilot vs Phishing */}
+      {/* Tab Selector */}
       <div style={{ marginBottom: 20, display: "flex", gap: 10 }}>
         <button
           onClick={() => setSelectedTab("CoPilot")}
@@ -72,7 +72,7 @@ export default function App() {
         </button>
       </div>
 
-      {/* If user selects CoPilot */}
+      {/* Co-Pilot Tab */}
       {selectedTab === "CoPilot" && (
         <>
           <div style={{ marginBottom: 20 }}>
@@ -144,13 +144,17 @@ export default function App() {
         </>
       )}
 
-      {/* If user selects Phishing */}
+      {/* Phishing Tab */}
       {selectedTab === "Phishing" && (
-        <PhishingDetection />
-      <div style={{ marginTop: 60, textAlign: "center", fontSize: 14, color: "#94a3b8" }}>
-  © 2025 Third Space Security · All rights reserved
-</div>
+        <>
+          <PhishingDetection />
+        </>
       )}
+
+      {/* Global Footer */}
+      <div style={{ marginTop: 60, textAlign: "center", fontSize: 14, color: "#94a3b8" }}>
+        © 2025 Third Space Security · All rights reserved
+      </div>
     </div>
   );
 }
