@@ -48,6 +48,12 @@ export default function PhishingDetection() {
 
   return (
     <form onSubmit={handleSubmit}>
+      {/* Tagline */}
+      <p style={{ marginBottom: 12, color: "#10b981", fontWeight: "bold" }}>
+        ✅ Instantly detect suspicious emails missed by your filters.
+      </p>
+
+      {/* Textarea input */}
       <textarea
         rows={6}
         placeholder="Paste suspicious email text or link here..."
@@ -61,6 +67,8 @@ export default function PhishingDetection() {
           marginBottom: 20,
         }}
       />
+
+      {/* Submit button */}
       <button
         type="submit"
         style={{
@@ -76,6 +84,7 @@ export default function PhishingDetection() {
         {loading ? "Checking..." : "Check for Phishing"}
       </button>
 
+      {/* Result output */}
       {result && (
         <div style={{ marginTop: 40, background: "#1e293b", padding: 20, borderRadius: 8 }}>
           <h3 style={{ marginBottom: 10 }}>🔍 Result:</h3>
