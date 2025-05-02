@@ -147,6 +147,9 @@ export default function App() {
       {/* If user selects Phishing */}
       {selectedTab === "Phishing" && (
         <PhishingDetection />
+      <div style={{ marginTop: 60, textAlign: "center", fontSize: 14, color: "#94a3b8" }}>
+  © 2025 Third Space Security · All rights reserved
+</div>
       )}
     </div>
   );
