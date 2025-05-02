@@ -10,12 +10,30 @@ export default function PhishingDetection() {
     setLoading(true);
     setResult("");
 
+    const start = Date.now(); // Start timer
+
     try {
       const res = await fetch("https://third-space-backend.onrender.com/api/phishing-detect/detect", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text }),
       });
+
+      const durationMs = Date.now() - start;
+      console.log("⏱️ Phishing check completed in", durationMs / 1000, "seconds");
+
+      // Optional: send to metrics API
+      /*
+      await fetch("https://third-space-backend.onrender.com/api/metrics/phishing-log", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          durationMs,
+          timestamp: new Date().toISOString(),
+          source: "phishing-tab",
+        }),
+      });
+      */
 
       const data = await res.json();
 
