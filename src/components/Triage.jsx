@@ -23,14 +23,12 @@ export default function Triage() {
         body: JSON.stringify({ alert: input }),
       });
 
-      // ✅ Accurate GPT call duration
       const durationMs = Date.now() - start;
       console.log("⏱️ GPT call duration:", (durationMs / 1000).toFixed(2), "seconds");
 
-      // ✅ Simulate time saved (baseline = 6 minutes)
-      const baselineMs = 6 * 60 * 1000;
+      const baselineMs = 6 * 60 * 1000; // 6 minutes
       const savedMs = Math.max(0, baselineMs - durationMs);
-      const savedMin = Math.round(savedMs / 60000);
+      const savedMin = Math.ceil(savedMs / 60000); // Use ceil instead of round
       const percentFaster = Math.round((savedMs / baselineMs) * 100);
 
       setTimeSavedMsg(
@@ -65,7 +63,7 @@ export default function Triage() {
           padding: "8px",
           borderRadius: "6px",
           marginRight: "10px",
-          border: "1px solid #ccc"
+          border: "1px solid #ccc",
         }}
       />
       <button onClick={handleTriageSubmit} style={{ padding: "8px 12px" }}>
@@ -94,4 +92,3 @@ export default function Triage() {
     </div>
   );
 }
-
