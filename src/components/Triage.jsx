@@ -23,10 +23,11 @@ export default function Triage() {
         body: JSON.stringify({ alert: input }),
       });
 
+      // ✅ Accurate GPT call duration
       const durationMs = Date.now() - start;
-      console.log("⏱️ GPT call duration:", durationMs / 1000, "seconds");
+      console.log("⏱️ GPT call duration:", (durationMs / 1000).toFixed(2), "seconds");
 
-      // Simulate time saved (baseline = 6 minutes)
+      // ✅ Simulate time saved (baseline = 6 minutes)
       const baselineMs = 6 * 60 * 1000;
       const savedMs = Math.max(0, baselineMs - durationMs);
       const savedMin = Math.round(savedMs / 60000);
@@ -39,7 +40,7 @@ export default function Triage() {
       const data = await res.json();
       setResult(data.result || "❌ No analysis returned.");
     } catch (error) {
-      console.error("Triage fetch error:", error);
+      console.error("❌ Triage fetch error:", error);
       setResult("❌ Error analyzing alert.");
     }
   };
@@ -59,10 +60,18 @@ export default function Triage() {
         value={input}
         onChange={(e) => setInput(e.target.value)}
         placeholder="e.g. Suspicious login from foreign IP"
-        style={{ width: "300px", marginRight: "10px" }}
+        style={{
+          width: "300px",
+          padding: "8px",
+          borderRadius: "6px",
+          marginRight: "10px",
+          border: "1px solid #ccc"
+        }}
       />
-      <button onClick={handleTriageSubmit}>Submit</button>
-      <button onClick={handleDemoAlert} style={{ marginLeft: "10px" }}>
+      <button onClick={handleTriageSubmit} style={{ padding: "8px 12px" }}>
+        Submit
+      </button>
+      <button onClick={handleDemoAlert} style={{ marginLeft: "10px", padding: "8px 12px" }}>
         Load Demo Alert
       </button>
 
@@ -85,3 +94,4 @@ export default function Triage() {
     </div>
   );
 }
+
