@@ -11,7 +11,7 @@ export default function Triage() {
       return;
     }
 
-    const start = Date.now(); // start timing
+    const start = Date.now();
 
     try {
       const res = await fetch("https://third-space-backend.onrender.com/api/triage", {
@@ -23,11 +23,15 @@ export default function Triage() {
       const durationMs = Date.now() - start;
       console.log("⏱️ Triage GPT call took", durationMs / 1000, "seconds");
 
-      // Simulate time saved (baseline = 6 min)
+      // Dynamic calculation
       const baselineMs = 6 * 60 * 1000;
       const savedMs = Math.max(0, baselineMs - durationMs);
       const savedMin = Math.round(savedMs / 60000);
-      setTimeSavedMsg(`⏱️ Saved ~${savedMin} min of manual triage`);
+      const percentFaster = Math.round((savedMs / baselineMs) * 100);
+
+      setTimeSavedMsg(
+        `⏱️ Saved ~${savedMin} min • 🚀 ${percentFaster}% faster than manual triage`
+      );
 
       const data = await res.json();
       setResult(data.result || "❌ No analysis returned.");
