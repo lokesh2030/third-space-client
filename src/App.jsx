@@ -10,8 +10,9 @@ export default function App() {
   const [mode, setMode] = useState("triage");
   const [selectedTab, setSelectedTab] = useState("CoPilot");
   const [timeSavedMsg, setTimeSavedMsg] = useState("");
-  const [threatIntelCount, setThreatIntelCount] = useState(0);
   const [triageCount, setTriageCount] = useState(0);
+  const [threatIntelCount, setThreatIntelCount] = useState(0);
+  const [kbCount, setKbCount] = useState(0);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -55,6 +56,15 @@ export default function App() {
         const percentFaster = ((savedMs / baselineMs) * 100).toFixed(1);
         setTimeSavedMsg(`⏱️ Saved ~${savedMin} min • 🚀 ${percentFaster}% faster than manual research`);
         setThreatIntelCount((prev) => prev + 1);
+      }
+
+      if (mode === "kb") {
+        const baselineMs = 5 * 60 * 1000;
+        const savedMs = Math.max(0, baselineMs - durationMs);
+        const savedMin = (savedMs / 60000).toFixed(1);
+        const percentFaster = ((savedMs / baselineMs) * 100).toFixed(1);
+        setTimeSavedMsg(`⏱️ Saved ~${savedMin} min • 🚀 ${percentFaster}% faster than searching the KB manually`);
+        setKbCount((prev) => prev + 1);
       }
     } catch (err) {
       setOutput("Error: " + err.message);
@@ -165,7 +175,7 @@ export default function App() {
               <h3 style={{ marginBottom: 10 }}>🔍 Result:</h3>
               <pre style={{ whiteSpace: "pre-wrap" }}>{output}</pre>
 
-              {["triage", "threat-intel"].includes(mode) && timeSavedMsg && (
+              {["triage", "threat-intel", "kb"].includes(mode) && timeSavedMsg && (
                 <p style={{ fontSize: "0.85em", color: "#10b981", marginTop: "0.5rem" }}>{timeSavedMsg}</p>
               )}
 
@@ -187,6 +197,17 @@ export default function App() {
                   </p>
                   <p style={{ fontSize: "0.85em", color: "#cbd5e1" }}>
                     ({threatIntelCount} lookups × 10 min each)
+                  </p>
+                </div>
+              )}
+
+              {mode === "kb" && kbCount > 0 && (
+                <div style={{ marginTop: "1rem", backgroundColor: "#0f172a", padding: "1rem", borderRadius: "8px" }}>
+                  <p style={{ fontWeight: "bold", color: "#fbbf24" }}>
+                    📈 Total Time Saved: {(kbCount * 5).toFixed(1)} minutes
+                  </p>
+                  <p style={{ fontSize: "0.85em", color: "#cbd5e1" }}>
+                    ({kbCount} questions × 5 min each)
                   </p>
                 </div>
               )}
