@@ -4,7 +4,6 @@ export default function Triage() {
   const [input, setInput] = useState("");
   const [result, setResult] = useState("");
   const [timeSavedMsg, setTimeSavedMsg] = useState("");
-  const [loading, setLoading] = useState(false);
 
   const handleTriageSubmit = async () => {
     if (!input.trim()) {
@@ -12,7 +11,6 @@ export default function Triage() {
       return;
     }
 
-    setLoading(true);
     setResult("");
     setTimeSavedMsg("");
 
@@ -26,21 +24,21 @@ export default function Triage() {
       });
 
       const data = await res.json();
+      setResult(data.result || "❌ No analysis returned.");
 
       const durationMs = Date.now() - start;
       const baselineMs = 6 * 60 * 1000; // 6 minutes
       const savedMs = Math.max(0, baselineMs - durationMs);
-      const savedMin = (savedMs / 60000).toFixed(1);
+      const savedMinPrecise = (savedMs / 60000).toFixed(1);
       const percentFaster = ((savedMs / baselineMs) * 100).toFixed(1);
 
-      setTimeSavedMsg(`⏱️ Saved ~${savedMin} min • 🚀 ${percentFaster}% faster than manual triage`);
-      setResult(data.result || "❌ No analysis returned.");
+      setTimeSavedMsg(
+        `⏱️ Saved ~${savedMinPrecise} min • 🚀 ${percentFaster}% faster than manual triage`
+      );
     } catch (error) {
       console.error("❌ Triage fetch error:", error);
       setResult("❌ Error analyzing alert.");
     }
-
-    setLoading(false);
   };
 
   const handleDemoAlert = () => {
@@ -66,8 +64,8 @@ export default function Triage() {
           border: "1px solid #ccc",
         }}
       />
-      <button onClick={handleTriageSubmit} disabled={loading} style={{ padding: "8px 12px" }}>
-        {loading ? "Analyzing..." : "Submit"}
+      <button onClick={handleTriageSubmit} style={{ padding: "8px 12px" }}>
+        Submit
       </button>
       <button onClick={handleDemoAlert} style={{ marginLeft: "10px", padding: "8px 12px" }}>
         Load Demo Alert
