@@ -17,7 +17,7 @@ export default function PhishingDetection({ setPhishingCount }) {
     const start = Date.now();
 
     try {
-      const res = await fetch("https://third-space-backend.onrender.com/api/phishing", {
+      const res = await fetch("https://third-space-backend.onrender.com/api/phishing-detect", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: input }),
