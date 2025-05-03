@@ -23,10 +23,8 @@ export default function Triage() {
         body: JSON.stringify({ alert: input }),
       });
 
-      const data = await res.json();
       const durationMs = Date.now() - start;
-
-      const baselineMs = 6 * 60 * 1000; // 6 min
+      const baselineMs = 6 * 60 * 1000; // 6 min baseline
       const savedMs = Math.max(0, baselineMs - durationMs);
       const savedMinPrecise = (savedMs / 60000).toFixed(1);
       const percentFaster = ((savedMs / baselineMs) * 100).toFixed(1);
@@ -35,6 +33,7 @@ export default function Triage() {
         `⏱️ Saved ~${savedMinPrecise} min • 🚀 ${percentFaster}% faster than manual triage`
       );
 
+      const data = await res.json();
       setResult(data.result || "❌ No analysis returned.");
     } catch (error) {
       console.error("❌ Triage fetch error:", error);
@@ -43,7 +42,7 @@ export default function Triage() {
   };
 
   const handleDemoAlert = () => {
-    setInput("Suspicious PowerShell activity on workstation-07 at 3:14AM involving outbound connection to unknown domain.");
+    setInput("Unusual outbound traffic to rare domain");
     setResult("");
     setTimeSavedMsg("");
   };
@@ -51,7 +50,6 @@ export default function Triage() {
   return (
     <div style={{ padding: "1rem" }}>
       <h2>🚨 Triage</h2>
-
       <input
         type="text"
         value={input}
