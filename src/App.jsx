@@ -151,13 +151,8 @@ export default function App() {
         </>
       )}
 
-      {/* Global Time Savings Badge */}
-      <div style={{ marginTop: 40, textAlign: "center", fontSize: 14, color: "#10b981" }}>
-        ⏱️ Saved ~5 min of manual triage • 🚀 90% faster than manual checks
-      </div>
-
       {/* Global Footer */}
-      <div style={{ marginTop: 20, textAlign: "center", fontSize: 14, color: "#94a3b8" }}>
+      <div style={{ marginTop: 40, textAlign: "center", fontSize: 14, color: "#94a3b8" }}>
         © 2025 Third Space Security · All rights reserved
       </div>
     </div>
