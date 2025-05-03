@@ -244,7 +244,7 @@ export default function App() {
       )}
 
       {/* Phishing */}
-      {selectedTab === "Phishing" && <PhishingDetection />}
+      {selectedTab === "Phishing" && <PhishingDetection setPhishingCount={setPhishingCount} />}
 
       {/* Global Total */}
       {totalGlobalTimeSaved > 0 && (
