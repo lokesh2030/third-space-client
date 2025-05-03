@@ -14,7 +14,7 @@ export default function Triage() {
     setResult("");
     setTimeSavedMsg("");
 
-    const start = Date.now();
+    const startTime = performance.now();
 
     try {
       const res = await fetch("https://third-space-backend.onrender.com/api/triage", {
@@ -26,15 +26,18 @@ export default function Triage() {
       const data = await res.json();
       setResult(data.result || "❌ No analysis returned.");
 
-      const durationMs = Date.now() - start;
-      const baselineMs = 6 * 60 * 1000; // 6 minutes
+      const endTime = performance.now();
+      const durationMs = endTime - startTime;
+
+      // Baseline: 6 min (360,000 ms)
+      const baselineMs = 6 * 60 * 1000;
       const savedMs = Math.max(0, baselineMs - durationMs);
-      const savedMinPrecise = (savedMs / 60000).toFixed(1);
+      const savedMin = (savedMs / 60000).toFixed(1);
       const percentFaster = ((savedMs / baselineMs) * 100).toFixed(1);
 
-      setTimeSavedMsg(
-        `⏱️ Saved ~${savedMinPrecise} min • 🚀 ${percentFaster}% faster than manual triage`
-      );
+      if (savedMs > 0) {
+        setTimeSavedMsg(`⏱️ Saved ~${savedMin} min • 🚀 ${percentFaster}% faster than manual triage`);
+      }
     } catch (error) {
       console.error("❌ Triage fetch error:", error);
       setResult("❌ Error analyzing alert.");
@@ -42,7 +45,7 @@ export default function Triage() {
   };
 
   const handleDemoAlert = () => {
-    setInput("Unusual outbound traffic to rare domain");
+    setInput("Multiple failed logins followed by a successful login from unknown foreign IP");
     setResult("");
     setTimeSavedMsg("");
   };
