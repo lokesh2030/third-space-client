@@ -85,7 +85,7 @@ export default function ThreatIntel() {
               </button>
             </div>
 
-            <ThreatIntelDisplay aiResponse={result} />
+            <ThreatIntelDisplay key={queryCount} aiResponse={result} />
           </div>
         )}
 
