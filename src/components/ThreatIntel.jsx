@@ -7,6 +7,9 @@ export default function ThreatIntel() {
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
   const [timeSavedMsg, setTimeSavedMsg] = useState('');
+  const [queryCount, setQueryCount] = useState(0);
+
+  const TIME_SAVED_PER_QUERY_MIN = 10;
 
   const handleThreatIntelSubmit = async () => {
     if (!input.trim()) {
@@ -29,7 +32,7 @@ export default function ThreatIntel() {
       const data = await res.json();
       setResult(data.result || data.response || '🧠 No data found.');
 
-      // ⏱️ Time metrics
+      // Time/performance metrics
       const durationMs = Date.now() - start;
       const baselineMs = 7 * 60 * 1000;
       const savedMs = Math.max(0, baselineMs - durationMs);
@@ -37,6 +40,7 @@ export default function ThreatIntel() {
       const percentFaster = ((savedMs / baselineMs) * 100).toFixed(1);
 
       setTimeSavedMsg(`⏱️ Saved ~${savedMin} min • 🚀 ${percentFaster}% faster than manual research`);
+      setQueryCount(prev => prev + 1);
     } catch (error) {
       console.error("Fetch error:", error);
       setResult('❌ Could not fetch threat intel.');
@@ -50,6 +54,8 @@ export default function ThreatIntel() {
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
+
+  const totalTimeSavedMin = (queryCount * TIME_SAVED_PER_QUERY_MIN).toFixed(1);
 
   return (
     <div style={{ padding: '1rem' }}>
@@ -76,12 +82,22 @@ export default function ThreatIntel() {
                 {copied ? '✅ Copied!' : '📋 Copy to Clipboard'}
               </button>
             </div>
+
             <ThreatIntelDisplay aiResponse={result} />
 
             {timeSavedMsg && (
               <p style={{ fontSize: "0.85em", color: "#10b981", marginTop: "0.5rem" }}>
                 {timeSavedMsg}
               </p>
+            )}
+
+            {queryCount > 0 && (
+              <div style={{ marginTop: "1rem", backgroundColor: "#f3f4f6", padding: "1rem", borderRadius: "8px" }}>
+                <p style={{ fontWeight: "bold" }}>📈 Total Time Saved: {totalTimeSavedMin} minutes</p>
+                <p style={{ fontSize: "0.85em", color: "#6b7280" }}>
+                  ({queryCount} lookups × {TIME_SAVED_PER_QUERY_MIN} min each)
+                </p>
+              </div>
             )}
           </>
         ) : null}
