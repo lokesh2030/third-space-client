@@ -16,8 +16,8 @@ export default function ThreatIntel() {
 
     setLoading(true);
     setCopied(false);
-    setTimeSavedMsg("");
-    setResult("");
+    setTimeSavedMsg('');
+    setResult('');
 
     const start = Date.now();
 
@@ -28,18 +28,18 @@ export default function ThreatIntel() {
         body: JSON.stringify({ keyword: input }),
       });
 
+      const data = await res.json();
       const durationMs = Date.now() - start;
-      const baselineMs = 8 * 60 * 1000; // 8 minutes
+
+      const baselineMs = 8 * 60 * 1000; // 8 minutes assumed manual effort
       const savedMs = Math.max(0, baselineMs - durationMs);
       const savedMin = (savedMs / 60000).toFixed(1);
       const percentFaster = ((savedMs / baselineMs) * 100).toFixed(1);
 
       setTimeSavedMsg(`⏱️ Saved ~${savedMin} min • 🚀 ${percentFaster}% faster than manual research`);
-
-      const data = await res.json();
       setResult(data.result || data.response || '🧠 No data found.');
     } catch (error) {
-      console.error("❌ Threat Intel fetch error:", error);
+      console.error("Fetch error:", error);
       setResult('❌ Could not fetch threat intel.');
     } finally {
       setLoading(false);
@@ -78,9 +78,9 @@ export default function ThreatIntel() {
               </button>
             </div>
             <ThreatIntelDisplay aiResponse={result} />
-            <p style={{ fontSize: "0.85em", color: "#10b981", marginTop: "0.5rem" }}>
-              {timeSavedMsg}
-            </p>
+            {timeSavedMsg && (
+              <p style={{ fontSize: '0.85em', color: '#10b981', marginTop: '0.75rem' }}>{timeSavedMsg}</p>
+            )}
           </>
         ) : null}
       </div>
