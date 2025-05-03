@@ -1,5 +1,6 @@
 import { useState } from "react";
 import PhishingDetection from "./components/phishing";
+import Triage from "./components/Triage"; // Ensure filename matches casing on your system
 
 const BACKEND_URL = "https://third-space-backend.onrender.com";
 
@@ -97,61 +98,61 @@ export default function App() {
             </div>
           </div>
 
-          <form onSubmit={handleSubmit}>
-            <textarea
-              rows={6}
-              placeholder={`Paste your ${
-                mode === "triage"
-                  ? "alert"
-                  : mode === "ticket"
-                  ? "incident"
-                  : mode === "kb"
-                  ? "question"
-                  : "keyword"
-              } here...`}
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              style={{
-                width: "100%",
-                padding: 16,
-                fontSize: 16,
-                borderRadius: 6,
-                marginBottom: 20,
-              }}
-            />
-            <button
-              type="submit"
-              style={{
-                backgroundColor: "#3b82f6",
-                color: "white",
-                padding: "12px 24px",
-                fontSize: 16,
-                border: "none",
-                borderRadius: 6,
-                cursor: "pointer",
-              }}
-            >
-              {loading ? "Working..." : "Submit"}
-            </button>
-          </form>
+          {mode === "triage" ? (
+            <Triage />
+          ) : (
+            <>
+              <form onSubmit={handleSubmit}>
+                <textarea
+                  rows={6}
+                  placeholder={`Paste your ${
+                    mode === "ticket"
+                      ? "incident"
+                      : mode === "kb"
+                      ? "question"
+                      : "keyword"
+                  } here...`}
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  style={{
+                    width: "100%",
+                    padding: 16,
+                    fontSize: 16,
+                    borderRadius: 6,
+                    marginBottom: 20,
+                  }}
+                />
+                <button
+                  type="submit"
+                  style={{
+                    backgroundColor: "#3b82f6",
+                    color: "white",
+                    padding: "12px 24px",
+                    fontSize: 16,
+                    border: "none",
+                    borderRadius: 6,
+                    cursor: "pointer",
+                  }}
+                >
+                  {loading ? "Working..." : "Submit"}
+                </button>
+              </form>
 
-          {output && (
-            <div style={{ marginTop: 40, background: "#1e293b", padding: 20, borderRadius: 8 }}>
-              <h3 style={{ marginBottom: 10 }}>🔍 Result:</h3>
-              <pre style={{ whiteSpace: "pre-wrap" }}>{output}</pre>
-            </div>
+              {output && (
+                <div style={{ marginTop: 40, background: "#1e293b", padding: 20, borderRadius: 8 }}>
+                  <h3 style={{ marginBottom: 10 }}>🔍 Result:</h3>
+                  <pre style={{ whiteSpace: "pre-wrap" }}>{output}</pre>
+                </div>
+              )}
+            </>
           )}
         </>
       )}
 
       {/* Phishing Tab */}
-      {selectedTab === "Phishing" && (
-        <>
-          <PhishingDetection />
-        </>
-      )}
+      {selectedTab === "Phishing" && <PhishingDetection />}
 
-      {/* Global Footer */}
+      {/* Footer */}
       <div style={{ marginTop: 60, textAlign: "center", fontSize: 14, color: "#94a3b8" }}>
         © 2025 Third Space Security · All rights reserved
       </div>
