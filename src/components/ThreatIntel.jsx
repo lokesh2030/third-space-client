@@ -73,8 +73,21 @@ export default function ThreatIntel() {
       </button>
 
       <div style={{ marginTop: '1.5rem' }}>
-        {loading && (
-          <p>🔄 Fetching threat intelligence, please wait...</p>
+        {loading && <p>🔄 Fetching threat intelligence, please wait...</p>}
+
+        {!loading && timeSavedMsg && (
+          <p style={{ fontSize: "0.85em", color: "#10b981", marginTop: "1rem" }}>
+            {timeSavedMsg}
+          </p>
+        )}
+
+        {!loading && queryCount > 0 && (
+          <div style={{ marginTop: "0.5rem", backgroundColor: "#f3f4f6", padding: "1rem", borderRadius: "8px" }}>
+            <p style={{ fontWeight: "bold" }}>📈 Total Time Saved: {totalTimeSavedMin} minutes</p>
+            <p style={{ fontSize: "0.85em", color: "#6b7280" }}>
+              ({queryCount} lookups × {TIME_SAVED_PER_QUERY_MIN} min each)
+            </p>
+          </div>
         )}
 
         {!loading && result && (
@@ -86,23 +99,6 @@ export default function ThreatIntel() {
             </div>
 
             <ThreatIntelDisplay key={queryCount} aiResponse={result} />
-          </div>
-        )}
-
-        {!loading && timeSavedMsg && (
-          <div style={{ marginTop: '1rem' }}>
-            <p style={{ fontSize: "0.85em", color: "#10b981" }}>
-              {timeSavedMsg}
-            </p>
-          </div>
-        )}
-
-        {!loading && queryCount > 0 && (
-          <div style={{ marginTop: "1rem", backgroundColor: "#f3f4f6", padding: "1rem", borderRadius: "8px" }}>
-            <p style={{ fontWeight: "bold" }}>📈 Total Time Saved: {totalTimeSavedMin} minutes</p>
-            <p style={{ fontSize: "0.85em", color: "#6b7280" }}>
-              ({queryCount} lookups × {TIME_SAVED_PER_QUERY_MIN} min each)
-            </p>
           </div>
         )}
       </div>
