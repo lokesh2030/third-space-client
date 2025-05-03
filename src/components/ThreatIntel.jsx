@@ -6,7 +6,6 @@ export default function ThreatIntel() {
   const [result, setResult] = useState('');
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [timeSavedMsg, setTimeSavedMsg] = useState('');
   const [queryCount, setQueryCount] = useState(0);
 
   const TIME_SAVED_PER_QUERY_MIN = 10;
@@ -19,7 +18,6 @@ export default function ThreatIntel() {
 
     setLoading(true);
     setCopied(false);
-    setTimeSavedMsg('');
     const start = Date.now();
 
     try {
@@ -32,14 +30,6 @@ export default function ThreatIntel() {
       const data = await res.json();
       const output = data.result || data.response || '🧠 No data found.';
       setResult(output);
-
-      const durationMs = Date.now() - start;
-      const baselineMs = 7 * 60 * 1000;
-      const savedMs = Math.max(0, baselineMs - durationMs);
-      const savedMin = (savedMs / 60000).toFixed(1);
-      const percentFaster = ((savedMs / baselineMs) * 100).toFixed(1);
-
-      setTimeSavedMsg(`⏱️ Saved ~${savedMin} min • 🚀 ${percentFaster}% faster than manual research`);
       setQueryCount(prev => prev + 1);
     } catch (error) {
       console.error("Fetch error:", error);
@@ -56,6 +46,7 @@ export default function ThreatIntel() {
   };
 
   const totalTimeSavedMin = (queryCount * TIME_SAVED_PER_QUERY_MIN).toFixed(1);
+  const estimatedSavedMin = result ? Math.max(0, (7 - result.length / 1000)).toFixed(1) : '0';
 
   return (
     <div style={{ padding: '1rem' }}>
@@ -75,21 +66,6 @@ export default function ThreatIntel() {
       <div style={{ marginTop: '1.5rem' }}>
         {loading && <p>🔄 Fetching threat intelligence, please wait...</p>}
 
-        {!loading && timeSavedMsg && (
-          <p style={{ fontSize: "0.85em", color: "#10b981", marginTop: "1rem" }}>
-            {timeSavedMsg}
-          </p>
-        )}
-
-        {!loading && queryCount > 0 && (
-          <div style={{ marginTop: "0.5rem", backgroundColor: "#f3f4f6", padding: "1rem", borderRadius: "8px" }}>
-            <p style={{ fontWeight: "bold" }}>📈 Total Time Saved: {totalTimeSavedMin} minutes</p>
-            <p style={{ fontSize: "0.85em", color: "#6b7280" }}>
-              ({queryCount} lookups × {TIME_SAVED_PER_QUERY_MIN} min each)
-            </p>
-          </div>
-        )}
-
         {!loading && result && (
           <div style={{ marginTop: '1rem' }}>
             <div style={{ marginBottom: '10px' }}>
@@ -98,7 +74,20 @@ export default function ThreatIntel() {
               </button>
             </div>
 
-            <ThreatIntelDisplay key={queryCount} aiResponse={result} />
+            <div style={{ backgroundColor: "#f9fafb", padding: "1rem", borderRadius: "8px" }}>
+              <p style={{ fontSize: "0.85em", color: "#10b981", marginBottom: "0.5rem" }}>
+                ⏱️ Estimated Time Saved: {estimatedSavedMin} min
+              </p>
+
+              <ThreatIntelDisplay key={queryCount} aiResponse={result} />
+
+              <div style={{ marginTop: "1rem", backgroundColor: "#f3f4f6", padding: "1rem", borderRadius: "8px" }}>
+                <p style={{ fontWeight: "bold" }}>📈 Total Time Saved: {totalTimeSavedMin} minutes</p>
+                <p style={{ fontSize: "0.85em", color: "#6b7280" }}>
+                  ({queryCount} lookups × {TIME_SAVED_PER_QUERY_MIN} min each)
+                </p>
+              </div>
+            </div>
           </div>
         )}
       </div>
