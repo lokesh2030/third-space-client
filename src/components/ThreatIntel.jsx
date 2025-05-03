@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import ThreatIntelDisplay from '../components/ThreatIntelDisplay';
 
 export default function ThreatIntel() {
   const [input, setInput] = useState('');
@@ -58,7 +59,7 @@ export default function ThreatIntel() {
 
   return (
     <div style={{ padding: '1rem' }}>
-      <h2>🕵️‍♂️ Threat Intelligence (Debug)</h2>
+      <h2>🕵️‍♂️ Threat Intelligence</h2>
 
       <input
         type="text"
@@ -72,38 +73,38 @@ export default function ThreatIntel() {
       </button>
 
       <div style={{ marginTop: '1.5rem' }}>
-        {loading ? (
+        {loading && (
           <p>🔄 Fetching threat intelligence, please wait...</p>
-        ) : (result || timeSavedMsg) ? (
-          <div>
+        )}
+
+        {!loading && result && (
+          <div style={{ marginTop: '1rem' }}>
             <div style={{ marginBottom: '10px' }}>
               <button onClick={handleCopy} style={{ padding: '8px 12px', cursor: 'pointer' }}>
                 {copied ? '✅ Copied!' : '📋 Copy to Clipboard'}
               </button>
             </div>
 
-            {result && (
-              <pre style={{ whiteSpace: 'pre-wrap', background: '#f9fafb', padding: '1rem', borderRadius: '8px' }}>
-                {result}
-              </pre>
-            )}
-
-            {timeSavedMsg && (
-              <p style={{ fontSize: "0.85em", color: "#10b981", marginTop: "0.5rem" }}>
-                {timeSavedMsg}
-              </p>
-            )}
-
-            {queryCount > 0 && (
-              <div style={{ marginTop: "1rem", backgroundColor: "#f3f4f6", padding: "1rem", borderRadius: "8px" }}>
-                <p style={{ fontWeight: "bold" }}>📈 Total Time Saved: {totalTimeSavedMin} minutes</p>
-                <p style={{ fontSize: "0.85em", color: "#6b7280" }}>
-                  ({queryCount} lookups × {TIME_SAVED_PER_QUERY_MIN} min each)
-                </p>
-              </div>
-            )}
+            <ThreatIntelDisplay aiResponse={result} />
           </div>
-        ) : null}
+        )}
+
+        {!loading && timeSavedMsg && (
+          <div style={{ marginTop: '1rem' }}>
+            <p style={{ fontSize: "0.85em", color: "#10b981" }}>
+              {timeSavedMsg}
+            </p>
+          </div>
+        )}
+
+        {!loading && queryCount > 0 && (
+          <div style={{ marginTop: "1rem", backgroundColor: "#f3f4f6", padding: "1rem", borderRadius: "8px" }}>
+            <p style={{ fontWeight: "bold" }}>📈 Total Time Saved: {totalTimeSavedMin} minutes</p>
+            <p style={{ fontSize: "0.85em", color: "#6b7280" }}>
+              ({queryCount} lookups × {TIME_SAVED_PER_QUERY_MIN} min each)
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
