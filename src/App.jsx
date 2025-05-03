@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Triage from "./components/Triage";
 import PhishingDetection from "./components/phishing";
 
 const BACKEND_URL = "https://third-space-backend.onrender.com";
@@ -10,11 +9,15 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [mode, setMode] = useState("triage");
   const [selectedTab, setSelectedTab] = useState("CoPilot");
+  const [timeSavedMsg, setTimeSavedMsg] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setOutput("");
+    setTimeSavedMsg("");
+
+    const start = Date.now();
 
     let payload = {};
     if (mode === "triage") payload = { alert: input };
@@ -31,6 +34,15 @@ export default function App() {
 
       const data = await res.json();
       setOutput(data.result || "Something went wrong.");
+
+      if (mode === "triage") {
+        const durationMs = Date.now() - start;
+        const baselineMs = 6 * 60 * 1000;
+        const savedMs = Math.max(0, baselineMs - durationMs);
+        const savedMinPrecise = (savedMs / 60000).toFixed(1);
+        const percentFaster = ((savedMs / baselineMs) * 100).toFixed(1);
+        setTimeSavedMsg(`⏱️ Saved ~${savedMinPrecise} min • 🚀 ${percentFaster}% faster than manual triage`);
+      }
     } catch (err) {
       setOutput("Error: " + err.message);
     }
@@ -42,7 +54,7 @@ export default function App() {
     <div style={{ background: "#0f172a", color: "white", minHeight: "100vh", padding: 40, fontFamily: "Arial" }}>
       <h1 style={{ fontSize: 28, marginBottom: 20 }}>🛡️ Third Space Co-Pilot</h1>
 
-      {/* Top Tab Selector */}
+      {/* Tab Selector */}
       <div style={{ marginBottom: 20, display: "flex", gap: 10 }}>
         <button
           onClick={() => setSelectedTab("CoPilot")}
@@ -72,7 +84,7 @@ export default function App() {
         </button>
       </div>
 
-      {/* CoPilot Logic */}
+      {/* CoPilot */}
       {selectedTab === "CoPilot" && (
         <>
           <div style={{ marginBottom: 20 }}>
@@ -97,64 +109,62 @@ export default function App() {
             </div>
           </div>
 
-          {mode === "triage" ? (
-            <Triage />
-          ) : (
-            <form onSubmit={handleSubmit}>
-              <textarea
-                rows={6}
-                placeholder={`Paste your ${
-                  mode === "ticket"
-                    ? "incident"
-                    : mode === "kb"
-                    ? "question"
-                    : "keyword"
-                } here...`}
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                style={{
-                  width: "100%",
-                  padding: 16,
-                  fontSize: 16,
-                  borderRadius: 6,
-                  marginBottom: 20,
-                }}
-              />
-              <button
-                type="submit"
-                style={{
-                  backgroundColor: "#3b82f6",
-                  color: "white",
-                  padding: "12px 24px",
-                  fontSize: 16,
-                  border: "none",
-                  borderRadius: 6,
-                  cursor: "pointer",
-                }}
-              >
-                {loading ? "Working..." : "Submit"}
-              </button>
-            </form>
-          )}
+          <form onSubmit={handleSubmit}>
+            <textarea
+              rows={6}
+              placeholder={`Paste your ${
+                mode === "triage"
+                  ? "alert"
+                  : mode === "ticket"
+                  ? "incident"
+                  : mode === "kb"
+                  ? "question"
+                  : "keyword"
+              } here...`}
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              style={{
+                width: "100%",
+                padding: 16,
+                fontSize: 16,
+                borderRadius: 6,
+                marginBottom: 20,
+              }}
+            />
+            <button
+              type="submit"
+              style={{
+                backgroundColor: "#3b82f6",
+                color: "white",
+                padding: "12px 24px",
+                fontSize: 16,
+                border: "none",
+                borderRadius: 6,
+                cursor: "pointer",
+              }}
+            >
+              {loading ? "Working..." : "Submit"}
+            </button>
+          </form>
 
           {output && (
             <div style={{ marginTop: 40, background: "#1e293b", padding: 20, borderRadius: 8 }}>
               <h3 style={{ marginBottom: 10 }}>🔍 Result:</h3>
               <pre style={{ whiteSpace: "pre-wrap" }}>{output}</pre>
+
+              {mode === "triage" && timeSavedMsg && (
+                <p style={{ fontSize: "0.85em", color: "#10b981", marginTop: "0.5rem" }}>{timeSavedMsg}</p>
+              )}
             </div>
           )}
         </>
       )}
 
-      {/* Phishing Detection Tab */}
+      {/* Phishing */}
       {selectedTab === "Phishing" && <PhishingDetection />}
 
       {/* Footer */}
-      <div style={{ marginTop: 40, textAlign: "center", fontSize: 14, color: "#10b981" }}>
-        ⏱️ Saved ~5 min of manual triage • 🚀 90% faster than manual checks
-      </div>
-
-      <div style={{ marginTop: 10, textAlign: "center", fontSize: 14, color: "#94a3b8" }}>
+      <div style={{ marginTop: 40, textAlign: "center", fontSize: 14, color: "#94a3b8" }}>
         © 2025 Third Space Security · All rights reserved
       </div>
     </div>
