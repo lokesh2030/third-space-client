@@ -15,10 +15,8 @@ export default function ThreatIntel() {
     }
 
     setLoading(true);
-    setResult('');
     setCopied(false);
     setTimeSavedMsg('');
-
     const start = Date.now();
 
     try {
@@ -29,17 +27,18 @@ export default function ThreatIntel() {
       });
 
       const data = await res.json();
+      setResult(data.result || data.response || '🧠 No data found.');
 
+      // ⏱️ Time metrics
       const durationMs = Date.now() - start;
-      const baselineMs = 6 * 60 * 1000; // 6 min baseline
+      const baselineMs = 7 * 60 * 1000;
       const savedMs = Math.max(0, baselineMs - durationMs);
-      const savedMinPrecise = (savedMs / 60000).toFixed(1);
+      const savedMin = (savedMs / 60000).toFixed(1);
       const percentFaster = ((savedMs / baselineMs) * 100).toFixed(1);
 
-      setTimeSavedMsg(`⏱️ Saved ~${savedMinPrecise} min • 🚀 ${percentFaster}% faster than manual research`);
-      setResult(data.result || data.response || '🧠 No data found.');
+      setTimeSavedMsg(`⏱️ Saved ~${savedMin} min • 🚀 ${percentFaster}% faster than manual research`);
     } catch (error) {
-      console.error("❌ Fetch error:", error);
+      console.error("Fetch error:", error);
       setResult('❌ Could not fetch threat intel.');
     } finally {
       setLoading(false);
@@ -60,16 +59,16 @@ export default function ThreatIntel() {
         type="text"
         value={input}
         onChange={(e) => setInput(e.target.value)}
-        placeholder="e.g. Lazarus Group, Black Basta"
-        style={{ width: '300px', marginRight: '10px' }}
+        placeholder="e.g. Lazarus Group, Emotet"
+        style={{ width: '300px', marginRight: '10px', padding: '8px', borderRadius: '6px', border: '1px solid #ccc' }}
       />
-      <button onClick={handleThreatIntelSubmit}>Submit</button>
+      <button onClick={handleThreatIntelSubmit} style={{ padding: '8px 12px' }}>
+        Submit
+      </button>
 
       <div style={{ marginTop: '1.5rem' }}>
         {loading ? (
-          <div style={{ textAlign: 'center', marginTop: '20px' }}>
-            <p style={{ fontSize: '18px' }}>🔄 Fetching threat intelligence, please wait...</p>
-          </div>
+          <p>🔄 Fetching threat intelligence, please wait...</p>
         ) : result ? (
           <>
             <div style={{ marginBottom: '10px' }}>
@@ -80,7 +79,9 @@ export default function ThreatIntel() {
             <ThreatIntelDisplay aiResponse={result} />
 
             {timeSavedMsg && (
-              <p style={{ fontSize: '0.85em', color: '#10b981', marginTop: '1rem' }}>{timeSavedMsg}</p>
+              <p style={{ fontSize: "0.85em", color: "#10b981", marginTop: "0.5rem" }}>
+                {timeSavedMsg}
+              </p>
             )}
           </>
         ) : null}
