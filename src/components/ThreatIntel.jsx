@@ -75,7 +75,7 @@ export default function ThreatIntel() {
       <div style={{ marginTop: '1.5rem' }}>
         {loading ? (
           <p>🔄 Fetching threat intelligence, please wait...</p>
-        ) : result ? (
+        ) : (result || timeSavedMsg) ? (
           <div>
             <div style={{ marginBottom: '10px' }}>
               <button onClick={handleCopy} style={{ padding: '8px 12px', cursor: 'pointer' }}>
@@ -83,7 +83,7 @@ export default function ThreatIntel() {
               </button>
             </div>
 
-            <ThreatIntelDisplay aiResponse={result} />
+            {result && <ThreatIntelDisplay aiResponse={result} />}
 
             {timeSavedMsg && (
               <p style={{ fontSize: "0.85em", color: "#10b981", marginTop: "0.5rem" }}>
