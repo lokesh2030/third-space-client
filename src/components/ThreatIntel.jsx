@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import ThreatIntelDisplay from '../components/ThreatIntelDisplay';
 
 export default function ThreatIntel() {
   const [input, setInput] = useState('');
@@ -30,9 +29,9 @@ export default function ThreatIntel() {
       });
 
       const data = await res.json();
-      setResult(data.result || data.response || '🧠 No data found.');
+      const output = data.result || data.response || '🧠 No data found.';
+      setResult(output);
 
-      // Time/performance metrics
       const durationMs = Date.now() - start;
       const baselineMs = 7 * 60 * 1000;
       const savedMs = Math.max(0, baselineMs - durationMs);
@@ -59,7 +58,7 @@ export default function ThreatIntel() {
 
   return (
     <div style={{ padding: '1rem' }}>
-      <h2>🕵️‍♂️ Threat Intelligence</h2>
+      <h2>🕵️‍♂️ Threat Intelligence (Debug)</h2>
 
       <input
         type="text"
@@ -83,7 +82,11 @@ export default function ThreatIntel() {
               </button>
             </div>
 
-            {result && <ThreatIntelDisplay aiResponse={result} />}
+            {result && (
+              <pre style={{ whiteSpace: 'pre-wrap', background: '#f9fafb', padding: '1rem', borderRadius: '8px' }}>
+                {result}
+              </pre>
+            )}
 
             {timeSavedMsg && (
               <p style={{ fontSize: "0.85em", color: "#10b981", marginTop: "0.5rem" }}>
