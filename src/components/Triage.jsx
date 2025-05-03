@@ -14,7 +14,7 @@ export default function Triage() {
     setResult("");
     setTimeSavedMsg("");
 
-    const start = Date.now(); // ⏱️ Start timing before fetch
+    const start = Date.now(); // Start timer
 
     try {
       const res = await fetch("https://third-space-backend.onrender.com/api/triage", {
@@ -25,14 +25,14 @@ export default function Triage() {
 
       const data = await res.json();
 
-      const durationMs = Date.now() - start; // ⏱️ Measure total time after .json()
-      const baselineMs = 6 * 60 * 1000; // 6 minutes
+      const durationMs = Date.now() - start; // End timer
+      const baselineMs = 6 * 60 * 1000; // 6 minutes baseline
       const savedMs = Math.max(0, baselineMs - durationMs);
-      const savedMin = Math.ceil(savedMs / 60000);
-      const percentFaster = Math.round((savedMs / baselineMs) * 100);
+      const savedMinPrecise = (savedMs / 60000).toFixed(1);
+      const percentFaster = ((savedMs / baselineMs) * 100).toFixed(1);
 
       setTimeSavedMsg(
-        `⏱️ Saved ~${savedMin} min • 🚀 ${percentFaster}% faster than manual triage`
+        `⏱️ Saved ~${savedMinPrecise} min • 🚀 ${percentFaster}% faster than manual triage`
       );
 
       setResult(data.result || "❌ No analysis returned.");
