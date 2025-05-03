@@ -10,6 +10,7 @@ export default function App() {
   const [mode, setMode] = useState("triage");
   const [selectedTab, setSelectedTab] = useState("CoPilot");
   const [timeSavedMsg, setTimeSavedMsg] = useState("");
+  const [threatIntelCount, setThreatIntelCount] = useState(0);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,13 +36,23 @@ export default function App() {
       const data = await res.json();
       setOutput(data.result || "Something went wrong.");
 
+      const durationMs = Date.now() - start;
+
       if (mode === "triage") {
-        const durationMs = Date.now() - start;
         const baselineMs = 6 * 60 * 1000;
         const savedMs = Math.max(0, baselineMs - durationMs);
         const savedMinPrecise = (savedMs / 60000).toFixed(1);
         const percentFaster = ((savedMs / baselineMs) * 100).toFixed(1);
         setTimeSavedMsg(`⏱️ Saved ~${savedMinPrecise} min • 🚀 ${percentFaster}% faster than manual triage`);
+      }
+
+      if (mode === "threat-intel") {
+        const baselineMs = 7 * 60 * 1000;
+        const savedMs = Math.max(0, baselineMs - durationMs);
+        const savedMinPrecise = (savedMs / 60000).toFixed(1);
+        const percentFaster = ((savedMs / baselineMs) * 100).toFixed(1);
+        setTimeSavedMsg(`⏱️ Saved ~${savedMinPrecise} min • 🚀 ${percentFaster}% faster than manual research`);
+        setThreatIntelCount((prev) => prev + 1);
       }
     } catch (err) {
       setOutput("Error: " + err.message);
@@ -152,8 +163,19 @@ export default function App() {
               <h3 style={{ marginBottom: 10 }}>🔍 Result:</h3>
               <pre style={{ whiteSpace: "pre-wrap" }}>{output}</pre>
 
-              {mode === "triage" && timeSavedMsg && (
+              {["triage", "threat-intel"].includes(mode) && timeSavedMsg && (
                 <p style={{ fontSize: "0.85em", color: "#10b981", marginTop: "0.5rem" }}>{timeSavedMsg}</p>
+              )}
+
+              {mode === "threat-intel" && threatIntelCount > 0 && (
+                <div style={{ marginTop: "1rem", backgroundColor: "#0f172a", padding: "1rem", borderRadius: "8px" }}>
+                  <p style={{ fontWeight: "bold", color: "#fbbf24" }}>
+                    📈 Total Time Saved: {(threatIntelCount * 10).toFixed(1)} minutes
+                  </p>
+                  <p style={{ fontSize: "0.85em", color: "#cbd5e1" }}>
+                    ({threatIntelCount} lookups × 10 min each)
+                  </p>
+                </div>
               )}
             </div>
           )}
