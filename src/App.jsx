@@ -14,10 +14,13 @@ export default function App() {
   const [threatIntelCount, setThreatIntelCount] = useState(0);
   const [kbCount, setKbCount] = useState(0);
   const [ticketCount, setTicketCount] = useState(0);
-
+  const [phishingCount, setPhishingCount] = useState(0);
   const totalGlobalTimeSaved =
-    triageCount * 6 + threatIntelCount * 10 + kbCount * 5 + ticketCount * 8;
-
+  triageCount * 6 +
+  threatIntelCount * 10 +
+  kbCount * 5 +
+  ticketCount * 8 +
+  phishingCount * 3; // ✅ add phishing
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
