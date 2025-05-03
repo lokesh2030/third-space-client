@@ -6,6 +6,7 @@ export default function ThreatIntel() {
   const [result, setResult] = useState('');
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [timeSavedMsg, setTimeSavedMsg] = useState('');
 
   const handleThreatIntelSubmit = async () => {
     if (!input.trim()) {
@@ -14,7 +15,12 @@ export default function ThreatIntel() {
     }
 
     setLoading(true);
-    setCopied(false); // Reset copied status
+    setCopied(false);
+    setTimeSavedMsg("");
+    setResult("");
+
+    const start = Date.now();
+
     try {
       const res = await fetch('https://third-space-backend.onrender.com/api/threat-intel', {
         method: 'POST',
@@ -22,10 +28,18 @@ export default function ThreatIntel() {
         body: JSON.stringify({ keyword: input }),
       });
 
+      const durationMs = Date.now() - start;
+      const baselineMs = 8 * 60 * 1000; // 8 minutes
+      const savedMs = Math.max(0, baselineMs - durationMs);
+      const savedMin = (savedMs / 60000).toFixed(1);
+      const percentFaster = ((savedMs / baselineMs) * 100).toFixed(1);
+
+      setTimeSavedMsg(`⏱️ Saved ~${savedMin} min • 🚀 ${percentFaster}% faster than manual research`);
+
       const data = await res.json();
       setResult(data.result || data.response || '🧠 No data found.');
     } catch (error) {
-      console.error("Fetch error:", error);
+      console.error("❌ Threat Intel fetch error:", error);
       setResult('❌ Could not fetch threat intel.');
     } finally {
       setLoading(false);
@@ -35,7 +49,7 @@ export default function ThreatIntel() {
   const handleCopy = () => {
     navigator.clipboard.writeText(result);
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000); // Reset after 2 sec
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
@@ -64,6 +78,9 @@ export default function ThreatIntel() {
               </button>
             </div>
             <ThreatIntelDisplay aiResponse={result} />
+            <p style={{ fontSize: "0.85em", color: "#10b981", marginTop: "0.5rem" }}>
+              {timeSavedMsg}
+            </p>
           </>
         ) : null}
       </div>
