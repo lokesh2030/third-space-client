@@ -11,6 +11,7 @@ export default function App() {
   const [selectedTab, setSelectedTab] = useState("CoPilot");
   const [timeSavedMsg, setTimeSavedMsg] = useState("");
   const [threatIntelCount, setThreatIntelCount] = useState(0);
+  const [triageCount, setTriageCount] = useState(0);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,17 +42,18 @@ export default function App() {
       if (mode === "triage") {
         const baselineMs = 6 * 60 * 1000;
         const savedMs = Math.max(0, baselineMs - durationMs);
-        const savedMinPrecise = (savedMs / 60000).toFixed(1);
+        const savedMin = (savedMs / 60000).toFixed(1);
         const percentFaster = ((savedMs / baselineMs) * 100).toFixed(1);
-        setTimeSavedMsg(`⏱️ Saved ~${savedMinPrecise} min • 🚀 ${percentFaster}% faster than manual triage`);
+        setTimeSavedMsg(`⏱️ Saved ~${savedMin} min • 🚀 ${percentFaster}% faster than manual triage`);
+        setTriageCount((prev) => prev + 1);
       }
 
       if (mode === "threat-intel") {
         const baselineMs = 7 * 60 * 1000;
         const savedMs = Math.max(0, baselineMs - durationMs);
-        const savedMinPrecise = (savedMs / 60000).toFixed(1);
+        const savedMin = (savedMs / 60000).toFixed(1);
         const percentFaster = ((savedMs / baselineMs) * 100).toFixed(1);
-        setTimeSavedMsg(`⏱️ Saved ~${savedMinPrecise} min • 🚀 ${percentFaster}% faster than manual research`);
+        setTimeSavedMsg(`⏱️ Saved ~${savedMin} min • 🚀 ${percentFaster}% faster than manual research`);
         setThreatIntelCount((prev) => prev + 1);
       }
     } catch (err) {
@@ -165,6 +167,17 @@ export default function App() {
 
               {["triage", "threat-intel"].includes(mode) && timeSavedMsg && (
                 <p style={{ fontSize: "0.85em", color: "#10b981", marginTop: "0.5rem" }}>{timeSavedMsg}</p>
+              )}
+
+              {mode === "triage" && triageCount > 0 && (
+                <div style={{ marginTop: "1rem", backgroundColor: "#0f172a", padding: "1rem", borderRadius: "8px" }}>
+                  <p style={{ fontWeight: "bold", color: "#fbbf24" }}>
+                    📈 Total Time Saved: {(triageCount * 6).toFixed(1)} minutes
+                  </p>
+                  <p style={{ fontSize: "0.85em", color: "#cbd5e1" }}>
+                    ({triageCount} lookups × 6 min each)
+                  </p>
+                </div>
               )}
 
               {mode === "threat-intel" && threatIntelCount > 0 && (
