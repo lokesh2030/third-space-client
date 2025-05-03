@@ -13,6 +13,10 @@ export default function App() {
   const [triageCount, setTriageCount] = useState(0);
   const [threatIntelCount, setThreatIntelCount] = useState(0);
   const [kbCount, setKbCount] = useState(0);
+  const [ticketCount, setTicketCount] = useState(0);
+
+  const totalGlobalTimeSaved =
+    triageCount * 6 + threatIntelCount * 10 + kbCount * 5 + ticketCount * 8;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -65,6 +69,15 @@ export default function App() {
         const percentFaster = ((savedMs / baselineMs) * 100).toFixed(1);
         setTimeSavedMsg(`⏱️ Saved ~${savedMin} min • 🚀 ${percentFaster}% faster than searching the KB manually`);
         setKbCount((prev) => prev + 1);
+      }
+
+      if (mode === "ticket") {
+        const baselineMs = 8 * 60 * 1000;
+        const savedMs = Math.max(0, baselineMs - durationMs);
+        const savedMin = (savedMs / 60000).toFixed(1);
+        const percentFaster = ((savedMs / baselineMs) * 100).toFixed(1);
+        setTimeSavedMsg(`⏱️ Saved ~${savedMin} min • 🚀 ${percentFaster}% faster than writing incidents manually`);
+        setTicketCount((prev) => prev + 1);
       }
     } catch (err) {
       setOutput("Error: " + err.message);
@@ -175,7 +188,7 @@ export default function App() {
               <h3 style={{ marginBottom: 10 }}>🔍 Result:</h3>
               <pre style={{ whiteSpace: "pre-wrap" }}>{output}</pre>
 
-              {["triage", "threat-intel", "kb"].includes(mode) && timeSavedMsg && (
+              {["triage", "threat-intel", "kb", "ticket"].includes(mode) && timeSavedMsg && (
                 <p style={{ fontSize: "0.85em", color: "#10b981", marginTop: "0.5rem" }}>{timeSavedMsg}</p>
               )}
 
@@ -211,6 +224,17 @@ export default function App() {
                   </p>
                 </div>
               )}
+
+              {mode === "ticket" && ticketCount > 0 && (
+                <div style={{ marginTop: "1rem", backgroundColor: "#0f172a", padding: "1rem", borderRadius: "8px" }}>
+                  <p style={{ fontWeight: "bold", color: "#fbbf24" }}>
+                    📈 Total Time Saved: {(ticketCount * 8).toFixed(1)} minutes
+                  </p>
+                  <p style={{ fontSize: "0.85em", color: "#cbd5e1" }}>
+                    ({ticketCount} tickets × 8 min each)
+                  </p>
+                </div>
+              )}
             </div>
           )}
         </>
@@ -218,6 +242,15 @@ export default function App() {
 
       {/* Phishing */}
       {selectedTab === "Phishing" && <PhishingDetection />}
+
+      {/* Global Total */}
+      {totalGlobalTimeSaved > 0 && (
+        <div style={{ marginTop: 40, backgroundColor: "#1e293b", padding: "1rem", borderRadius: "8px", textAlign: "center" }}>
+          <p style={{ fontWeight: "bold", color: "#4ade80", fontSize: "1.1em" }}>
+            🧠 Total Time Saved Across All Modes: {totalGlobalTimeSaved.toFixed(1)} minutes
+          </p>
+        </div>
+      )}
 
       {/* Footer */}
       <div style={{ marginTop: 40, textAlign: "center", fontSize: 14, color: "#94a3b8" }}>
