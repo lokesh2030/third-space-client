@@ -15,9 +15,9 @@ export default function ThreatIntel() {
     }
 
     setLoading(true);
+    setResult('');
     setCopied(false);
     setTimeSavedMsg('');
-    setResult('');
 
     const start = Date.now();
 
@@ -29,17 +29,17 @@ export default function ThreatIntel() {
       });
 
       const data = await res.json();
-      const durationMs = Date.now() - start;
 
-      const baselineMs = 8 * 60 * 1000; // 8 minutes assumed manual effort
+      const durationMs = Date.now() - start;
+      const baselineMs = 6 * 60 * 1000; // 6 min baseline
       const savedMs = Math.max(0, baselineMs - durationMs);
-      const savedMin = (savedMs / 60000).toFixed(1);
+      const savedMinPrecise = (savedMs / 60000).toFixed(1);
       const percentFaster = ((savedMs / baselineMs) * 100).toFixed(1);
 
-      setTimeSavedMsg(`⏱️ Saved ~${savedMin} min • 🚀 ${percentFaster}% faster than manual research`);
+      setTimeSavedMsg(`⏱️ Saved ~${savedMinPrecise} min • 🚀 ${percentFaster}% faster than manual research`);
       setResult(data.result || data.response || '🧠 No data found.');
     } catch (error) {
-      console.error("Fetch error:", error);
+      console.error("❌ Fetch error:", error);
       setResult('❌ Could not fetch threat intel.');
     } finally {
       setLoading(false);
@@ -67,8 +67,8 @@ export default function ThreatIntel() {
 
       <div style={{ marginTop: '1.5rem' }}>
         {loading ? (
-          <div style={{ textAlign: "center", marginTop: "20px" }}>
-            <p style={{ fontSize: "18px" }}>🔄 Fetching threat intelligence, please wait...</p>
+          <div style={{ textAlign: 'center', marginTop: '20px' }}>
+            <p style={{ fontSize: '18px' }}>🔄 Fetching threat intelligence, please wait...</p>
           </div>
         ) : result ? (
           <>
@@ -78,8 +78,9 @@ export default function ThreatIntel() {
               </button>
             </div>
             <ThreatIntelDisplay aiResponse={result} />
+
             {timeSavedMsg && (
-              <p style={{ fontSize: '0.85em', color: '#10b981', marginTop: '0.75rem' }}>{timeSavedMsg}</p>
+              <p style={{ fontSize: '0.85em', color: '#10b981', marginTop: '1rem' }}>{timeSavedMsg}</p>
             )}
           </>
         ) : null}
