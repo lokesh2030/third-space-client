@@ -23,18 +23,16 @@ export default function Triage() {
         body: JSON.stringify({ alert: input }),
       });
 
-      const durationMs = Date.now() - start;
-      const baselineMs = 6 * 60 * 1000; // 6 min baseline
-      const savedMs = Math.max(0, baselineMs - durationMs);
-      const savedMinPrecise = (savedMs / 60000).toFixed(1);
-      const percentFaster = ((savedMs / baselineMs) * 100).toFixed(1);
-
-      setTimeSavedMsg(
-        `⏱️ Saved ~${savedMinPrecise} min • 🚀 ${percentFaster}% faster than manual triage`
-      );
-
       const data = await res.json();
       setResult(data.result || "❌ No analysis returned.");
+
+      const durationMs = Date.now() - start;
+      const baselineMs = 6 * 60 * 1000; // 6 minutes
+      const savedMs = Math.max(0, baselineMs - durationMs);
+      const savedMin = Math.round(savedMs / 60000);
+      const percentFaster = Math.round((savedMs / baselineMs) * 100);
+
+      setTimeSavedMsg(`⏱️ Saved ~${savedMin} min • 🚀 ${percentFaster}% faster than manual triage`);
     } catch (error) {
       console.error("❌ Triage fetch error:", error);
       setResult("❌ Error analyzing alert.");
@@ -50,6 +48,7 @@ export default function Triage() {
   return (
     <div style={{ padding: "1rem" }}>
       <h2>🚨 Triage</h2>
+
       <input
         type="text"
         value={input}
