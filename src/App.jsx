@@ -1,6 +1,5 @@
 import { useState } from "react";
 import PhishingDetection from "./components/phishing";
-import Triage from "./components/Triage";
 
 const BACKEND_URL = "https://third-space-backend.onrender.com";
 
@@ -74,16 +73,86 @@ export default function App() {
       </div>
 
       {/* Co-Pilot Tab */}
-      {selectedTab === "CoPilot" && <Triage />}
+      {selectedTab === "CoPilot" && (
+        <>
+          <div style={{ marginBottom: 20 }}>
+            <strong>Choose Mode:</strong>
+            <div style={{ marginTop: 10, display: "flex", gap: 10 }}>
+              {["triage", "threat-intel", "ticket", "kb"].map((m) => (
+                <button
+                  key={m}
+                  onClick={() => setMode(m)}
+                  style={{
+                    padding: "8px 16px",
+                    backgroundColor: mode === m ? "#3b82f6" : "#1e293b",
+                    border: "none",
+                    color: "white",
+                    borderRadius: 6,
+                    cursor: "pointer",
+                  }}
+                >
+                  {m.replace("-", " ").toUpperCase()}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <form onSubmit={handleSubmit}>
+            <textarea
+              rows={6}
+              placeholder={`Paste your ${
+                mode === "triage"
+                  ? "alert"
+                  : mode === "ticket"
+                  ? "incident"
+                  : mode === "kb"
+                  ? "question"
+                  : "keyword"
+              } here...`}
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              style={{
+                width: "100%",
+                padding: 16,
+                fontSize: 16,
+                borderRadius: 6,
+                marginBottom: 20,
+              }}
+            />
+            <button
+              type="submit"
+              style={{
+                backgroundColor: "#3b82f6",
+                color: "white",
+                padding: "12px 24px",
+                fontSize: 16,
+                border: "none",
+                borderRadius: 6,
+                cursor: "pointer",
+              }}
+            >
+              {loading ? "Working..." : "Submit"}
+            </button>
+          </form>
+
+          {output && (
+            <div style={{ marginTop: 40, background: "#1e293b", padding: 20, borderRadius: 8 }}>
+              <h3 style={{ marginBottom: 10 }}>🔍 Result:</h3>
+              <pre style={{ whiteSpace: "pre-wrap" }}>{output}</pre>
+            </div>
+          )}
+        </>
+      )}
 
       {/* Phishing Tab */}
-      {selectedTab === "Phishing" && <PhishingDetection />}
+      {selectedTab === "Phishing" && (
+        <>
+          <PhishingDetection />
+        </>
+      )}
 
-      {/* Footer */}
-      <div style={{ marginTop: 40, textAlign: "center", fontSize: 14, color: "#10b981" }}>
-        ⏱️ Estimated savings shown dynamically in Triage tab
-      </div>
-      <div style={{ marginTop: 10, textAlign: "center", fontSize: 14, color: "#94a3b8" }}>
+      {/* Global Footer */}
+      <div style={{ marginTop: 60, textAlign: "center", fontSize: 14, color: "#94a3b8" }}>
         © 2025 Third Space Security · All rights reserved
       </div>
     </div>
