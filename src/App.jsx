@@ -262,6 +262,19 @@ export default function App() {
 
       {/* Phishing */}
       {selectedTab === "Phishing" && <PhishingDetection setPhishingCount={setPhishingCount} />}
+      {selectedTab === "Phishing" && phishingCount > 0 && (
+  <div style={{ marginTop: 20, backgroundColor: "#1e293b", padding: "1rem", borderRadius: "8px", textAlign: "center" }}>
+    <p style={{ fontWeight: "bold", color: "#fbbf24" }}>
+      🐟 Total Time Saved from Phishing Detections: {(phishingCount * 3).toFixed(1)} minutes
+    </p>
+    <p style={{ fontSize: "0.95em", color: "#22c55e" }}>
+      💵 Estimated Savings: ~${((phishingCount * 3) * MINUTE_RATE).toFixed(0)}
+    </p>
+    <p style={{ fontSize: "0.85em", color: "#cbd5e1" }}>
+      ({phishingCount} scans × 3 min each)
+    </p>
+  </div>
+)}
 
       {/* Global Total */}
       {totalGlobalTimeSaved > 0 && (
