@@ -199,6 +199,9 @@ export default function App() {
                 <div style={{ marginTop: "1rem", backgroundColor: "#0f172a", padding: "1rem", borderRadius: "8px" }}>
                   <p style={{ fontWeight: "bold", color: "#fbbf24" }}>
                     📈 Total Time Saved: {(triageCount * 6).toFixed(1)} minutes
+                    const HOURLY_RATE = 75;
+                    const MINUTE_RATE = HOURLY_RATE / 60;
+
                   </p>
                   <p style={{ fontSize: "0.85em", color: "#cbd5e1" }}>
                     ({triageCount} lookups × 6 min each)
@@ -210,6 +213,9 @@ export default function App() {
                 <div style={{ marginTop: "1rem", backgroundColor: "#0f172a", padding: "1rem", borderRadius: "8px" }}>
                   <p style={{ fontWeight: "bold", color: "#fbbf24" }}>
                     📈 Total Time Saved: {(threatIntelCount * 10).toFixed(1)} minutes
+                    const HOURLY_RATE = 75;
+                    const MINUTE_RATE = HOURLY_RATE / 60;
+
                   </p>
                   <p style={{ fontSize: "0.85em", color: "#cbd5e1" }}>
                     ({threatIntelCount} lookups × 10 min each)
@@ -221,6 +227,9 @@ export default function App() {
                 <div style={{ marginTop: "1rem", backgroundColor: "#0f172a", padding: "1rem", borderRadius: "8px" }}>
                   <p style={{ fontWeight: "bold", color: "#fbbf24" }}>
                     📈 Total Time Saved: {(kbCount * 5).toFixed(1)} minutes
+                    const HOURLY_RATE = 75;
+                    const MINUTE_RATE = HOURLY_RATE / 60;
+
                   </p>
                   <p style={{ fontSize: "0.85em", color: "#cbd5e1" }}>
                     ({kbCount} questions × 5 min each)
@@ -232,6 +241,9 @@ export default function App() {
                 <div style={{ marginTop: "1rem", backgroundColor: "#0f172a", padding: "1rem", borderRadius: "8px" }}>
                   <p style={{ fontWeight: "bold", color: "#fbbf24" }}>
                     📈 Total Time Saved: {(ticketCount * 8).toFixed(1)} minutes
+                    const HOURLY_RATE = 75;
+                    const MINUTE_RATE = HOURLY_RATE / 60;
+
                   </p>
                   <p style={{ fontSize: "0.85em", color: "#cbd5e1" }}>
                     ({ticketCount} tickets × 8 min each)
@@ -251,6 +263,8 @@ export default function App() {
         <div style={{ marginTop: 40, backgroundColor: "#1e293b", padding: "1rem", borderRadius: "8px", textAlign: "center" }}>
           <p style={{ fontWeight: "bold", color: "#4ade80", fontSize: "1.1em" }}>
             🧠 Total Time Saved Across All Modes: {totalGlobalTimeSaved.toFixed(1)} minutes
+            const HOURLY_RATE = 75;
+            const MINUTE_RATE = HOURLY_RATE / 60;
           </p>
         </div>
       )}
