@@ -1,4 +1,4 @@
-// App.jsx (full fresh version with inline Remediation in Triage mode)
+// App.jsx (updated with dollar savings in Remediation section)
 import { useState } from "react";
 import PhishingDetection from "./components/phishing";
 
@@ -140,6 +140,9 @@ export default function App() {
                   <p style={{ color: "#e0f2fe" }}>{output}</p>
                   <p style={{ marginTop: "0.5rem", color: "#38bdf8" }}>
                     📍 Route to: <strong>{getTargetTeam(output)}</strong>
+                  </p>
+                  <p style={{ marginTop: "0.5rem", color: "#22c55e" }}>
+                    💵 Estimated Savings: ~${((6 * MINUTE_RATE).toFixed(0))}
                   </p>
                   <button
                     onClick={() =>
