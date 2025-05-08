@@ -1,3 +1,4 @@
+// App.jsx (full fresh version with inline Remediation in Triage mode)
 import { useState } from "react";
 import PhishingDetection from "./components/phishing";
 
@@ -26,6 +27,14 @@ export default function App() {
   const HOURLY_RATE = 75;
   const MINUTE_RATE = HOURLY_RATE / 60;
 
+  const getTargetTeam = (text) => {
+    const lower = text.toLowerCase();
+    if (lower.includes("block") || lower.includes("firewall")) return "Firewall Team";
+    if (lower.includes("reset password") || lower.includes("account")) return "IT Team";
+    if (lower.includes("isolate") || lower.includes("network")) return "Network Team";
+    return "Security Team";
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -51,42 +60,18 @@ export default function App() {
       setOutput(data.result || "Something went wrong.");
 
       const durationMs = Date.now() - start;
-
-      if (mode === "triage") {
-        const baselineMs = 6 * 60 * 1000;
-        const savedMs = Math.max(0, baselineMs - durationMs);
+      const updateMetrics = (countSetter, minutes) => {
+        const savedMs = Math.max(0, minutes * 60 * 1000 - durationMs);
         const savedMin = (savedMs / 60000).toFixed(1);
-        const percentFaster = ((savedMs / baselineMs) * 100).toFixed(1);
-        setTimeSavedMsg(`⏱️ Saved ~${savedMin} min • 🚀 ${percentFaster}% faster than manual triage`);
-        setTriageCount((prev) => prev + 1);
-      }
+        const percentFaster = ((savedMs / (minutes * 60 * 1000)) * 100).toFixed(1);
+        setTimeSavedMsg(`⏱️ Saved ~${savedMin} min • 🚀 ${percentFaster}% faster`);
+        countSetter((prev) => prev + 1);
+      };
 
-      if (mode === "threat-intel") {
-        const baselineMs = 7 * 60 * 1000;
-        const savedMs = Math.max(0, baselineMs - durationMs);
-        const savedMin = (savedMs / 60000).toFixed(1);
-        const percentFaster = ((savedMs / baselineMs) * 100).toFixed(1);
-        setTimeSavedMsg(`⏱️ Saved ~${savedMin} min • 🚀 ${percentFaster}% faster than manual research`);
-        setThreatIntelCount((prev) => prev + 1);
-      }
-
-      if (mode === "kb") {
-        const baselineMs = 5 * 60 * 1000;
-        const savedMs = Math.max(0, baselineMs - durationMs);
-        const savedMin = (savedMs / 60000).toFixed(1);
-        const percentFaster = ((savedMs / baselineMs) * 100).toFixed(1);
-        setTimeSavedMsg(`⏱️ Saved ~${savedMin} min • 🚀 ${percentFaster}% faster than searching the KB manually`);
-        setKbCount((prev) => prev + 1);
-      }
-
-      if (mode === "ticket") {
-        const baselineMs = 8 * 60 * 1000;
-        const savedMs = Math.max(0, baselineMs - durationMs);
-        const savedMin = (savedMs / 60000).toFixed(1);
-        const percentFaster = ((savedMs / baselineMs) * 100).toFixed(1);
-        setTimeSavedMsg(`⏱️ Saved ~${savedMin} min • 🚀 ${percentFaster}% faster than writing incidents manually`);
-        setTicketCount((prev) => prev + 1);
-      }
+      if (mode === "triage") updateMetrics(setTriageCount, 6);
+      if (mode === "threat-intel") updateMetrics(setThreatIntelCount, 10);
+      if (mode === "kb") updateMetrics(setKbCount, 5);
+      if (mode === "ticket") updateMetrics(setTicketCount, 8);
     } catch (err) {
       setOutput("Error: " + err.message);
     }
@@ -95,40 +80,24 @@ export default function App() {
   };
 
   return (
-    <div style={{ background: "#0f172a", color: "white", minHeight: "100vh", padding: 40, fontFamily: "Arial" }}>
+    <div style={{ background: "#0f172a", color: "white", minHeight: "100vh", padding: 40 }}>
       <h1 style={{ fontSize: 28, marginBottom: 20 }}>🛡️ Third Space Co-Pilot</h1>
 
-      {/* Tab Selector */}
       <div style={{ marginBottom: 20, display: "flex", gap: 10 }}>
         <button
           onClick={() => setSelectedTab("CoPilot")}
-          style={{
-            padding: "8px 16px",
-            backgroundColor: selectedTab === "CoPilot" ? "#3b82f6" : "#1e293b",
-            border: "none",
-            color: "white",
-            borderRadius: 6,
-            cursor: "pointer",
-          }}
+          style={{ padding: "8px 16px", backgroundColor: selectedTab === "CoPilot" ? "#3b82f6" : "#1e293b", border: "none", color: "white", borderRadius: 6 }}
         >
           Co-Pilot
         </button>
         <button
           onClick={() => setSelectedTab("Phishing")}
-          style={{
-            padding: "8px 16px",
-            backgroundColor: selectedTab === "Phishing" ? "#3b82f6" : "#1e293b",
-            border: "none",
-            color: "white",
-            borderRadius: 6,
-            cursor: "pointer",
-          }}
+          style={{ padding: "8px 16px", backgroundColor: selectedTab === "Phishing" ? "#3b82f6" : "#1e293b", border: "none", color: "white", borderRadius: 6 }}
         >
           Phishing Detection
         </button>
       </div>
 
-      {/* CoPilot */}
       {selectedTab === "CoPilot" && (
         <>
           <div style={{ marginBottom: 20 }}>
@@ -138,14 +107,7 @@ export default function App() {
                 <button
                   key={m}
                   onClick={() => setMode(m)}
-                  style={{
-                    padding: "8px 16px",
-                    backgroundColor: mode === m ? "#3b82f6" : "#1e293b",
-                    border: "none",
-                    color: "white",
-                    borderRadius: 6,
-                    cursor: "pointer",
-                  }}
+                  style={{ padding: "8px 16px", backgroundColor: mode === m ? "#3b82f6" : "#1e293b", border: "none", color: "white", borderRadius: 6 }}
                 >
                   {m.replace("-", " ").toUpperCase()}
                 </button>
@@ -156,103 +118,39 @@ export default function App() {
           <form onSubmit={handleSubmit}>
             <textarea
               rows={6}
-              placeholder={`Paste your ${
-                mode === "triage"
-                  ? "alert"
-                  : mode === "ticket"
-                  ? "incident"
-                  : mode === "kb"
-                  ? "question"
-                  : "keyword"
-              } here...`}
+              placeholder={`Paste your ${mode} input here...`}
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              style={{
-                width: "100%",
-                padding: 16,
-                fontSize: 16,
-                borderRadius: 6,
-                marginBottom: 20,
-              }}
+              style={{ width: "100%", padding: 16, fontSize: 16, borderRadius: 6, marginBottom: 20 }}
             />
-            <button
-              type="submit"
-              style={{
-                backgroundColor: "#3b82f6",
-                color: "white",
-                padding: "12px 24px",
-                fontSize: 16,
-                border: "none",
-                borderRadius: 6,
-                cursor: "pointer",
-              }}
-            >
+            <button type="submit" style={{ backgroundColor: "#3b82f6", color: "white", padding: "12px 24px", fontSize: 16, border: "none", borderRadius: 6 }}>
               {loading ? "Working..." : "Submit"}
             </button>
           </form>
 
           {output && (
             <div style={{ marginTop: 40, background: "#1e293b", padding: 20, borderRadius: 8 }}>
-              <h3 style={{ marginBottom: 10 }}>🔍 Result:</h3>
+              <h3>🔍 Result:</h3>
               <pre style={{ whiteSpace: "pre-wrap" }}>{output}</pre>
+              {timeSavedMsg && <p style={{ marginTop: 8, color: "#10b981" }}>{timeSavedMsg}</p>}
 
-              {["triage", "threat-intel", "kb", "ticket"].includes(mode) && timeSavedMsg && (
-                <p style={{ fontSize: "0.85em", color: "#10b981", marginTop: "0.5rem" }}>{timeSavedMsg}</p>
-              )}
-
-              {mode === "triage" && triageCount > 0 && (
-                <div style={{ marginTop: "1rem", backgroundColor: "#0f172a", padding: "1rem", borderRadius: "8px" }}>
-                  <p style={{ fontWeight: "bold", color: "#fbbf24" }}>
-                    📈 Total Time Saved: {(triageCount * 6).toFixed(1)} minutes
+              {mode === "triage" && (
+                <div style={{ marginTop: 20, backgroundColor: "#0f172a", padding: "1rem", borderRadius: "8px" }}>
+                  <h4 style={{ color: "#facc15" }}>🔧 Remediation Suggestion</h4>
+                  <p style={{ color: "#e0f2fe" }}>{output}</p>
+                  <p style={{ marginTop: "0.5rem", color: "#38bdf8" }}>
+                    📍 Route to: <strong>{getTargetTeam(output)}</strong>
                   </p>
-                  <p style={{ fontSize: "0.85em", color: "#22c55e" }}>
-                    💰 Estimated Savings: ~${((triageCount * 6) * MINUTE_RATE).toFixed(0)}
-                  </p>
-                  <p style={{ fontSize: "0.85em", color: "#cbd5e1" }}>
-                    ({triageCount} lookups × 6 min each)
-                  </p>
-                </div>
-              )}
-
-              {mode === "threat-intel" && threatIntelCount > 0 && (
-                <div style={{ marginTop: "1rem", backgroundColor: "#0f172a", padding: "1rem", borderRadius: "8px" }}>
-                  <p style={{ fontWeight: "bold", color: "#fbbf24" }}>
-                    📈 Total Time Saved: {(threatIntelCount * 10).toFixed(1)} minutes
-                  </p>
-                  <p style={{ fontSize: "0.85em", color: "#22c55e" }}>
-                    💰 Estimated Savings: ~${((threatIntelCount * 10) * MINUTE_RATE).toFixed(0)}
-                  </p>
-                  <p style={{ fontSize: "0.85em", color: "#cbd5e1" }}>
-                    ({threatIntelCount} lookups × 10 min each)
-                  </p>
-                </div>
-              )}
-
-              {mode === "kb" && kbCount > 0 && (
-                <div style={{ marginTop: "1rem", backgroundColor: "#0f172a", padding: "1rem", borderRadius: "8px" }}>
-                  <p style={{ fontWeight: "bold", color: "#fbbf24" }}>
-                    📈 Total Time Saved: {(kbCount * 5).toFixed(1)} minutes
-                  </p>
-                  <p style={{ fontSize: "0.85em", color: "#22c55e" }}>
-                    💰 Estimated Savings: ~${((kbCount * 5) * MINUTE_RATE).toFixed(0)}
-                  </p>
-                  <p style={{ fontSize: "0.85em", color: "#cbd5e1" }}>
-                    ({kbCount} questions × 5 min each)
-                  </p>
-                </div>
-              )}
-
-              {mode === "ticket" && ticketCount > 0 && (
-                <div style={{ marginTop: "1rem", backgroundColor: "#0f172a", padding: "1rem", borderRadius: "8px" }}>
-                  <p style={{ fontWeight: "bold", color: "#fbbf24" }}>
-                    📈 Total Time Saved: {(ticketCount * 8).toFixed(1)} minutes
-                  </p>
-                  <p style={{ fontSize: "0.85em", color: "#22c55e" }}>
-                    💰 Estimated Savings: ~${((ticketCount * 8) * MINUTE_RATE).toFixed(0)}
-                  </p>
-                  <p style={{ fontSize: "0.85em", color: "#cbd5e1" }}>
-                    ({ticketCount} tickets × 8 min each)
-                  </p>
+                  <button
+                    onClick={() =>
+                      navigator.clipboard.writeText(
+                        `Remediation Action:\n${output}\n\nRoute to: ${getTargetTeam(output)}`
+                      )
+                    }
+                    style={{ marginTop: "0.75rem", padding: "0.5rem 1rem", backgroundColor: "#3b82f6", color: "white", border: "none", borderRadius: 6 }}
+                  >
+                    Copy Ticket
+                  </button>
                 </div>
               )}
             </div>
@@ -260,38 +158,7 @@ export default function App() {
         </>
       )}
 
-      {/* Phishing */}
       {selectedTab === "Phishing" && <PhishingDetection setPhishingCount={setPhishingCount} />}
-      {selectedTab === "Phishing" && phishingCount > 0 && (
-  <div style={{ marginTop: 20, backgroundColor: "#1e293b", padding: "1rem", borderRadius: "8px", textAlign: "center" }}>
-    <p style={{ fontWeight: "bold", color: "#fbbf24" }}>
-      🐟 Total Time Saved from Phishing Detections: {(phishingCount * 3).toFixed(1)} minutes
-    </p>
-    <p style={{ fontSize: "0.95em", color: "#22c55e" }}>
-      💵 Estimated Savings: ~${((phishingCount * 3) * MINUTE_RATE).toFixed(0)}
-    </p>
-    <p style={{ fontSize: "0.85em", color: "#cbd5e1" }}>
-      ({phishingCount} scans × 3 min each)
-    </p>
-  </div>
-)}
-
-      {/* Global Total */}
-      {totalGlobalTimeSaved > 0 && (
-        <div style={{ marginTop: 40, backgroundColor: "#1e293b", padding: "1rem", borderRadius: "8px", textAlign: "center" }}>
-          <p style={{ fontWeight: "bold", color: "#4ade80", fontSize: "1.1em" }}>
-            🧠 Total Time Saved Across All Modes: {totalGlobalTimeSaved.toFixed(1)} minutes
-          </p>
-          <p style={{ fontSize: "0.95em", color: "#22c55e" }}>
-            💵 Estimated Savings Across All Modes: ~${(totalGlobalTimeSaved * MINUTE_RATE).toFixed(0)}
-          </p>
-        </div>
-      )}
-
-      {/* Footer */}
-      <div style={{ marginTop: 40, textAlign: "center", fontSize: 14, color: "#94a3b8" }}>
-        © 2025 Third Space Security · All rights reserved
-      </div>
     </div>
   );
 }
