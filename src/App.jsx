@@ -1,4 +1,4 @@
-// App.jsx (updated with dollar savings in Remediation section)
+// App.jsx (final version with time + dollar savings in one line)
 import { useState } from "react";
 import PhishingDetection from "./components/phishing";
 
@@ -132,7 +132,11 @@ export default function App() {
             <div style={{ marginTop: 40, background: "#1e293b", padding: 20, borderRadius: 8 }}>
               <h3>🔍 Result:</h3>
               <pre style={{ whiteSpace: "pre-wrap" }}>{output}</pre>
-              {timeSavedMsg && <p style={{ marginTop: 8, color: "#10b981" }}>{timeSavedMsg}</p>}
+              {mode === "triage" && timeSavedMsg && (
+                <p style={{ marginTop: 8, color: "#10b981" }}>
+                  {timeSavedMsg} • 💵 Estimated Savings: ~${((6 * MINUTE_RATE).toFixed(0))}
+                </p>
+              )}
 
               {mode === "triage" && (
                 <div style={{ marginTop: 20, backgroundColor: "#0f172a", padding: "1rem", borderRadius: "8px" }}>
@@ -140,9 +144,6 @@ export default function App() {
                   <p style={{ color: "#e0f2fe" }}>{output}</p>
                   <p style={{ marginTop: "0.5rem", color: "#38bdf8" }}>
                     📍 Route to: <strong>{getTargetTeam(output)}</strong>
-                  </p>
-                  <p style={{ marginTop: "0.5rem", color: "#22c55e" }}>
-                    💵 Estimated Savings: ~${((6 * MINUTE_RATE).toFixed(0))}
                   </p>
                   <button
                     onClick={() =>
