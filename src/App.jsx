@@ -1,4 +1,4 @@
-// App.jsx (final version with time + dollar savings in one line)
+// App.jsx (updated to show per-input and total cumulative savings for Triage)
 import { useState } from "react";
 import PhishingDetection from "./components/phishing";
 
@@ -64,7 +64,7 @@ export default function App() {
         const savedMs = Math.max(0, minutes * 60 * 1000 - durationMs);
         const savedMin = (savedMs / 60000).toFixed(1);
         const percentFaster = ((savedMs / (minutes * 60 * 1000)) * 100).toFixed(1);
-        setTimeSavedMsg(`⏱️ Saved ~${savedMin} min • 🚀 ${percentFaster}% faster`);
+        setTimeSavedMsg(`⏱️ Saved ~${savedMin} min • 🚀 ${percentFaster}% faster • 💵 This Run: ~$${((savedMin * MINUTE_RATE).toFixed(0))}`);
         countSetter((prev) => prev + 1);
       };
 
@@ -133,9 +133,12 @@ export default function App() {
               <h3>🔍 Result:</h3>
               <pre style={{ whiteSpace: "pre-wrap" }}>{output}</pre>
               {mode === "triage" && timeSavedMsg && (
-                <p style={{ marginTop: 8, color: "#10b981" }}>
-                  {timeSavedMsg} • 💵 Estimated Savings: ~${((6 * MINUTE_RATE).toFixed(0))}
-                </p>
+                <>
+                  <p style={{ marginTop: 8, color: "#10b981" }}>{timeSavedMsg}</p>
+                  <p style={{ fontSize: "0.9em", color: "#38bdf8", marginTop: "0.25rem" }}>
+                    📊 Total Saved in Triage Mode: {(triageCount * 6).toFixed(1)} min • 💰 ~${((triageCount * 6) * MINUTE_RATE).toFixed(0)}
+                  </p>
+                </>
               )}
 
               {mode === "triage" && (
