@@ -12,6 +12,7 @@ function getRemediationForThreatIntel(summary) {
       ],
       timeSavedMinutes: 3,
       valueSaved: '$4',
+      isSuspicious: true,
     };
   }
 
@@ -25,6 +26,7 @@ function getRemediationForThreatIntel(summary) {
       ],
       timeSavedMinutes: 4,
       valueSaved: '$5.50',
+      isSuspicious: true,
     };
   }
 
@@ -32,36 +34,38 @@ function getRemediationForThreatIntel(summary) {
     remediation: ['No specific remediation required.'],
     timeSavedMinutes: 0,
     valueSaved: '$0',
+    isSuspicious: false,
   };
 }
 
 const ThreatIntelDisplay = () => {
   const [input, setInput] = useState('');
-  const [threatIntelOutput, setThreatIntelOutput] = useState('');
+  const [output, setOutput] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleAnalyze = async () => {
     setLoading(true);
     try {
-      const response = await axios.post('/api/threat-intel', { input }); // Adjust endpoint as needed
-      setThreatIntelOutput(response.data.result);
-    } catch (error) {
-      console.error('Error fetching threat intel:', error);
-      setThreatIntelOutput('Error fetching threat intel.');
+      const response = await axios.post('/api/threat-intel', { input }); // adjust to your backend
+      setOutput(response.data.result);
+    } catch (err) {
+      console.error('Error:', err);
+      setOutput('Error analyzing input.');
     }
     setLoading(false);
   };
 
-  const { remediation, timeSavedMinutes, valueSaved } = getRemediationForThreatIntel(threatIntelOutput);
+  const { remediation, timeSavedMinutes, valueSaved, isSuspicious } =
+    getRemediationForThreatIntel(output);
 
   return (
     <div className="p-4">
-      <h2 className="text-xl font-semibold mb-2">Threat Intel</h2>
+      <h2 className="text-xl font-semibold mb-3">Threat Intelligence</h2>
 
       <textarea
         className="w-full p-2 border rounded mb-2"
         rows={3}
-        placeholder="Enter IOC or threat keyword..."
+        placeholder="Paste threat summary or IOCs here..."
         value={input}
         onChange={(e) => setInput(e.target.value)}
       />
@@ -74,19 +78,24 @@ const ThreatIntelDisplay = () => {
         {loading ? 'Analyzing...' : 'Analyze'}
       </button>
 
-      {threatIntelOutput && (
+      {output && (
         <div className="mt-4 bg-gray-100 p-4 rounded shadow">
-          <h3 className="text-lg font-semibold">🔍 Threat Intel Result</h3>
-          <p>{threatIntelOutput}</p>
+          <h3 className="text-lg font-semibold mb-2">🔍 Result:</h3>
+          <p className="mb-2 whitespace-pre-wrap">{output}</p>
 
           <div className="mt-4">
-            <h4 className="font-semibold">🔧 Remediation Suggestions:</h4>
+            <h4 className="font-semibold">
+              {isSuspicious ? '✅ Suspicious' : '🟢 Benign'}
+            </h4>
+            <h4 className="mt-2 font-semibold">🔧 Remediation Suggestion</h4>
             <ul className="list-disc pl-5">
               {remediation.map((item, idx) => (
                 <li key={idx}>{item}</li>
               ))}
             </ul>
-            <p className="mt-2">⏱️ Saved ~{timeSavedMinutes} min • 💵 {valueSaved}</p>
+            <p className="mt-2">
+              ⏱️ Saved ~{timeSavedMinutes} min • 💵 {valueSaved}
+            </p>
           </div>
         </div>
       )}
