@@ -1,6 +1,7 @@
-// App.jsx (Full, Fresh Version with Threat Intel Matching Triage Formatting)
+// App.jsx (Final version with KnowledgeBase.jsx rendered as component)
 import { useState } from "react";
 import PhishingDetection from "./components/phishing";
+import KnowledgeBase from "./components/knowledgebase";
 
 const BACKEND_URL = "https://third-space-backend.onrender.com";
 
@@ -50,7 +51,6 @@ export default function App() {
     if (mode === "triage") payload = { alert: input };
     else if (mode === "threat-intel") payload = { keyword: input };
     else if (mode === "ticket") payload = { incident: input };
-    else if (mode === "kb") payload = { question: input };
 
     try {
       const res = await fetch(`${BACKEND_URL}/api/${mode}`, {
@@ -73,7 +73,6 @@ export default function App() {
 
       if (mode === "triage") updateMetrics(setTriageCount, 6);
       if (mode === "threat-intel") updateMetrics(setThreatIntelCount, 10);
-      if (mode === "kb") updateMetrics(setKbCount, 5);
       if (mode === "ticket") updateMetrics(setTicketCount, 8);
     } catch (err) {
       setOutput("Error: " + err.message);
@@ -118,52 +117,58 @@ export default function App() {
             </div>
           </div>
 
-          <form onSubmit={handleSubmit}>
-            <textarea
-              rows={6}
-              placeholder={`Paste your ${mode} input here...`}
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              style={{ width: "100%", padding: 16, fontSize: 16, borderRadius: 6, marginBottom: 20 }}
-            />
-            <button type="submit" style={{ backgroundColor: "#3b82f6", color: "white", padding: "12px 24px", fontSize: 16, border: "none", borderRadius: 6 }}>
-              {loading ? "Working..." : "Submit"}
-            </button>
-          </form>
+          {mode === "kb" ? (
+            <KnowledgeBase />
+          ) : (
+            <>
+              <form onSubmit={handleSubmit}>
+                <textarea
+                  rows={6}
+                  placeholder={`Paste your ${mode} input here...`}
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  style={{ width: "100%", padding: 16, fontSize: 16, borderRadius: 6, marginBottom: 20 }}
+                />
+                <button type="submit" style={{ backgroundColor: "#3b82f6", color: "white", padding: "12px 24px", fontSize: 16, border: "none", borderRadius: 6 }}>
+                  {loading ? "Working..." : "Submit"}
+                </button>
+              </form>
 
-          {output && (
-            <div style={{ marginTop: 40, background: "#1e293b", padding: 20, borderRadius: 8 }}>
-              <h3>🔍 Result:</h3>
-              <pre style={{ whiteSpace: "pre-wrap" }}>{output}</pre>
-              {["triage", "threat-intel"].includes(mode) && timeSavedMsg && (
-                <>
-                  <p style={{ marginTop: 8, color: "#10b981" }}>{timeSavedMsg}</p>
-                  <p style={{ fontSize: "0.9em", color: "#38bdf8", marginTop: "0.25rem" }}>
-                    📊 Total Saved in {mode === "triage" ? "Triage" : "Threat Intel"} Mode: {((mode === "triage" ? triageCount * 6 : threatIntelCount * 10)).toFixed(1)} min • 💰 ~${(((mode === "triage" ? triageCount * 6 : threatIntelCount * 10)) * MINUTE_RATE).toFixed(0)}
-                  </p>
-                </>
-              )}
+              {output && (
+                <div style={{ marginTop: 40, background: "#1e293b", padding: 20, borderRadius: 8 }}>
+                  <h3>🔍 Result:</h3>
+                  <pre style={{ whiteSpace: "pre-wrap" }}>{output}</pre>
+                  {["triage", "threat-intel"].includes(mode) && timeSavedMsg && (
+                    <>
+                      <p style={{ marginTop: 8, color: "#10b981" }}>{timeSavedMsg}</p>
+                      <p style={{ fontSize: "0.9em", color: "#38bdf8", marginTop: "0.25rem" }}>
+                        📊 Total Saved in {mode === "triage" ? "Triage" : "Threat Intel"} Mode: {((mode === "triage" ? triageCount * 6 : threatIntelCount * 10)).toFixed(1)} min • 💰 ~${(((mode === "triage" ? triageCount * 6 : threatIntelCount * 10)) * MINUTE_RATE).toFixed(0)}
+                      </p>
+                    </>
+                  )}
 
-              {["triage", "threat-intel"].includes(mode) && (
-                <div style={{ marginTop: 20, backgroundColor: "#0f172a", padding: "1rem", borderRadius: "8px" }}>
-                  <h4 style={{ color: "#facc15" }}>🔧 Remediation Suggestion</h4>
-                  <p style={{ color: "#e0f2fe" }}>{output}</p>
-                  <p style={{ marginTop: "0.5rem", color: "#38bdf8" }}>
-                    📍 Route to: <strong>{getTargetTeam(output)}</strong>
-                  </p>
-                  <button
-                    onClick={() =>
-                      navigator.clipboard.writeText(
-                        `Remediation Action:\n${output}\n\nRoute to: ${getTargetTeam(output)}`
-                      )
-                    }
-                    style={{ marginTop: "0.75rem", padding: "0.5rem 1rem", backgroundColor: "#3b82f6", color: "white", border: "none", borderRadius: 6 }}
-                  >
-                    Copy Ticket
-                  </button>
+                  {["triage", "threat-intel"].includes(mode) && (
+                    <div style={{ marginTop: 20, backgroundColor: "#0f172a", padding: "1rem", borderRadius: "8px" }}>
+                      <h4 style={{ color: "#facc15" }}>🔧 Remediation Suggestion</h4>
+                      <p style={{ color: "#e0f2fe" }}>{output}</p>
+                      <p style={{ marginTop: "0.5rem", color: "#38bdf8" }}>
+                        📍 Route to: <strong>{getTargetTeam(output)}</strong>
+                      </p>
+                      <button
+                        onClick={() =>
+                          navigator.clipboard.writeText(
+                            `Remediation Action:\n${output}\n\nRoute to: ${getTargetTeam(output)}`
+                          )
+                        }
+                        style={{ marginTop: "0.75rem", padding: "0.5rem 1rem", backgroundColor: "#3b82f6", color: "white", border: "none", borderRadius: 6 }}
+                      >
+                        Copy Ticket
+                      </button>
+                    </div>
+                  )}
                 </div>
               )}
-            </div>
+            </>
           )}
         </>
       )}
