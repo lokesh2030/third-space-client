@@ -1,103 +1,90 @@
-// KnowledgeBase.jsx — Triage-style UI and remediation logic
-import React, { useState } from 'react';
-import axios from 'axios';
+import { useState } from "react";
+import axios from "axios";
 
-const MINUTE_RATE = 75 / 60;
-let totalKbTimeSaved = 0;
-
-function getKbInsights(answer) {
-  const lower = answer.toLowerCase();
-  let routeTo = 'Security Team';
-  const remediation = [];
-
-  if (lower.includes('phishing')) {
-    routeTo = 'Email Security Team';
-    remediation.push('Educate users on identifying phishing red flags.');
-    remediation.push('Enable anti-phishing policies in your email provider.');
-  }
-  if (lower.includes('ransomware')) {
-    routeTo = 'IR Team';
-    remediation.push('Ensure off-site backups are up-to-date and tested.');
-    remediation.push('Isolate infected systems immediately.');
-  }
-  if (lower.includes('mfa') || lower.includes('multi-factor')) {
-    routeTo = 'IT Team';
-    remediation.push('Ensure MFA is enabled for all privileged accounts.');
-  }
-  if (remediation.length === 0) {
-    remediation.push('Review this issue with the SOC team for further action.');
-  }
-
-  const timeSaved = 5.0;
-  const valueSaved = timeSaved * MINUTE_RATE;
-  totalKbTimeSaved += timeSaved;
-
-  return { timeSaved, valueSaved, remediation, routeTo };
-}
-
-const KnowledgeBase = () => {
-  const [input, setInput] = useState('');
-  const [output, setOutput] = useState('');
+export default function KnowledgeBase({ setKbCount }) {
+  const [input, setInput] = useState("");
+  const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [insight, setInsight] = useState(null);
+  const [timeSavedMsg, setTimeSavedMsg] = useState("");
+
+  const MINUTE_RATE = 75 / 60; // $75/hour rate
+  const MINUTES_SAVED = 5;
+
+  const getTargetTeam = (text) => {
+    const lower = text.toLowerCase();
+    if (lower.includes("email") || lower.includes("phishing")) return "Email Security Team";
+    if (lower.includes("firewall") || lower.includes("block")) return "Firewall Team";
+    if (lower.includes("network")) return "Network Team";
+    if (lower.includes("password") || lower.includes("login")) return "IT Team";
+    return "Security Team";
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setOutput("");
+    setTimeSavedMsg("");
+
     try {
-      const res = await axios.post('/api/kb', { question: input });
-      const result = res.data.result || 'No answer returned.';
+      const res = await axios.post("/api/kb", { question: input });
+      const result = res.data.result || "No response received.";
       setOutput(result);
-      setInsight(getKbInsights(result));
+
+      const savedMin = MINUTES_SAVED.toFixed(1);
+      const savedValue = (savedMin * MINUTE_RATE).toFixed(0);
+      const percentFaster = (100 - (1 / MINUTES_SAVED) * 100).toFixed(1);
+
+      setTimeSavedMsg(`⏱️ Saved ~${savedMin} min • 🚀 ${percentFaster}% faster • 💵 This Run: ~$${savedValue}`);
+      setKbCount((prev) => prev + 1);
     } catch (err) {
-      setOutput('Error retrieving answer.');
+      console.error("KB API error:", err.message);
+      setOutput("Something went wrong.");
     }
+
     setLoading(false);
   };
 
   return (
-    <div style={{ color: 'white' }}>
+    <div style={{ padding: 20 }}>
+      <h2>📚 Knowledge Base</h2>
       <form onSubmit={handleSubmit}>
         <textarea
-          rows={6}
-          placeholder="Paste your KB question here..."
+          rows={5}
           value={input}
+          placeholder="Ask any cybersecurity question..."
           onChange={(e) => setInput(e.target.value)}
-          style={{ width: '100%', padding: 16, fontSize: 16, borderRadius: 6, marginBottom: 20 }}
+          style={{ width: "100%", padding: 12, fontSize: 16, borderRadius: 6, marginBottom: 12 }}
         />
-        <button
-          type="submit"
-          style={{ backgroundColor: '#3b82f6', color: 'white', padding: '12px 24px', fontSize: 16, border: 'none', borderRadius: 6 }}
-        >
-          {loading ? 'Working...' : 'Submit'}
+        <button type="submit" disabled={loading} style={{ padding: "10px 20px", fontSize: 16, backgroundColor: "#3b82f6", color: "white", border: "none", borderRadius: 6 }}>
+          {loading ? "Working..." : "Submit"}
         </button>
       </form>
 
-      {output && insight && (
-        <div style={{ marginTop: 40, background: '#1e293b', padding: 20, borderRadius: 8 }}>
-          <h3>🔍 Result:</h3>
-          <pre style={{ whiteSpace: 'pre-wrap' }}>{output}</pre>
+      {output && (
+        <div style={{ marginTop: 30, backgroundColor: "#1e293b", padding: 20, borderRadius: 8 }}>
+          <h3>🔍 Answer:</h3>
+          <pre style={{ whiteSpace: "pre-wrap", color: "#e0f2fe" }}>{output}</pre>
 
-          <p style={{ marginTop: 8, color: '#10b981' }}>
-            ⏱️ Saved ~{insight.timeSaved.toFixed(1)} min • 💵 ~${insight.valueSaved.toFixed(0)}
-          </p>
-          <p style={{ fontSize: '0.9em', color: '#38bdf8', marginTop: '0.25rem' }}>
-            📊 Total Saved in KB Mode: {totalKbTimeSaved.toFixed(1)} min • 💰 ~${(totalKbTimeSaved * MINUTE_RATE).toFixed(0)}
-          </p>
+          {timeSavedMsg && (
+            <>
+              <p style={{ color: "#10b981", marginTop: 12 }}>{timeSavedMsg}</p>
+              <p style={{ fontSize: "0.9em", color: "#38bdf8" }}>
+                📊 Total Saved in Knowledge Base Mode: {(MINUTES_SAVED).toFixed(1)} min • 💰 ~${(MINUTES_SAVED * MINUTE_RATE).toFixed(0)}
+              </p>
+            </>
+          )}
 
-          <div style={{ marginTop: 20, backgroundColor: '#0f172a', padding: '1rem', borderRadius: '8px' }}>
-            <h4 style={{ color: '#facc15' }}>🔧 Remediation Suggestion</h4>
-            <ul style={{ paddingLeft: 20, color: '#e0f2fe' }}>
-              {insight.remediation.map((item, idx) => (
-                <li key={idx}>{item}</li>
-              ))}
-            </ul>
-            <p style={{ marginTop: '0.5rem', color: '#38bdf8' }}>
-              📍 Route to: <strong>{insight.routeTo}</strong>
+          <div style={{ marginTop: 20, backgroundColor: "#0f172a", padding: 16, borderRadius: 8 }}>
+            <h4 style={{ color: "#facc15" }}>🔧 Remediation Suggestion</h4>
+            <p style={{ color: "#e0f2fe" }}>{output}</p>
+            <p style={{ marginTop: 10, color: "#38bdf8" }}>
+              📍 Route to: <strong>{getTargetTeam(output)}</strong>
             </p>
             <button
-              onClick={() => navigator.clipboard.writeText(`KB Answer:\n${output}\n\nRemediation:\n${insight.remediation.join('\n')}\n\nRoute to: ${insight.routeTo}`)}
-              style={{ marginTop: '0.75rem', padding: '0.5rem 1rem', backgroundColor: '#3b82f6', color: 'white', border: 'none', borderRadius: 6 }}
+              onClick={() =>
+                navigator.clipboard.writeText(`Remediation Action:\n${output}\n\nRoute to: ${getTargetTeam(output)}`)
+              }
+              style={{ marginTop: 12, padding: "8px 16px", backgroundColor: "#3b82f6", color: "white", border: "none", borderRadius: 6 }}
             >
               Copy Ticket
             </button>
@@ -106,6 +93,4 @@ const KnowledgeBase = () => {
       )}
     </div>
   );
-};
-
-export default KnowledgeBase;
+}
