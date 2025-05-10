@@ -1,8 +1,7 @@
 // App.jsx (Final version with KnowledgeBase.jsx rendered as component)
 import { useState } from "react";
 import PhishingDetection from "./components/phishing";
-import KnowledgeBase from "./components/knowledgebase";
-
+import KnowledgeBase from "./components/KnowledgeBase";
 const BACKEND_URL = "https://third-space-backend.onrender.com";
 
 export default function App() {
