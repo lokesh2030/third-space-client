@@ -5,20 +5,35 @@ export default function KnowledgeBase() {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [timeSavedMsg, setTimeSavedMsg] = useState("");
+
+  const HOURLY_RATE = 75;
+  const MINUTES_SAVED = 5;
+  const MINUTE_RATE = HOURLY_RATE / 60;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setOutput("");
+    setTimeSavedMsg("");
+
+    const start = Date.now();
 
     try {
       const res = await axios.post("https://third-space-backend.onrender.com/api/kb", {
         question: input,
       });
 
+      const durationMs = Date.now() - start;
+      const savedMs = Math.max(0, MINUTES_SAVED * 60000 - durationMs);
+      const savedMin = (savedMs / 60000).toFixed(1);
+      const percentFaster = ((savedMs / (MINUTES_SAVED * 60000)) * 100).toFixed(1);
+      const dollarSaved = (savedMin * MINUTE_RATE).toFixed(0);
+
       setOutput(res.data.result || "No response.");
+      setTimeSavedMsg(`⏱️ Saved ~${savedMin} min • 🚀 ${percentFaster}% faster • 💵 This Run: ~$${dollarSaved}`);
     } catch (err) {
-      console.error("KB tab error:", err.message);
+      console.error("KB error:", err.message);
       setOutput("Something went wrong.");
     }
 
@@ -45,6 +60,9 @@ export default function KnowledgeBase() {
         <div style={{ marginTop: 30, backgroundColor: "#1e293b", padding: 20, borderRadius: 8 }}>
           <h3>🔍 Answer:</h3>
           <pre style={{ whiteSpace: "pre-wrap", color: "#e0f2fe" }}>{output}</pre>
+          {timeSavedMsg && (
+            <p style={{ marginTop: 12, color: "#10b981" }}>{timeSavedMsg}</p>
+          )}
         </div>
       )}
     </div>
