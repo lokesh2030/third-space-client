@@ -6,27 +6,50 @@ let totalValueSaved = 0;
 
 function analyzeThreatIntel(summary) {
   const lower = summary.toLowerCase();
-  const ttpMatches = [...summary.matchAll(/T\d{4}(\.\d{3})?/g)].map((m) => m[0]);
+  const ttpMatches = [...summary.matchAll(/T\d{4}(\.\d{3})?/g)].map(m => m[0]);
 
-  const mappings = [
-    { keyword: /emotet|trickbot|ryuk/, actor: 'Emotet Campaign', routeTo: 'IR Team' },
-    { keyword: /fin7/, actor: 'FIN7', routeTo: 'Firewall Team' },
-    { keyword: /lazarus/, actor: 'Lazarus Group', routeTo: 'Threat Intel Team' },
-    { keyword: /apt\d+/, actor: 'APT Group', routeTo: 'Threat Intel Team' },
-    { keyword: /ransomware/, actor: 'Ransomware Threat', routeTo: 'IR Team' },
-    { keyword: /phishing|spearphishing/, actor: 'Phishing Attack', routeTo: 'Email Security Team' },
-    { keyword: /c2|command and control/, actor: 'C2 Infrastructure', routeTo: 'Firewall Team' }
-  ];
-
+  // Actor matching
   let actor = 'Unknown Threat';
   let routeTo = 'SOC Team';
 
-  for (const map of mappings) {
-    if (map.keyword.test(lower)) {
-      actor = map.actor;
-      routeTo = map.routeTo;
-      break;
-    }
+  if (/apt41|double dragon/.test(lower)) {
+    actor = 'APT41 (Double Dragon)';
+    routeTo = 'Threat Intel Team';
+  } else if (/fin7/.test(lower)) {
+    actor = 'FIN7';
+    routeTo = 'Firewall Team';
+  } else if (/emotet|trickbot|ryuk/.test(lower)) {
+    actor = 'Emotet Campaign';
+    routeTo = 'IR Team';
+  } else if (/ransomware/.test(lower)) {
+    actor = 'Ransomware Threat';
+    routeTo = 'IR Team';
+  } else if (/phishing|spearphishing/.test(lower)) {
+    actor = 'Phishing Attack';
+    routeTo = 'Email Security Team';
+  }
+
+  // TTP category hints
+  const tacticHints = {
+    execution: /(powershell|scheduled task|t1053|t1086)/i,
+    lateral: /(remote file copy|rdp|t1105|t1076)/i,
+    credential: /(brute force|t1110)/i,
+    discovery: /(network config|system info|t1016|t1082)/i,
+    exfiltration: /(t1002|t1041)/i,
+    defenseEvasion: /(obfuscate|decode|t1027|t1140)/i
+  };
+
+  const remediation = [];
+
+  if (tacticHints.execution.test(lower)) remediation.push('Review and restrict PowerShell and scheduled task execution policies.');
+  if (tacticHints.lateral.test(lower)) remediation.push('Monitor and limit RDP and remote file copy behavior between systems.');
+  if (tacticHints.credential.test(lower)) remediation.push('Audit authentication logs for brute force attempts and enforce strong passwords.');
+  if (tacticHints.discovery.test(lower)) remediation.push('Limit access to system/network discovery tools and enhance logging.');
+  if (tacticHints.exfiltration.test(lower)) remediation.push('Monitor data compression and outbound transfers; flag suspicious flows.');
+  if (tacticHints.defenseEvasion.test(lower)) remediation.push('Enable script logging and flag obfuscated or encoded scripts.');
+
+  if (remediation.length === 0) {
+    remediation.push('No specific remediation identified — escalate to SOC for deeper analysis.');
   }
 
   const timeSaved = 6.0;
@@ -37,17 +60,14 @@ function analyzeThreatIntel(summary) {
   totalValueSaved += valueSaved;
 
   const remediationAnalysis = `Analysis:
-- Threat Actor or Technique: ${actor}
-- Observed TTPs: ${ttpMatches.length > 0 ? ttpMatches.join(', ') : 'N/A'}
+- Threat Actor: ${actor}
+- Intent: Likely dual-purpose espionage and/or financial gain
+- Observed MITRE Techniques: ${ttpMatches.length > 0 ? ttpMatches.join(', ') : 'None detected'}
 
 Recommended Action:
-1. Triage all systems showing IOCs related to this threat.
-2. Isolate potentially affected systems.
-3. Investigate lateral movement and persistence techniques.
-4. Block malicious IPs/domains identified in the report.
-5. Engage the appropriate team (${routeTo}) for follow-up.
+• ${remediation.join('\n• ')}
 
-Severity: High`;
+This alert reflects a HIGH severity threat and should be prioritized accordingly.`;
 
   return {
     isSuspicious: true,
@@ -68,12 +88,12 @@ const ThreatIntelDisplay = () => {
   const handleAnalyze = async () => {
     setLoading(true);
     try {
-      const res = await axios.post('/api/threat-intel', { input }); // Replace with your actual API
+      const res = await axios.post('/api/threat-intel', { input }); // Adjust this endpoint
       setResult(res.data.result);
       setAnalysis(analyzeThreatIntel(res.data.result));
     } catch (err) {
       console.error(err);
-      setResult('Error processing threat intel.');
+      setResult('Error analyzing threat intel.');
       setAnalysis(null);
     }
     setLoading(false);
@@ -85,8 +105,8 @@ const ThreatIntelDisplay = () => {
 
       <textarea
         className="w-full p-2 border rounded mb-2"
-        rows={4}
-        placeholder="Paste threat intel summary, IOCs, or report..."
+        rows={5}
+        placeholder="Paste threat report or intel summary..."
         value={input}
         onChange={(e) => setInput(e.target.value)}
       />
