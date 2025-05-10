@@ -1,4 +1,4 @@
-// App.jsx (updated to show per-input and total cumulative savings for Triage)
+// App.jsx (Full, Fresh Version with Threat Intel Matching Triage Formatting)
 import { useState } from "react";
 import PhishingDetection from "./components/phishing";
 
@@ -29,9 +29,12 @@ export default function App() {
 
   const getTargetTeam = (text) => {
     const lower = text.toLowerCase();
-    if (lower.includes("block") || lower.includes("firewall")) return "Firewall Team";
+    if (lower.includes("firewall")) return "Firewall Team";
     if (lower.includes("reset password") || lower.includes("account")) return "IT Team";
     if (lower.includes("isolate") || lower.includes("network")) return "Network Team";
+    if (lower.includes("intel")) return "Threat Intel Team";
+    if (lower.includes("phishing")) return "Email Security Team";
+    if (lower.includes("ir team")) return "IR Team";
     return "Security Team";
   };
 
@@ -132,16 +135,16 @@ export default function App() {
             <div style={{ marginTop: 40, background: "#1e293b", padding: 20, borderRadius: 8 }}>
               <h3>🔍 Result:</h3>
               <pre style={{ whiteSpace: "pre-wrap" }}>{output}</pre>
-              {mode === "triage" && timeSavedMsg && (
+              {["triage", "threat-intel"].includes(mode) && timeSavedMsg && (
                 <>
                   <p style={{ marginTop: 8, color: "#10b981" }}>{timeSavedMsg}</p>
                   <p style={{ fontSize: "0.9em", color: "#38bdf8", marginTop: "0.25rem" }}>
-                    📊 Total Saved in Triage Mode: {(triageCount * 6).toFixed(1)} min • 💰 ~${((triageCount * 6) * MINUTE_RATE).toFixed(0)}
+                    📊 Total Saved in {mode === "triage" ? "Triage" : "Threat Intel"} Mode: {((mode === "triage" ? triageCount * 6 : threatIntelCount * 10)).toFixed(1)} min • 💰 ~${(((mode === "triage" ? triageCount * 6 : threatIntelCount * 10)) * MINUTE_RATE).toFixed(0)}
                   </p>
                 </>
               )}
 
-              {mode === "triage" && (
+              {["triage", "threat-intel"].includes(mode) && (
                 <div style={{ marginTop: 20, backgroundColor: "#0f172a", padding: "1rem", borderRadius: "8px" }}>
                   <h4 style={{ color: "#facc15" }}>🔧 Remediation Suggestion</h4>
                   <p style={{ color: "#e0f2fe" }}>{output}</p>
