@@ -6,6 +6,7 @@ export default function KnowledgeBase() {
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
   const [timeSavedMsg, setTimeSavedMsg] = useState("");
+  const [kbCount, setKbCount] = useState(0); // global counter
 
   const HOURLY_RATE = 75;
   const MINUTES_SAVED = 5;
@@ -32,6 +33,7 @@ export default function KnowledgeBase() {
 
       setOutput(res.data.result || "No response.");
       setTimeSavedMsg(`⏱️ Saved ~${savedMin} min • 🚀 ${percentFaster}% faster • 💵 This Run: ~$${dollarSaved}`);
+      setKbCount((prev) => prev + 1); // update global counter
     } catch (err) {
       console.error("KB error:", err.message);
       setOutput("Something went wrong.");
@@ -39,6 +41,9 @@ export default function KnowledgeBase() {
 
     setLoading(false);
   };
+
+  const totalTimeSaved = (kbCount * MINUTES_SAVED).toFixed(1);
+  const totalDollarSaved = ((kbCount * MINUTES_SAVED) * MINUTE_RATE).toFixed(0);
 
   return (
     <div style={{ padding: 20 }}>
@@ -63,6 +68,9 @@ export default function KnowledgeBase() {
           {timeSavedMsg && (
             <p style={{ marginTop: 12, color: "#10b981" }}>{timeSavedMsg}</p>
           )}
+          <p style={{ fontSize: "0.9em", color: "#38bdf8", marginTop: "0.25rem" }}>
+            📊 Total Saved in Knowledge Base: {totalTimeSaved} min • 💰 ~${totalDollarSaved}
+          </p>
         </div>
       )}
     </div>
