@@ -117,7 +117,7 @@ export default function App() {
           </div>
 
           {mode === "kb" ? (
-            <KnowledgeBase />
+          <KnowledgeBase setKbCount={setKbCount} />
           ) : (
             <>
               <form onSubmit={handleSubmit}>
