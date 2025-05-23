@@ -52,8 +52,9 @@ function analyzeThreatIntel(summary) {
     remediation.push('No specific remediation identified — escalate to SOC for deeper analysis.');
   }
 
-  const timeSaved = 6.0;
-  const valueSaved = 8;
+const timeSaved = 6.0;
+const hourlyRate = 200; // typical security analyst rate per hour
+const valueSaved = ((timeSaved / 60) * hourlyRate).toFixed(2);
   const percentageFaster = 99.2;
 
   totalTimeSaved += timeSaved;
