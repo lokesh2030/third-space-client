@@ -1,4 +1,5 @@
 // App.jsx (Final version with KnowledgeBase.jsx rendered as component)
+import Integrations from "./components/Integrations";
 import { useState } from "react";
 import PhishingDetection from "./components/phishing";
 import KnowledgeBase from "./components/KnowledgeBase";
