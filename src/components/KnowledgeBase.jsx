@@ -32,7 +32,7 @@ export default function KnowledgeBase() {
       const dollarSaved = (savedMin * MINUTE_RATE).toFixed(0);
 
       setOutput(res.data.result || "No response.");
-      setTimeSavedMsg(`⏱️ Saved ~${savedMin} min • 🚀 ${percentFaster}% faster • 💵 This Run: ~$${dollarSaved}`);
+      setTimeSavedMsg(`✅ Saved ~${savedMin} min = 💵 ~$${dollarSaved} • 🚀 ${percentFaster}% faster`);
       setKbCount((prev) => prev + 1); // update global counter
     } catch (err) {
       console.error("KB error:", err.message);
