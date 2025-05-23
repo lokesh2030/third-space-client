@@ -173,6 +173,15 @@ export default function App() {
       )}
 
       {selectedTab === "Phishing" && <PhishingDetection setPhishingCount={setPhishingCount} />}
-    </div>
+      <div style={{ marginTop: 30, backgroundColor: "#0f172a", padding: 20, borderRadius: 8, border: "1px solid #334155" }}>
+  <h3 style={{ fontSize: "1.2rem", marginBottom: 8 }}>📈 Global Impact</h3>
+  <p style={{ color: "#10b981", fontWeight: "bold" }}>
+    ⏱️ Total Time Saved: {totalGlobalTimeSaved.toFixed(1)} min
+  </p>
+  <p style={{ color: "#facc15", fontWeight: "bold" }}>
+    💵 Estimated Value Saved: ${((totalGlobalTimeSaved * MINUTE_RATE).toFixed(0))}
+  </p>
+</div>
+</div>
   );
 }
