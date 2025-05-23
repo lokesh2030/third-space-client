@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
-export default function KnowledgeBase() {
+export default function KnowledgeBase({ setKbCount }) {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -32,6 +32,7 @@ export default function KnowledgeBase() {
       const dollarSaved = (savedMin * MINUTE_RATE).toFixed(0);
 
       setOutput(res.data.result || "No response.");
+      setKbCount((prev) => prev + 1);
       setTimeSavedMsg(`✅ Saved ~${savedMin} min = 💵 ~$${dollarSaved} • 🚀 ${percentFaster}% faster`);
       setKbCount((prev) => prev + 1); // update global counter
     } catch (err) {
