@@ -55,8 +55,7 @@ export default function PhishingDetection({ setPhishingCount }) {
       const savedMs = Math.max(0, baselineMs - durationMs);
       const savedMin = (savedMs / 60000).toFixed(1);
       const percentFaster = ((savedMs / baselineMs) * 100).toFixed(1);
-      setTimeSavedMsg(`⏱️ Saved ~${savedMin} min • 💵 ~$${((savedMin * MINUTE_RATE).toFixed(0))} • 🚀 ${percentFaster}% faster`);
-
+      setTimeSavedMsg(`✅ Saved ~${savedMin} min = 💵 ~$${(savedMin * MINUTE_RATE).toFixed(0)} • 🚀 ${percentFaster}% faster`);
       // Increment counts
       setLocalCount((prev) => prev + 1);
       setPhishingCount((prev) => prev + 1);
