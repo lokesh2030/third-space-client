@@ -1,4 +1,3 @@
-// App.jsx (Final version with KnowledgeBase.jsx rendered as component)
 import Integrations from "./components/Integrations";
 import { useState } from "react";
 import PhishingDetection from "./components/phishing";
@@ -64,10 +63,10 @@ export default function App() {
 
       const durationMs = Date.now() - start;
       const updateMetrics = (countSetter, minutes) => {
-        const savedMs = Math.max(0, minutes * 60 * 1000 - durationMs);
+        const savedMs = Math.max(0, minutes * 60000 - durationMs);
         const savedMin = (savedMs / 60000).toFixed(1);
-        const percentFaster = ((savedMs / (minutes * 60 * 1000)) * 100).toFixed(1);
-        setTimeSavedMsg(`⏱️ Saved ~${savedMin} min • 🚀 ${percentFaster}% faster • 💵 This Run: ~$${((savedMin * MINUTE_RATE).toFixed(0))}`);
+        const percentFaster = ((savedMs / (minutes * 60000)) * 100).toFixed(1);
+        setTimeSavedMsg(`⏱️ Saved ~${savedMin} min • 🚀 ${percentFaster}% faster • 💵 This Run: ~$${(savedMin * MINUTE_RATE).toFixed(0)}`);
         countSetter((prev) => prev + 1);
       };
 
@@ -88,27 +87,39 @@ export default function App() {
       <div style={{ marginBottom: 20, display: "flex", gap: 10 }}>
         <button
           onClick={() => setSelectedTab("CoPilot")}
-          style={{ padding: "8px 16px", backgroundColor: selectedTab === "CoPilot" ? "#3b82f6" : "#1e293b", border: "none", color: "white", borderRadius: 6 }}
+          style={{
+            padding: "8px 16px",
+            backgroundColor: selectedTab === "CoPilot" ? "#3b82f6" : "#1e293b",
+            border: "none",
+            color: "white",
+            borderRadius: 6,
+          }}
         >
           Co-Pilot
         </button>
         <button
           onClick={() => setSelectedTab("Phishing")}
-          style={{ padding: "8px 16px", backgroundColor: selectedTab === "Phishing" ? "#3b82f6" : "#1e293b", border: "none", color: "white", borderRadius: 6 }}
+          style={{
+            padding: "8px 16px",
+            backgroundColor: selectedTab === "Phishing" ? "#3b82f6" : "#1e293b",
+            border: "none",
+            color: "white",
+            borderRadius: 6,
+          }}
         >
           Phishing Detection
-          <button
-  onClick={() => setSelectedTab("Integrations")}
-  style={{
-    padding: "8px 16px",
-    backgroundColor: selectedTab === "Integrations" ? "#3b82f6" : "#1e293b",
-    border: "none",
-    color: "white",
-    borderRadius: 6,
-  }}
->
-  Integrations
-</button>
+        </button>
+        <button
+          onClick={() => setSelectedTab("Integrations")}
+          style={{
+            padding: "8px 16px",
+            backgroundColor: selectedTab === "Integrations" ? "#3b82f6" : "#1e293b",
+            border: "none",
+            color: "white",
+            borderRadius: 6,
+          }}
+        >
+          Integrations
         </button>
       </div>
 
@@ -121,7 +132,13 @@ export default function App() {
                 <button
                   key={m}
                   onClick={() => setMode(m)}
-                  style={{ padding: "8px 16px", backgroundColor: mode === m ? "#3b82f6" : "#1e293b", border: "none", color: "white", borderRadius: 6 }}
+                  style={{
+                    padding: "8px 16px",
+                    backgroundColor: mode === m ? "#3b82f6" : "#1e293b",
+                    border: "none",
+                    color: "white",
+                    borderRadius: 6,
+                  }}
                 >
                   {m.replace("-", " ").toUpperCase()}
                 </button>
@@ -130,7 +147,7 @@ export default function App() {
           </div>
 
           {mode === "kb" ? (
-          <KnowledgeBase setKbCount={setKbCount} />
+            <KnowledgeBase setKbCount={setKbCount} />
           ) : (
             <>
               <form onSubmit={handleSubmit}>
@@ -139,15 +156,38 @@ export default function App() {
                   placeholder={`Paste your ${mode} input here...`}
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  style={{ width: "100%", padding: 16, fontSize: 16, borderRadius: 6, marginBottom: 20 }}
+                  style={{
+                    width: "100%",
+                    padding: 16,
+                    fontSize: 16,
+                    borderRadius: 6,
+                    marginBottom: 20,
+                  }}
                 />
-                <button type="submit" style={{ backgroundColor: "#3b82f6", color: "white", padding: "12px 24px", fontSize: 16, border: "none", borderRadius: 6 }}>
+                <button
+                  type="submit"
+                  style={{
+                    backgroundColor: "#3b82f6",
+                    color: "white",
+                    padding: "12px 24px",
+                    fontSize: 16,
+                    border: "none",
+                    borderRadius: 6,
+                  }}
+                >
                   {loading ? "Working..." : "Submit"}
                 </button>
               </form>
 
               {output && (
-                <div style={{ marginTop: 40, background: "#1e293b", padding: 20, borderRadius: 8 }}>
+                <div
+                  style={{
+                    marginTop: 40,
+                    background: "#1e293b",
+                    padding: 20,
+                    borderRadius: 8,
+                  }}
+                >
                   <h3>🔍 Result:</h3>
                   <pre style={{ whiteSpace: "pre-wrap" }}>{output}</pre>
                   {["triage", "threat-intel"].includes(mode) && timeSavedMsg && (
@@ -158,26 +198,6 @@ export default function App() {
                       </p>
                     </>
                   )}
-
-                  {["triage", "threat-intel"].includes(mode) && (
-                    <div style={{ marginTop: 20, backgroundColor: "#0f172a", padding: "1rem", borderRadius: "8px" }}>
-                      <h4 style={{ color: "#facc15" }}>🔧 Remediation Suggestion</h4>
-                      <p style={{ color: "#e0f2fe" }}>{output}</p>
-                      <p style={{ marginTop: "0.5rem", color: "#38bdf8" }}>
-                        📍 Route to: <strong>{getTargetTeam(output)}</strong>
-                      </p>
-                      <button
-                        onClick={() =>
-                          navigator.clipboard.writeText(
-                            `Remediation Action:\n${output}\n\nRoute to: ${getTargetTeam(output)}`
-                          )
-                        }
-                        style={{ marginTop: "0.75rem", padding: "0.5rem 1rem", backgroundColor: "#3b82f6", color: "white", border: "none", borderRadius: 6 }}
-                      >
-                        Copy Ticket
-                      </button>
-                    </div>
-                  )}
                 </div>
               )}
             </>
@@ -186,15 +206,25 @@ export default function App() {
       )}
 
       {selectedTab === "Phishing" && <PhishingDetection setPhishingCount={setPhishingCount} />}
-      <div style={{ marginTop: 30, backgroundColor: "#0f172a", padding: 20, borderRadius: 8, border: "1px solid #334155" }}>
-  <h3 style={{ fontSize: "1.2rem", marginBottom: 8 }}>📈 Global Impact</h3>
-  <p style={{ color: "#10b981", fontWeight: "bold" }}>
-    ⏱️ Total Time Saved: {totalGlobalTimeSaved.toFixed(1)} min
-  </p>
-  <p style={{ color: "#facc15", fontWeight: "bold" }}>
-    💵 Estimated Value Saved: ${((totalGlobalTimeSaved * MINUTE_RATE).toFixed(0))}
-  </p>
-</div>
-</div>
+      {selectedTab === "Integrations" && <Integrations />}
+
+      <div
+        style={{
+          marginTop: 30,
+          backgroundColor: "#0f172a",
+          padding: 20,
+          borderRadius: 8,
+          border: "1px solid #334155",
+        }}
+      >
+        <h3 style={{ fontSize: "1.2rem", marginBottom: 8 }}>📈 Global Impact</h3>
+        <p style={{ color: "#10b981", fontWeight: "bold" }}>
+          ⏱️ Total Time Saved: {totalGlobalTimeSaved.toFixed(1)} min
+        </p>
+        <p style={{ color: "#facc15", fontWeight: "bold" }}>
+          💵 Estimated Value Saved: ${((totalGlobalTimeSaved * MINUTE_RATE).toFixed(0))}
+        </p>
+      </div>
+    </div>
   );
 }
