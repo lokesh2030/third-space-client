@@ -6,7 +6,7 @@ export default function KnowledgeBase({ setKbCount }) {
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
   const [timeSavedMsg, setTimeSavedMsg] = useState("");
-  const [kbCount, setKbCount] = useState(0); // global counter
+  const [localCount, setLocalCount] = useState(0); // Local tab-specific counter
 
   const HOURLY_RATE = 75;
   const MINUTES_SAVED = 5;
@@ -32,9 +32,9 @@ export default function KnowledgeBase({ setKbCount }) {
       const dollarSaved = (savedMin * MINUTE_RATE).toFixed(0);
 
       setOutput(res.data.result || "No response.");
-      setKbCount((prev) => prev + 1);
       setTimeSavedMsg(`✅ Saved ~${savedMin} min = 💵 ~$${dollarSaved} • 🚀 ${percentFaster}% faster`);
-      setKbCount((prev) => prev + 1); // update global counter
+      setLocalCount((prev) => prev + 1); // local tab counter
+      setKbCount((prev) => prev + 1);    // global counter for App.jsx
     } catch (err) {
       console.error("KB error:", err.message);
       setOutput("Something went wrong.");
@@ -43,8 +43,8 @@ export default function KnowledgeBase({ setKbCount }) {
     setLoading(false);
   };
 
-  const totalTimeSaved = (kbCount * MINUTES_SAVED).toFixed(1);
-  const totalDollarSaved = ((kbCount * MINUTES_SAVED) * MINUTE_RATE).toFixed(0);
+  const totalTimeSaved = (localCount * MINUTES_SAVED).toFixed(1);
+  const totalDollarSaved = ((localCount * MINUTES_SAVED) * MINUTE_RATE).toFixed(0);
 
   return (
     <div style={{ padding: 20 }}>
@@ -57,19 +57,43 @@ export default function KnowledgeBase({ setKbCount }) {
           onChange={(e) => setInput(e.target.value)}
           style={{ width: "100%", padding: 12, fontSize: 16, borderRadius: 6, marginBottom: 12 }}
         />
-        <button type="submit" disabled={loading} style={{ padding: "10px 20px", fontSize: 16, backgroundColor: "#3b82f6", color: "white", border: "none", borderRadius: 6 }}>
+        <button
+          type="submit"
+          disabled={loading}
+          style={{
+            padding: "10px 20px",
+            fontSize: 16,
+            backgroundColor: "#3b82f6",
+            color: "white",
+            border: "none",
+            borderRadius: 6,
+          }}
+        >
           {loading ? "Working..." : "Submit"}
         </button>
       </form>
 
       {output && (
-        <div style={{ marginTop: 30, backgroundColor: "#1e293b", padding: 20, borderRadius: 8 }}>
+        <div
+          style={{
+            marginTop: 30,
+            backgroundColor: "#1e293b",
+            padding: 20,
+            borderRadius: 8,
+          }}
+        >
           <h3>🔍 Answer:</h3>
           <pre style={{ whiteSpace: "pre-wrap", color: "#e0f2fe" }}>{output}</pre>
           {timeSavedMsg && (
             <p style={{ marginTop: 12, color: "#10b981" }}>{timeSavedMsg}</p>
           )}
-          <p style={{ fontSize: "0.9em", color: "#38bdf8", marginTop: "0.25rem" }}>
+          <p
+            style={{
+              fontSize: "0.9em",
+              color: "#38bdf8",
+              marginTop: "0.25rem",
+            }}
+          >
             📊 Total Saved in Knowledge Base: {totalTimeSaved} min • 💰 ~${totalDollarSaved}
           </p>
         </div>
