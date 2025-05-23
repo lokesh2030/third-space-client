@@ -97,6 +97,18 @@ export default function App() {
           style={{ padding: "8px 16px", backgroundColor: selectedTab === "Phishing" ? "#3b82f6" : "#1e293b", border: "none", color: "white", borderRadius: 6 }}
         >
           Phishing Detection
+          <button
+  onClick={() => setSelectedTab("Integrations")}
+  style={{
+    padding: "8px 16px",
+    backgroundColor: selectedTab === "Integrations" ? "#3b82f6" : "#1e293b",
+    border: "none",
+    color: "white",
+    borderRadius: 6,
+  }}
+>
+  Integrations
+</button>
         </button>
       </div>
 
