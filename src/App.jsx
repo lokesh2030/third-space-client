@@ -7,6 +7,7 @@ const BACKEND_URL = "https://third-space-backend.onrender.com";
 export default function App() {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [mode, setMode] = useState("triage");
   const [selectedTab, setSelectedTab] = useState("CoPilot");
@@ -31,14 +32,14 @@ export default function App() {
     e.preventDefault();
     setLoading(true);
     setOutput("");
+    setData(null);
     setTimeSavedMsg("");
 
     const start = Date.now();
-
     let payload = {};
     let endpoint = "";
 
-    if (mode === "triage") {
+    if (mode === "triage" || mode === "auto-triage") {
       payload = {
         alert_id: `ALERT-${Date.now()}`,
         description: input,
@@ -64,9 +65,10 @@ export default function App() {
         body: JSON.stringify(payload),
       });
 
-      const data = await res.json();
-      const result = data.result || data.triageResult?.summary || "Something went wrong.";
+      const json = await res.json();
+      const result = json.result || json.triageResult?.summary || "Something went wrong.";
       setOutput(result);
+      setData(json);
 
       const durationMs = Date.now() - start;
       const updateMetrics = (countSetter, minutes) => {
@@ -77,7 +79,7 @@ export default function App() {
         countSetter((prev) => prev + 1);
       };
 
-      if (mode === "triage") updateMetrics(setTriageCount, 6);
+      if (mode === "triage" || mode === "auto-triage") updateMetrics(setTriageCount, 6);
       if (mode === "threat-intel") updateMetrics(setThreatIntelCount, 10);
       if (mode === "ticket") updateMetrics(setTicketCount, 8);
     } catch (err) {
@@ -92,7 +94,7 @@ export default function App() {
       <h1 style={{ fontSize: 28, marginBottom: 20 }}>🛡️ Third Space Co-Pilot</h1>
 
       <div style={{ marginBottom: 20, display: "flex", gap: 10 }}>
-        {['CoPilot', 'Phishing', 'Integrations'].map((tab) => (
+        {["CoPilot", "Phishing", "Integrations"].map((tab) => (
           <button
             key={tab}
             onClick={() => setSelectedTab(tab)}
@@ -114,7 +116,7 @@ export default function App() {
           <div style={{ marginBottom: 20 }}>
             <strong>Choose Mode:</strong>
             <div style={{ marginTop: 10, display: "flex", gap: 10 }}>
-              {["triage", "threat-intel", "ticket", "kb"].map((m) => (
+              {["triage", "threat-intel", "ticket", "kb", "auto-triage"].map((m) => (
                 <button
                   key={m}
                   onClick={() => setMode(m)}
@@ -139,7 +141,7 @@ export default function App() {
               <form onSubmit={handleSubmit}>
                 <textarea
                   rows={6}
-                  placeholder={`Paste your ${mode} input here...`}
+                  placeholder={mode === "auto-triage" ? "Enter alert description (e.g., login from suspicious IP...)" : `Paste your ${mode} input here...`}
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   style={{
@@ -176,6 +178,20 @@ export default function App() {
                 >
                   <h3>🔍 Result:</h3>
                   <pre style={{ whiteSpace: "pre-wrap" }}>{output}</pre>
+
+                  {mode === "auto-triage" && data?.triageResult?.enrichment?.length > 0 && (
+                    <div style={{ marginTop: 20 }}>
+                      <h4>🧠 Enrichment Data:</h4>
+                      {data.triageResult.enrichment.map((item, idx) => (
+                        <div key={idx} style={{ marginBottom: 10 }}>
+                          <strong>IP:</strong> {item.ip} <br />
+                          <strong>Reputation:</strong> {item.reputation} <br />
+                          <strong>Malicious Votes:</strong> {item.maliciousVotes}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
                   {["triage", "threat-intel"].includes(mode) && timeSavedMsg && (
                     <>
                       <p style={{ marginTop: 8, color: "#10b981" }}>{timeSavedMsg}</p>
