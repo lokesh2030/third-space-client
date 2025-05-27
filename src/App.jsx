@@ -27,17 +27,6 @@ export default function App() {
   const HOURLY_RATE = 75;
   const MINUTE_RATE = HOURLY_RATE / 60;
 
-  const getTargetTeam = (text) => {
-    const lower = text.toLowerCase();
-    if (lower.includes("firewall")) return "Firewall Team";
-    if (lower.includes("reset password") || lower.includes("account")) return "IT Team";
-    if (lower.includes("isolate") || lower.includes("network")) return "Network Team";
-    if (lower.includes("intel")) return "Threat Intel Team";
-    if (lower.includes("phishing")) return "Email Security Team";
-    if (lower.includes("ir team")) return "IR Team";
-    return "Security Team";
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -47,19 +36,37 @@ export default function App() {
     const start = Date.now();
 
     let payload = {};
-    if (mode === "triage") payload = { alert: input };
-    else if (mode === "threat-intel") payload = { keyword: input };
-    else if (mode === "ticket") payload = { incident: input };
+    let endpoint = "";
+
+    if (mode === "triage") {
+      payload = {
+        alert_id: `ALERT-${Date.now()}`,
+        description: input,
+        source: "User Submitted",
+        severity: "Medium",
+      };
+      endpoint = "alerts/ingest";
+    } else if (mode === "threat-intel") {
+      payload = { keyword: input };
+      endpoint = "threat-intel";
+    } else if (mode === "ticket") {
+      payload = { incident: input };
+      endpoint = "ticket";
+    } else if (mode === "kb") {
+      payload = { question: input };
+      endpoint = "kb";
+    }
 
     try {
-      const res = await fetch(`${BACKEND_URL}/api/${mode}`, {
+      const res = await fetch(`${BACKEND_URL}/api/${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
       const data = await res.json();
-      setOutput(data.result || "Something went wrong.");
+      const result = data.result || data.triageResult?.summary || "Something went wrong.";
+      setOutput(result);
 
       const durationMs = Date.now() - start;
       const updateMetrics = (countSetter, minutes) => {
@@ -85,42 +92,21 @@ export default function App() {
       <h1 style={{ fontSize: 28, marginBottom: 20 }}>🛡️ Third Space Co-Pilot</h1>
 
       <div style={{ marginBottom: 20, display: "flex", gap: 10 }}>
-        <button
-          onClick={() => setSelectedTab("CoPilot")}
-          style={{
-            padding: "8px 16px",
-            backgroundColor: selectedTab === "CoPilot" ? "#3b82f6" : "#1e293b",
-            border: "none",
-            color: "white",
-            borderRadius: 6,
-          }}
-        >
-          Co-Pilot
-        </button>
-        <button
-          onClick={() => setSelectedTab("Phishing")}
-          style={{
-            padding: "8px 16px",
-            backgroundColor: selectedTab === "Phishing" ? "#3b82f6" : "#1e293b",
-            border: "none",
-            color: "white",
-            borderRadius: 6,
-          }}
-        >
-          Phishing Detection
-        </button>
-        <button
-          onClick={() => setSelectedTab("Integrations")}
-          style={{
-            padding: "8px 16px",
-            backgroundColor: selectedTab === "Integrations" ? "#3b82f6" : "#1e293b",
-            border: "none",
-            color: "white",
-            borderRadius: 6,
-          }}
-        >
-          Integrations
-        </button>
+        {['CoPilot', 'Phishing', 'Integrations'].map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setSelectedTab(tab)}
+            style={{
+              padding: "8px 16px",
+              backgroundColor: selectedTab === tab ? "#3b82f6" : "#1e293b",
+              border: "none",
+              color: "white",
+              borderRadius: 6,
+            }}
+          >
+            {tab}
+          </button>
+        ))}
       </div>
 
       {selectedTab === "CoPilot" && (
