@@ -7,7 +7,6 @@ const BACKEND_URL = "https://third-space-backend.onrender.com";
 export default function App() {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
-  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [mode, setMode] = useState("triage");
   const [selectedTab, setSelectedTab] = useState("CoPilot");
@@ -17,6 +16,7 @@ export default function App() {
   const [kbCount, setKbCount] = useState(0);
   const [ticketCount, setTicketCount] = useState(0);
   const [phishingCount, setPhishingCount] = useState(0);
+  const [ticketOutput, setTicketOutput] = useState("");
 
   const totalGlobalTimeSaved =
     triageCount * 6 +
@@ -32,10 +32,11 @@ export default function App() {
     e.preventDefault();
     setLoading(true);
     setOutput("");
-    setData(null);
     setTimeSavedMsg("");
+    setTicketOutput("");
 
     const start = Date.now();
+
     let payload = {};
     let endpoint = "";
 
@@ -65,12 +66,30 @@ export default function App() {
         body: JSON.stringify(payload),
       });
 
-      const json = await res.json();
-      const result = json.result || json.triageResult?.summary || "Something went wrong.";
-      setOutput(result);
-      setData(json);
-
+      const data = await res.json();
       const durationMs = Date.now() - start;
+
+      let result = "";
+      let enrichmentBlock = "";
+
+      if (mode === "auto-triage") {
+        result = data.triageResult?.summary || "No triage result.";
+        if (data.triageResult?.enrichment?.length) {
+          const enrichments = data.triageResult.enrichment.map((e) =>
+            `IP: ${e.ip}\nReputation: ${e.reputation}\nMalicious Votes: ${e.maliciousVotes}`
+          ).join("\n\n");
+          enrichmentBlock = `\n\n\uD83E\uDDE0 Enrichment Data:\n${enrichments}`;
+        }
+        if (data.ticket) {
+          setTicketOutput(data.ticket);
+          setTicketCount((prev) => prev + 1);
+        }
+      } else {
+        result = data.result || data.triageResult?.summary || "Something went wrong.";
+      }
+
+      setOutput(result + enrichmentBlock);
+
       const updateMetrics = (countSetter, minutes) => {
         const savedMs = Math.max(0, minutes * 60000 - durationMs);
         const savedMin = (savedMs / 60000).toFixed(1);
@@ -79,9 +98,10 @@ export default function App() {
         countSetter((prev) => prev + 1);
       };
 
-      if (mode === "triage" || mode === "auto-triage") updateMetrics(setTriageCount, 6);
+      if (mode === "triage") updateMetrics(setTriageCount, 6);
       if (mode === "threat-intel") updateMetrics(setThreatIntelCount, 10);
       if (mode === "ticket") updateMetrics(setTicketCount, 8);
+      if (mode === "auto-triage") updateMetrics(setTriageCount, 6);
     } catch (err) {
       setOutput("Error: " + err.message);
     }
@@ -178,28 +198,26 @@ export default function App() {
                 >
                   <h3>🔍 Result:</h3>
                   <pre style={{ whiteSpace: "pre-wrap" }}>{output}</pre>
-
-                  {mode === "auto-triage" && data?.triageResult?.enrichment?.length > 0 && (
-                    <div style={{ marginTop: 20 }}>
-                      <h4>🧠 Enrichment Data:</h4>
-                      {data.triageResult.enrichment.map((item, idx) => (
-                        <div key={idx} style={{ marginBottom: 10 }}>
-                          <strong>IP:</strong> {item.ip} <br />
-                          <strong>Reputation:</strong> {item.reputation} <br />
-                          <strong>Malicious Votes:</strong> {item.maliciousVotes}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {["triage", "threat-intel"].includes(mode) && timeSavedMsg && (
+                  {["triage", "threat-intel", "auto-triage"].includes(mode) && timeSavedMsg && (
                     <>
                       <p style={{ marginTop: 8, color: "#10b981" }}>{timeSavedMsg}</p>
                       <p style={{ fontSize: "0.9em", color: "#38bdf8", marginTop: "0.25rem" }}>
-                        📊 Total Saved in {mode === "triage" ? "Triage" : "Threat Intel"} Mode: {((mode === "triage" ? triageCount * 6 : threatIntelCount * 10)).toFixed(1)} min • 💰 ~${(((mode === "triage" ? triageCount * 6 : threatIntelCount * 10)) * MINUTE_RATE).toFixed(0)}
+                        📊 Total Saved in {mode.replace("-", " ").toUpperCase()} Mode: {((mode === "triage" ? triageCount * 6 : mode === "threat-intel" ? threatIntelCount * 10 : triageCount * 6)).toFixed(1)} min • 💰 ~${(((mode === "triage" ? triageCount * 6 : mode === "threat-intel" ? threatIntelCount * 10 : triageCount * 6)) * MINUTE_RATE).toFixed(0)}
                       </p>
                     </>
                   )}
+                </div>
+              )}
+
+              {ticketOutput && (
+                <div style={{
+                  marginTop: 20,
+                  backgroundColor: "#334155",
+                  padding: 20,
+                  borderRadius: 8,
+                }}>
+                  <h3>🎫 Auto-Generated Ticket:</h3>
+                  <pre style={{ whiteSpace: "pre-wrap" }}>{ticketOutput}</pre>
                 </div>
               )}
             </>
