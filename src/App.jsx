@@ -149,7 +149,7 @@ export default function App() {
         } catch (err) {
           setOutput("Error: " + err.message);
         }
-      }, 600000);
+      }, 86,400,000);
       return () => clearInterval(interval);
     }
   }, [mode]);
