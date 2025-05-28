@@ -2,7 +2,6 @@ import Integrations from "./components/Integrations";
 import { useState, useEffect } from "react";
 import PhishingDetection from "./components/phishing";
 import KnowledgeBase from "./components/KnowledgeBase";
-
 const BACKEND_URL = "https://third-space-backend.onrender.com";
 
 export default function App() {
@@ -29,12 +28,13 @@ export default function App() {
   const MINUTE_RATE = HOURLY_RATE / 60;
 
   const handleSubmit = async (e) => {
-    e?.preventDefault();
+    e.preventDefault();
     setLoading(true);
     setOutput("");
     setTimeSavedMsg("");
 
     const start = Date.now();
+
     let payload = {};
     let endpoint = "";
 
@@ -70,30 +70,36 @@ export default function App() {
         data.triageResult?.summary ||
         "Something went wrong.";
 
-      const ticket = data.ticket ? `\n\n🎫 Auto-Generated Ticket:\n${data.ticket}` : "";
+      let ticketBlock = "";
+      if (data.ticket) {
+        ticketBlock = `\n\n🎫 Auto-Generated Ticket:\n${data.ticket}`;
+      }
 
-      const enrichment = data.triageResult?.enrichment
-        ? `\n\n🧠 Enrichment Data:\n${data.triageResult.enrichment
-            .map((e) => `IP: ${e.ip}\nReputation: ${e.reputation}\nMalicious Votes: ${e.maliciousVotes}`)
-            .join("\n\n")}`
-        : "";
+      let enrichmentBlock = "";
+      if (data.triageResult?.enrichment?.length > 0) {
+        enrichmentBlock = "\n\n🧠 Enrichment Data:\n" +
+          data.triageResult.enrichment
+            .map(
+              (e) => `IP: ${e.ip}\nReputation: ${e.reputation}\nMalicious Votes: ${e.maliciousVotes}`
+            )
+            .join("\n\n");
+      }
 
-      setOutput(result + enrichment + ticket);
+      setOutput(result + enrichmentBlock + ticketBlock);
 
       const durationMs = Date.now() - start;
       const updateMetrics = (countSetter, minutes) => {
         const savedMs = Math.max(0, minutes * 60000 - durationMs);
         const savedMin = (savedMs / 60000).toFixed(1);
         const percentFaster = ((savedMs / (minutes * 60000)) * 100).toFixed(1);
-        setTimeSavedMsg(
-          `⏱️ Saved ~${savedMin} min • 🚀 ${percentFaster}% faster • 💵 This Run: ~$${(savedMin * MINUTE_RATE).toFixed(0)}`
-        );
+        setTimeSavedMsg(`⏱️ Saved ~${savedMin} min • 🚀 ${percentFaster}% faster • 💵 This Run: ~$${(savedMin * MINUTE_RATE).toFixed(0)}`);
         countSetter((prev) => prev + 1);
       };
 
-      if (mode === "triage" || mode === "auto-triage") updateMetrics(setTriageCount, 6);
+      if (mode === "triage") updateMetrics(setTriageCount, 6);
       if (mode === "threat-intel") updateMetrics(setThreatIntelCount, 10);
       if (mode === "ticket") updateMetrics(setTicketCount, 8);
+      if (mode === "auto-triage") updateMetrics(setTriageCount, 6);
     } catch (err) {
       setOutput("Error: " + err.message);
     }
@@ -101,17 +107,51 @@ export default function App() {
     setLoading(false);
   };
 
-  // === AUTO-TRIAGE POLLING ===
   useEffect(() => {
-    if (mode !== "auto-triage") return;
+    if (mode === "auto-triage") {
+      const interval = setInterval(async () => {
+        try {
+          const res = await fetch(`${BACKEND_URL}/api/alerts/ingest`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              alert_id: `AUTO-${Date.now()}`,
+              description: "CrowdStrike detected failed login attempts from suspicious IP 185.107.56.223.",
+              source: "Auto Ingest",
+              severity: "High",
+            }),
+          });
 
-    const interval = setInterval(() => {
-      handleSubmit({
-        preventDefault: () => {},
-      });
-    }, 30000); // every 30 sec
+          const data = await res.json();
+          const result = data.triageResult?.summary || "Something went wrong.";
 
-    return () => clearInterval(interval);
+          let ticketBlock = "";
+          if (data.ticket) {
+            ticketBlock = `\n\n🎫 Auto-Generated Ticket:\n${data.ticket}`;
+          }
+
+          let enrichmentBlock = "";
+          if (data.triageResult?.enrichment?.length > 0) {
+            enrichmentBlock = "\n\n🧠 Enrichment Data:\n" +
+              data.triageResult.enrichment
+                .map(
+                  (e) => `IP: ${e.ip}\nReputation: ${e.reputation}\nMalicious Votes: ${e.maliciousVotes}`
+                )
+                .join("\n\n");
+          }
+
+          setOutput(result + enrichmentBlock + ticketBlock);
+
+          const savedMin = (6).toFixed(1);
+          const percentFaster = ((6 * 60 - 15) / (6 * 60) * 100).toFixed(1);
+          setTimeSavedMsg(`⏱️ Saved ~${savedMin} min • 🚀 ${percentFaster}% faster • 💵 This Run: ~$${(savedMin * MINUTE_RATE).toFixed(0)}`);
+          setTriageCount((prev) => prev + 1);
+        } catch (err) {
+          setOutput("Error: " + err.message);
+        }
+      }, 10000);
+      return () => clearInterval(interval);
+    }
   }, [mode]);
 
   return (
@@ -161,61 +201,59 @@ export default function App() {
 
           {mode === "kb" ? (
             <KnowledgeBase setKbCount={setKbCount} />
-          ) : (
+          ) : mode === "auto-triage" ? null : (
             <>
-              {mode !== "auto-triage" && (
-                <form onSubmit={handleSubmit}>
-                  <textarea
-                    rows={6}
-                    placeholder={`Paste your ${mode} input here...`}
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    style={{
-                      width: "100%",
-                      padding: 16,
-                      fontSize: 16,
-                      borderRadius: 6,
-                      marginBottom: 20,
-                    }}
-                  />
-                  <button
-                    type="submit"
-                    style={{
-                      backgroundColor: "#3b82f6",
-                      color: "white",
-                      padding: "12px 24px",
-                      fontSize: 16,
-                      border: "none",
-                      borderRadius: 6,
-                    }}
-                  >
-                    {loading ? "Working..." : "Submit"}
-                  </button>
-                </form>
-              )}
-
-              {output && (
-                <div
+              <form onSubmit={handleSubmit}>
+                <textarea
+                  rows={6}
+                  placeholder={`Paste your ${mode} input here...`}
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
                   style={{
-                    marginTop: 40,
-                    background: "#1e293b",
-                    padding: 20,
-                    borderRadius: 8,
+                    width: "100%",
+                    padding: 16,
+                    fontSize: 16,
+                    borderRadius: 6,
+                    marginBottom: 20,
+                  }}
+                />
+                <button
+                  type="submit"
+                  style={{
+                    backgroundColor: "#3b82f6",
+                    color: "white",
+                    padding: "12px 24px",
+                    fontSize: 16,
+                    border: "none",
+                    borderRadius: 6,
                   }}
                 >
-                  <h3>🔍 Result:</h3>
-                  <pre style={{ whiteSpace: "pre-wrap" }}>{output}</pre>
-                  {["triage", "threat-intel", "auto-triage"].includes(mode) && timeSavedMsg && (
-                    <>
-                      <p style={{ marginTop: 8, color: "#10b981" }}>{timeSavedMsg}</p>
-                      <p style={{ fontSize: "0.9em", color: "#38bdf8", marginTop: "0.25rem" }}>
-                        📊 Total Saved in {mode.replace("-", " ").toUpperCase()} Mode: {((mode === "triage" ? triageCount * 6 : triageCount * 6)).toFixed(1)} min • 💰 ~${((triageCount * 6) * MINUTE_RATE).toFixed(0)}
-                      </p>
-                    </>
-                  )}
-                </div>
-              )}
+                  {loading ? "Working..." : "Submit"}
+                </button>
+              </form>
             </>
+          )}
+
+          {output && (
+            <div
+              style={{
+                marginTop: 40,
+                background: "#1e293b",
+                padding: 20,
+                borderRadius: 8,
+              }}
+            >
+              <h3>🔍 Result:</h3>
+              <pre style={{ whiteSpace: "pre-wrap" }}>{output}</pre>
+              {timeSavedMsg && (
+                <>
+                  <p style={{ marginTop: 8, color: "#10b981" }}>{timeSavedMsg}</p>
+                  <p style={{ fontSize: "0.9em", color: "#38bdf8", marginTop: "0.25rem" }}>
+                    📊 Total Saved in {mode.replace("-", " ").toUpperCase()} Mode: {((mode === "triage" ? triageCount * 6 : mode === "threat-intel" ? threatIntelCount * 10 : triageCount * 6)).toFixed(1)} min • 💰 ~${(((mode === "triage" ? triageCount * 6 : mode === "threat-intel" ? threatIntelCount * 10 : triageCount * 6)) * MINUTE_RATE).toFixed(0)}
+                  </p>
+                </>
+              )}
+            </div>
           )}
         </>
       )}
