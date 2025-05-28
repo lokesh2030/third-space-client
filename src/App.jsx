@@ -1,7 +1,8 @@
 import Integrations from "./components/Integrations";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PhishingDetection from "./components/phishing";
 import KnowledgeBase from "./components/KnowledgeBase";
+
 const BACKEND_URL = "https://third-space-backend.onrender.com";
 
 export default function App() {
@@ -16,7 +17,6 @@ export default function App() {
   const [kbCount, setKbCount] = useState(0);
   const [ticketCount, setTicketCount] = useState(0);
   const [phishingCount, setPhishingCount] = useState(0);
-  const [ticketOutput, setTicketOutput] = useState("");
 
   const totalGlobalTimeSaved =
     triageCount * 6 +
@@ -29,18 +29,16 @@ export default function App() {
   const MINUTE_RATE = HOURLY_RATE / 60;
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e?.preventDefault();
     setLoading(true);
     setOutput("");
     setTimeSavedMsg("");
-    setTicketOutput("");
 
     const start = Date.now();
-
     let payload = {};
     let endpoint = "";
 
-    if (mode === "triage" || mode === "auto-triage") {
+    if (mode === "triage") {
       payload = {
         alert_id: `ALERT-${Date.now()}`,
         description: input,
@@ -67,47 +65,54 @@ export default function App() {
       });
 
       const data = await res.json();
+      const result =
+        data.result ||
+        data.triageResult?.summary ||
+        "Something went wrong.";
+
+      const ticket = data.ticket ? `\n\n🎫 Auto-Generated Ticket:\n${data.ticket}` : "";
+
+      const enrichment = data.triageResult?.enrichment
+        ? `\n\n🧠 Enrichment Data:\n${data.triageResult.enrichment
+            .map((e) => `IP: ${e.ip}\nReputation: ${e.reputation}\nMalicious Votes: ${e.maliciousVotes}`)
+            .join("\n\n")}`
+        : "";
+
+      setOutput(result + enrichment + ticket);
+
       const durationMs = Date.now() - start;
-
-      let result = "";
-      let enrichmentBlock = "";
-
-      if (mode === "auto-triage") {
-        result = data.triageResult?.summary || "No triage result.";
-        if (data.triageResult?.enrichment?.length) {
-          const enrichments = data.triageResult.enrichment.map((e) =>
-            `IP: ${e.ip}\nReputation: ${e.reputation}\nMalicious Votes: ${e.maliciousVotes}`
-          ).join("\n\n");
-          enrichmentBlock = `\n\n\uD83E\uDDE0 Enrichment Data:\n${enrichments}`;
-        }
-        if (data.ticket) {
-          setTicketOutput(data.ticket);
-          setTicketCount((prev) => prev + 1);
-        }
-      } else {
-        result = data.result || data.triageResult?.summary || "Something went wrong.";
-      }
-
-      setOutput(result + enrichmentBlock);
-
       const updateMetrics = (countSetter, minutes) => {
         const savedMs = Math.max(0, minutes * 60000 - durationMs);
         const savedMin = (savedMs / 60000).toFixed(1);
         const percentFaster = ((savedMs / (minutes * 60000)) * 100).toFixed(1);
-        setTimeSavedMsg(`⏱️ Saved ~${savedMin} min • 🚀 ${percentFaster}% faster • 💵 This Run: ~$${(savedMin * MINUTE_RATE).toFixed(0)}`);
+        setTimeSavedMsg(
+          `⏱️ Saved ~${savedMin} min • 🚀 ${percentFaster}% faster • 💵 This Run: ~$${(savedMin * MINUTE_RATE).toFixed(0)}`
+        );
         countSetter((prev) => prev + 1);
       };
 
-      if (mode === "triage") updateMetrics(setTriageCount, 6);
+      if (mode === "triage" || mode === "auto-triage") updateMetrics(setTriageCount, 6);
       if (mode === "threat-intel") updateMetrics(setThreatIntelCount, 10);
       if (mode === "ticket") updateMetrics(setTicketCount, 8);
-      if (mode === "auto-triage") updateMetrics(setTriageCount, 6);
     } catch (err) {
       setOutput("Error: " + err.message);
     }
 
     setLoading(false);
   };
+
+  // === AUTO-TRIAGE POLLING ===
+  useEffect(() => {
+    if (mode !== "auto-triage") return;
+
+    const interval = setInterval(() => {
+      handleSubmit({
+        preventDefault: () => {},
+      });
+    }, 30000); // every 30 sec
+
+    return () => clearInterval(interval);
+  }, [mode]);
 
   return (
     <div style={{ background: "#0f172a", color: "white", minHeight: "100vh", padding: 40 }}>
@@ -158,34 +163,36 @@ export default function App() {
             <KnowledgeBase setKbCount={setKbCount} />
           ) : (
             <>
-              <form onSubmit={handleSubmit}>
-                <textarea
-                  rows={6}
-                  placeholder={mode === "auto-triage" ? "Enter alert description (e.g., login from suspicious IP...)" : `Paste your ${mode} input here...`}
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  style={{
-                    width: "100%",
-                    padding: 16,
-                    fontSize: 16,
-                    borderRadius: 6,
-                    marginBottom: 20,
-                  }}
-                />
-                <button
-                  type="submit"
-                  style={{
-                    backgroundColor: "#3b82f6",
-                    color: "white",
-                    padding: "12px 24px",
-                    fontSize: 16,
-                    border: "none",
-                    borderRadius: 6,
-                  }}
-                >
-                  {loading ? "Working..." : "Submit"}
-                </button>
-              </form>
+              {mode !== "auto-triage" && (
+                <form onSubmit={handleSubmit}>
+                  <textarea
+                    rows={6}
+                    placeholder={`Paste your ${mode} input here...`}
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    style={{
+                      width: "100%",
+                      padding: 16,
+                      fontSize: 16,
+                      borderRadius: 6,
+                      marginBottom: 20,
+                    }}
+                  />
+                  <button
+                    type="submit"
+                    style={{
+                      backgroundColor: "#3b82f6",
+                      color: "white",
+                      padding: "12px 24px",
+                      fontSize: 16,
+                      border: "none",
+                      borderRadius: 6,
+                    }}
+                  >
+                    {loading ? "Working..." : "Submit"}
+                  </button>
+                </form>
+              )}
 
               {output && (
                 <div
@@ -202,22 +209,10 @@ export default function App() {
                     <>
                       <p style={{ marginTop: 8, color: "#10b981" }}>{timeSavedMsg}</p>
                       <p style={{ fontSize: "0.9em", color: "#38bdf8", marginTop: "0.25rem" }}>
-                        📊 Total Saved in {mode.replace("-", " ").toUpperCase()} Mode: {((mode === "triage" ? triageCount * 6 : mode === "threat-intel" ? threatIntelCount * 10 : triageCount * 6)).toFixed(1)} min • 💰 ~${(((mode === "triage" ? triageCount * 6 : mode === "threat-intel" ? threatIntelCount * 10 : triageCount * 6)) * MINUTE_RATE).toFixed(0)}
+                        📊 Total Saved in {mode.replace("-", " ").toUpperCase()} Mode: {((mode === "triage" ? triageCount * 6 : triageCount * 6)).toFixed(1)} min • 💰 ~${((triageCount * 6) * MINUTE_RATE).toFixed(0)}
                       </p>
                     </>
                   )}
-                </div>
-              )}
-
-              {ticketOutput && (
-                <div style={{
-                  marginTop: 20,
-                  backgroundColor: "#334155",
-                  padding: 20,
-                  borderRadius: 8,
-                }}>
-                  <h3>🎫 Auto-Generated Ticket:</h3>
-                  <pre style={{ whiteSpace: "pre-wrap" }}>{ticketOutput}</pre>
                 </div>
               )}
             </>
