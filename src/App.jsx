@@ -181,7 +181,7 @@ export default function App() {
           <div style={{ marginBottom: 20 }}>
             <strong>Choose Mode:</strong>
             <div style={{ marginTop: 10, display: "flex", gap: 10 }}>
-              {["triage", "threat-intel", "ticket", "kb", "auto-triage"].map((m) => (
+              {["triage", "threat-intel", "kb", "auto-triage"].map((m) => (
                 <button
                   key={m}
                   onClick={() => setMode(m)}
