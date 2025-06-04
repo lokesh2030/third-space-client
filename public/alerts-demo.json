@@ -1,0 +1,76 @@
+[
+  {
+    "alert_id": "alert-030",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 87,
+        "mitreTTPs": ["T1059", "T1204.002"],
+        "relatedIPs": ["169.182.234.111"],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-da9063"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-202",
+    "type": "non-actionable",
+    "source": "EDR",
+    "description": "Expired certificate on internal test server",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-027",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Malware detected in user download folder",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Malware detected in user download folder",
+      "enrichment": {
+        "virusTotalScore": 94,
+        "mitreTTPs": ["T1041", "T1027"],
+        "relatedIPs": ["139.243.230.149"],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-78eba0"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-071",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Data exfiltration over DNS tunneling",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Data exfiltration over DNS tunneling",
+      "enrichment": {
+        "virusTotalScore": 89,
+        "mitreTTPs": ["T1204.002", "T1059"],
+        "relatedIPs": ["16.221.14.162"],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-e80bb7"
+      }
+    }
+  }
+]
