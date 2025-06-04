@@ -153,7 +153,7 @@ export default function App() {
                   .join("\n\n");
             }
 
-            setOutput(`[${alert.id}] ${result}${enrichmentBlock}${ticketBlock}`);
+            setOutput(`[${alert.alert_id}] ${result}${enrichmentBlock}${ticketBlock}`);
             setTriageCount((prev) => prev + 1);
           } catch (err) {
             setOutput("Error: " + err.message);
