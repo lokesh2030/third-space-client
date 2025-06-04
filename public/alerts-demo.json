@@ -10,8 +10,13 @@
       "summary": "Command-and-control beacon to known malicious IP",
       "enrichment": {
         "virusTotalScore": 87,
-        "mitreTTPs": ["T1059", "T1204.002"],
-        "relatedIPs": ["169.182.234.111"],
+        "mitreTTPs": [
+          "T1059",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "169.182.234.111"
+        ],
         "remediation": "Investigate immediately, isolate host, block malicious domain"
       },
       "ticket": {
@@ -42,8 +47,13 @@
       "summary": "Malware detected in user download folder",
       "enrichment": {
         "virusTotalScore": 94,
-        "mitreTTPs": ["T1041", "T1027"],
-        "relatedIPs": ["139.243.230.149"],
+        "mitreTTPs": [
+          "T1041",
+          "T1027"
+        ],
+        "relatedIPs": [
+          "139.243.230.149"
+        ],
         "remediation": "Investigate immediately, isolate host, block malicious domain"
       },
       "ticket": {
@@ -63,13 +73,5229 @@
       "summary": "Data exfiltration over DNS tunneling",
       "enrichment": {
         "virusTotalScore": 89,
-        "mitreTTPs": ["T1204.002", "T1059"],
-        "relatedIPs": ["16.221.14.162"],
+        "mitreTTPs": [
+          "T1204.002",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "16.221.14.162"
+        ],
         "remediation": "Investigate immediately, isolate host, block malicious domain"
       },
       "ticket": {
         "created": true,
         "id": "ticket-e80bb7"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-189",
+    "type": "non-actionable",
+    "source": "EDR",
+    "description": "Scheduled vulnerability scan completed",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-042",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Unusual PowerShell execution from temp directory",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Unusual PowerShell execution from temp directory",
+      "enrichment": {
+        "virusTotalScore": 88,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "199.15.63.169"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-89cc54"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-144",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Unusual PowerShell execution from temp directory",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Unusual PowerShell execution from temp directory",
+      "enrichment": {
+        "virusTotalScore": 82,
+        "mitreTTPs": [
+          "T1204.002",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "11.43.16.101"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-39dbbe"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-136",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Suspicious email with credential harvesting link detected",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Suspicious email with credential harvesting link detected",
+      "enrichment": {
+        "virusTotalScore": 87,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "3.208.157.170"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-66acc4"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-114",
+    "type": "actionable",
+    "source": "XDR",
+    "description": "Unusual PowerShell execution from temp directory",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Unusual PowerShell execution from temp directory",
+      "enrichment": {
+        "virusTotalScore": 83,
+        "mitreTTPs": [
+          "T1041",
+          "T1027"
+        ],
+        "relatedIPs": [
+          "116.157.52.207"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-adc53a"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-111",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 97,
+        "mitreTTPs": [
+          "T1027",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "122.190.70.128"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-403a6b"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-188",
+    "type": "non-actionable",
+    "source": "Email Gateway",
+    "description": "User accessed public SharePoint file",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-017",
+    "type": "actionable",
+    "source": "Firewall",
+    "description": "Unusual PowerShell execution from temp directory",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Unusual PowerShell execution from temp directory",
+      "enrichment": {
+        "virusTotalScore": 97,
+        "mitreTTPs": [
+          "T1059",
+          "T1566.001"
+        ],
+        "relatedIPs": [
+          "127.30.38.242"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-6f488b"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-225",
+    "type": "non-actionable",
+    "source": "Internal Scanner",
+    "description": "Known benign domain pinged",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-073",
+    "type": "actionable",
+    "source": "EDR",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 89,
+        "mitreTTPs": [
+          "T1204.002",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "68.80.190.222"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-f57d43"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-097",
+    "type": "actionable",
+    "source": "EDR",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 85,
+        "mitreTTPs": [
+          "T1059",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "127.155.120.110"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-eeb681"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-089",
+    "type": "actionable",
+    "source": "XDR",
+    "description": "Suspicious email with credential harvesting link detected",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Suspicious email with credential harvesting link detected",
+      "enrichment": {
+        "virusTotalScore": 93,
+        "mitreTTPs": [
+          "T1059",
+          "T1566.001"
+        ],
+        "relatedIPs": [
+          "81.133.208.183"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-8f02a1"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-249",
+    "type": "non-actionable",
+    "source": "Azure AD",
+    "description": "Known benign domain pinged",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-067",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Malware detected in user download folder",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Malware detected in user download folder",
+      "enrichment": {
+        "virusTotalScore": 94,
+        "mitreTTPs": [
+          "T1059",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "49.175.6.13"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-3e6356"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-250",
+    "type": "non-actionable",
+    "source": "Azure AD",
+    "description": "User login from known safe location",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-014",
+    "type": "actionable",
+    "source": "XDR",
+    "description": "Suspicious email with credential harvesting link detected",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Suspicious email with credential harvesting link detected",
+      "enrichment": {
+        "virusTotalScore": 93,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1027"
+        ],
+        "relatedIPs": [
+          "162.82.134.57"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-58a7e6"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-203",
+    "type": "non-actionable",
+    "source": "Okta",
+    "description": "Scheduled vulnerability scan completed",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-010",
+    "type": "actionable",
+    "source": "XDR",
+    "description": "Suspicious email with credential harvesting link detected",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Suspicious email with credential harvesting link detected",
+      "enrichment": {
+        "virusTotalScore": 96,
+        "mitreTTPs": [
+          "T1027",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "74.196.118.202"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-7b4580"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-013",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Malware detected in user download folder",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Malware detected in user download folder",
+      "enrichment": {
+        "virusTotalScore": 99,
+        "mitreTTPs": [
+          "T1204.002",
+          "T1027"
+        ],
+        "relatedIPs": [
+          "254.190.85.80"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-e57e27"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-070",
+    "type": "actionable",
+    "source": "XDR",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 97,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "138.98.94.144"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-d04fa5"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-215",
+    "type": "non-actionable",
+    "source": "Okta",
+    "description": "Expired certificate on internal test server",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-048",
+    "type": "actionable",
+    "source": "Firewall",
+    "description": "Malware detected in user download folder",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Malware detected in user download folder",
+      "enrichment": {
+        "virusTotalScore": 89,
+        "mitreTTPs": [
+          "T1027",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "185.62.144.86"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-642b3a"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-198",
+    "type": "non-actionable",
+    "source": "Email Gateway",
+    "description": "User login from known safe location",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-008",
+    "type": "actionable",
+    "source": "XDR",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 95,
+        "mitreTTPs": [
+          "T1027",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "75.106.16.73"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-674337"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-180",
+    "type": "non-actionable",
+    "source": "Internal Scanner",
+    "description": "User accessed public SharePoint file",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-057",
+    "type": "actionable",
+    "source": "XDR",
+    "description": "Unusual PowerShell execution from temp directory",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Unusual PowerShell execution from temp directory",
+      "enrichment": {
+        "virusTotalScore": 93,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "90.191.44.2"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-54f1d6"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-199",
+    "type": "non-actionable",
+    "source": "Okta",
+    "description": "Expired certificate on internal test server",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-162",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Unusual PowerShell execution from temp directory",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Unusual PowerShell execution from temp directory",
+      "enrichment": {
+        "virusTotalScore": 88,
+        "mitreTTPs": [
+          "T1059",
+          "T1566.001"
+        ],
+        "relatedIPs": [
+          "26.43.164.67"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-1ac532"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-133",
+    "type": "actionable",
+    "source": "EDR",
+    "description": "Unusual PowerShell execution from temp directory",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Unusual PowerShell execution from temp directory",
+      "enrichment": {
+        "virusTotalScore": 96,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1027"
+        ],
+        "relatedIPs": [
+          "63.158.80.170"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-9a2008"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-066",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Malware detected in user download folder",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Malware detected in user download folder",
+      "enrichment": {
+        "virusTotalScore": 91,
+        "mitreTTPs": [
+          "T1041",
+          "T1566.001"
+        ],
+        "relatedIPs": [
+          "129.121.228.62"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-2c30dd"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-154",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Suspicious email with credential harvesting link detected",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Suspicious email with credential harvesting link detected",
+      "enrichment": {
+        "virusTotalScore": 99,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "119.117.226.39"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-f07a94"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-087",
+    "type": "actionable",
+    "source": "EDR",
+    "description": "Data exfiltration over DNS tunneling",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Data exfiltration over DNS tunneling",
+      "enrichment": {
+        "virusTotalScore": 98,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "21.117.123.109"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-6d6bfa"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-020",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Suspicious email with credential harvesting link detected",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Suspicious email with credential harvesting link detected",
+      "enrichment": {
+        "virusTotalScore": 89,
+        "mitreTTPs": [
+          "T1027",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "10.204.101.69"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-5510ad"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-137",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 88,
+        "mitreTTPs": [
+          "T1059",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "201.10.16.19"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-cb3a1f"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-187",
+    "type": "non-actionable",
+    "source": "EDR",
+    "description": "Expired certificate on internal test server",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-004",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 88,
+        "mitreTTPs": [
+          "T1027",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "91.46.203.175"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-5b1735"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-201",
+    "type": "non-actionable",
+    "source": "Email Gateway",
+    "description": "Expired certificate on internal test server",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-075",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Data exfiltration over DNS tunneling",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Data exfiltration over DNS tunneling",
+      "enrichment": {
+        "virusTotalScore": 81,
+        "mitreTTPs": [
+          "T1041",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "200.218.254.50"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-d75dfd"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-151",
+    "type": "actionable",
+    "source": "Firewall",
+    "description": "Unusual PowerShell execution from temp directory",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Unusual PowerShell execution from temp directory",
+      "enrichment": {
+        "virusTotalScore": 82,
+        "mitreTTPs": [
+          "T1027",
+          "T1566.001"
+        ],
+        "relatedIPs": [
+          "9.44.82.155"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-14a2da"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-214",
+    "type": "non-actionable",
+    "source": "Email Gateway",
+    "description": "User accessed public SharePoint file",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-130",
+    "type": "actionable",
+    "source": "Firewall",
+    "description": "Data exfiltration over DNS tunneling",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Data exfiltration over DNS tunneling",
+      "enrichment": {
+        "virusTotalScore": 97,
+        "mitreTTPs": [
+          "T1027",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "104.166.213.209"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-bc3b5d"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-023",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Suspicious email with credential harvesting link detected",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Suspicious email with credential harvesting link detected",
+      "enrichment": {
+        "virusTotalScore": 88,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "105.7.159.12"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-f6d088"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-086",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Suspicious email with credential harvesting link detected",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Suspicious email with credential harvesting link detected",
+      "enrichment": {
+        "virusTotalScore": 99,
+        "mitreTTPs": [
+          "T1204.002",
+          "T1566.001"
+        ],
+        "relatedIPs": [
+          "75.159.8.28"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-8d02f4"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-167",
+    "type": "actionable",
+    "source": "Firewall",
+    "description": "Data exfiltration over DNS tunneling",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Data exfiltration over DNS tunneling",
+      "enrichment": {
+        "virusTotalScore": 83,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "89.87.59.138"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-e9e63a"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-076",
+    "type": "actionable",
+    "source": "EDR",
+    "description": "Data exfiltration over DNS tunneling",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Data exfiltration over DNS tunneling",
+      "enrichment": {
+        "virusTotalScore": 88,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "93.103.102.57"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-f45e56"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-135",
+    "type": "actionable",
+    "source": "XDR",
+    "description": "Malware detected in user download folder",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Malware detected in user download folder",
+      "enrichment": {
+        "virusTotalScore": 85,
+        "mitreTTPs": [
+          "T1041",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "142.218.111.171"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-d04c0b"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-104",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Data exfiltration over DNS tunneling",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Data exfiltration over DNS tunneling",
+      "enrichment": {
+        "virusTotalScore": 93,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "103.224.172.13"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-bd4508"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-121",
+    "type": "actionable",
+    "source": "XDR",
+    "description": "Malware detected in user download folder",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Malware detected in user download folder",
+      "enrichment": {
+        "virusTotalScore": 95,
+        "mitreTTPs": [
+          "T1204.002",
+          "T1027"
+        ],
+        "relatedIPs": [
+          "152.133.75.144"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-5a2864"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-033",
+    "type": "actionable",
+    "source": "XDR",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 95,
+        "mitreTTPs": [
+          "T1059",
+          "T1027"
+        ],
+        "relatedIPs": [
+          "149.83.224.197"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-2a3c64"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-195",
+    "type": "non-actionable",
+    "source": "Okta",
+    "description": "Scheduled vulnerability scan completed",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-129",
+    "type": "actionable",
+    "source": "XDR",
+    "description": "Data exfiltration over DNS tunneling",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Data exfiltration over DNS tunneling",
+      "enrichment": {
+        "virusTotalScore": 97,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "2.79.154.213"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-6ae075"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-116",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 96,
+        "mitreTTPs": [
+          "T1204.002",
+          "T1566.001"
+        ],
+        "relatedIPs": [
+          "69.83.177.87"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-fb28c2"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-001",
+    "type": "actionable",
+    "source": "XDR",
+    "description": "Unusual PowerShell execution from temp directory",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Unusual PowerShell execution from temp directory",
+      "enrichment": {
+        "virusTotalScore": 84,
+        "mitreTTPs": [
+          "T1059",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "185.178.173.40"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-c157ba"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-156",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Suspicious email with credential harvesting link detected",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Suspicious email with credential harvesting link detected",
+      "enrichment": {
+        "virusTotalScore": 91,
+        "mitreTTPs": [
+          "T1041",
+          "T1566.001"
+        ],
+        "relatedIPs": [
+          "30.145.96.164"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-0ed3d9"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-174",
+    "type": "non-actionable",
+    "source": "Internal Scanner",
+    "description": "Expired certificate on internal test server",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-095",
+    "type": "actionable",
+    "source": "XDR",
+    "description": "Unusual PowerShell execution from temp directory",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Unusual PowerShell execution from temp directory",
+      "enrichment": {
+        "virusTotalScore": 90,
+        "mitreTTPs": [
+          "T1204.002",
+          "T1027"
+        ],
+        "relatedIPs": [
+          "182.99.11.187"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-4cc965"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-084",
+    "type": "actionable",
+    "source": "Firewall",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 81,
+        "mitreTTPs": [
+          "T1027",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "236.232.174.173"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-68d51e"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-100",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Unusual PowerShell execution from temp directory",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Unusual PowerShell execution from temp directory",
+      "enrichment": {
+        "virusTotalScore": 81,
+        "mitreTTPs": [
+          "T1059",
+          "T1566.001"
+        ],
+        "relatedIPs": [
+          "75.135.68.154"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-a4d27d"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-018",
+    "type": "actionable",
+    "source": "Firewall",
+    "description": "Suspicious email with credential harvesting link detected",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Suspicious email with credential harvesting link detected",
+      "enrichment": {
+        "virusTotalScore": 99,
+        "mitreTTPs": [
+          "T1059",
+          "T1027"
+        ],
+        "relatedIPs": [
+          "197.231.198.116"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-e61a40"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-101",
+    "type": "actionable",
+    "source": "Firewall",
+    "description": "Unusual PowerShell execution from temp directory",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Unusual PowerShell execution from temp directory",
+      "enrichment": {
+        "virusTotalScore": 94,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "52.187.129.80"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-a6f0f7"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-034",
+    "type": "actionable",
+    "source": "XDR",
+    "description": "Unusual PowerShell execution from temp directory",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Unusual PowerShell execution from temp directory",
+      "enrichment": {
+        "virusTotalScore": 98,
+        "mitreTTPs": [
+          "T1041",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "169.196.69.67"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-b31185"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-194",
+    "type": "non-actionable",
+    "source": "EDR",
+    "description": "Scheduled vulnerability scan completed",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-228",
+    "type": "non-actionable",
+    "source": "Email Gateway",
+    "description": "Known benign domain pinged",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-028",
+    "type": "actionable",
+    "source": "EDR",
+    "description": "Suspicious email with credential harvesting link detected",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Suspicious email with credential harvesting link detected",
+      "enrichment": {
+        "virusTotalScore": 80,
+        "mitreTTPs": [
+          "T1204.002",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "236.58.110.215"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-264ae8"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-242",
+    "type": "non-actionable",
+    "source": "Internal Scanner",
+    "description": "Known benign domain pinged",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-186",
+    "type": "non-actionable",
+    "source": "EDR",
+    "description": "Scheduled vulnerability scan completed",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-207",
+    "type": "non-actionable",
+    "source": "Azure AD",
+    "description": "User login from known safe location",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-009",
+    "type": "actionable",
+    "source": "EDR",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 91,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "7.81.135.160"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-a7af52"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-045",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 90,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "138.14.76.20"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-0190f2"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-115",
+    "type": "actionable",
+    "source": "Firewall",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 81,
+        "mitreTTPs": [
+          "T1041",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "80.13.111.130"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-b567ba"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-175",
+    "type": "non-actionable",
+    "source": "Email Gateway",
+    "description": "User accessed public SharePoint file",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-118",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 95,
+        "mitreTTPs": [
+          "T1204.002",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "73.91.33.234"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-221e22"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-236",
+    "type": "non-actionable",
+    "source": "EDR",
+    "description": "Scheduled vulnerability scan completed",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-053",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Malware detected in user download folder",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Malware detected in user download folder",
+      "enrichment": {
+        "virusTotalScore": 87,
+        "mitreTTPs": [
+          "T1027",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "59.138.245.21"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-12fd6e"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-077",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Data exfiltration over DNS tunneling",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Data exfiltration over DNS tunneling",
+      "enrichment": {
+        "virusTotalScore": 90,
+        "mitreTTPs": [
+          "T1027",
+          "T1566.001"
+        ],
+        "relatedIPs": [
+          "7.183.194.17"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-fbe499"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-082",
+    "type": "actionable",
+    "source": "Firewall",
+    "description": "Malware detected in user download folder",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Malware detected in user download folder",
+      "enrichment": {
+        "virusTotalScore": 94,
+        "mitreTTPs": [
+          "T1041",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "55.189.128.100"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-301740"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-159",
+    "type": "actionable",
+    "source": "EDR",
+    "description": "Unusual PowerShell execution from temp directory",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Unusual PowerShell execution from temp directory",
+      "enrichment": {
+        "virusTotalScore": 89,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1027"
+        ],
+        "relatedIPs": [
+          "195.38.123.249"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-2414a7"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-061",
+    "type": "actionable",
+    "source": "XDR",
+    "description": "Data exfiltration over DNS tunneling",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Data exfiltration over DNS tunneling",
+      "enrichment": {
+        "virusTotalScore": 86,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "8.182.189.26"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-38d4bd"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-005",
+    "type": "actionable",
+    "source": "XDR",
+    "description": "Data exfiltration over DNS tunneling",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Data exfiltration over DNS tunneling",
+      "enrichment": {
+        "virusTotalScore": 94,
+        "mitreTTPs": [
+          "T1041",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "78.37.232.160"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-15de46"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-152",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Malware detected in user download folder",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Malware detected in user download folder",
+      "enrichment": {
+        "virusTotalScore": 91,
+        "mitreTTPs": [
+          "T1204.002",
+          "T1566.001"
+        ],
+        "relatedIPs": [
+          "1.182.63.174"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-3a9c66"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-119",
+    "type": "actionable",
+    "source": "XDR",
+    "description": "Malware detected in user download folder",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Malware detected in user download folder",
+      "enrichment": {
+        "virusTotalScore": 84,
+        "mitreTTPs": [
+          "T1041",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "76.121.129.112"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-012e9a"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-081",
+    "type": "actionable",
+    "source": "XDR",
+    "description": "Data exfiltration over DNS tunneling",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Data exfiltration over DNS tunneling",
+      "enrichment": {
+        "virusTotalScore": 87,
+        "mitreTTPs": [
+          "T1041",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "199.231.76.52"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-e78375"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-139",
+    "type": "actionable",
+    "source": "EDR",
+    "description": "Suspicious email with credential harvesting link detected",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Suspicious email with credential harvesting link detected",
+      "enrichment": {
+        "virusTotalScore": 92,
+        "mitreTTPs": [
+          "T1027",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "38.153.75.143"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-44df93"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-088",
+    "type": "actionable",
+    "source": "XDR",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 80,
+        "mitreTTPs": [
+          "T1059",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "105.44.172.180"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-0f94da"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-220",
+    "type": "non-actionable",
+    "source": "Internal Scanner",
+    "description": "Known benign domain pinged",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-021",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Malware detected in user download folder",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Malware detected in user download folder",
+      "enrichment": {
+        "virusTotalScore": 84,
+        "mitreTTPs": [
+          "T1041",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "188.114.91.245"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-e37461"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-068",
+    "type": "actionable",
+    "source": "EDR",
+    "description": "Data exfiltration over DNS tunneling",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Data exfiltration over DNS tunneling",
+      "enrichment": {
+        "virusTotalScore": 87,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1027"
+        ],
+        "relatedIPs": [
+          "137.42.9.97"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-3d7e1b"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-050",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 97,
+        "mitreTTPs": [
+          "T1204.002",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "77.143.69.79"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-b9368d"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-122",
+    "type": "actionable",
+    "source": "XDR",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 99,
+        "mitreTTPs": [
+          "T1027",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "52.221.178.166"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-748232"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-178",
+    "type": "non-actionable",
+    "source": "EDR",
+    "description": "User accessed public SharePoint file",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-246",
+    "type": "non-actionable",
+    "source": "Email Gateway",
+    "description": "Known benign domain pinged",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-150",
+    "type": "actionable",
+    "source": "XDR",
+    "description": "Data exfiltration over DNS tunneling",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Data exfiltration over DNS tunneling",
+      "enrichment": {
+        "virusTotalScore": 84,
+        "mitreTTPs": [
+          "T1027",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "113.105.19.125"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-821d3c"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-127",
+    "type": "actionable",
+    "source": "EDR",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 80,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1027"
+        ],
+        "relatedIPs": [
+          "183.56.198.172"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-86a12f"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-134",
+    "type": "actionable",
+    "source": "Firewall",
+    "description": "Suspicious email with credential harvesting link detected",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Suspicious email with credential harvesting link detected",
+      "enrichment": {
+        "virusTotalScore": 97,
+        "mitreTTPs": [
+          "T1027",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "215.128.69.216"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-a65e54"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-041",
+    "type": "actionable",
+    "source": "XDR",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 95,
+        "mitreTTPs": [
+          "T1027",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "34.17.166.20"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-04fff4"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-208",
+    "type": "non-actionable",
+    "source": "Okta",
+    "description": "Known benign domain pinged",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-229",
+    "type": "non-actionable",
+    "source": "Internal Scanner",
+    "description": "Expired certificate on internal test server",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-112",
+    "type": "actionable",
+    "source": "EDR",
+    "description": "Suspicious email with credential harvesting link detected",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Suspicious email with credential harvesting link detected",
+      "enrichment": {
+        "virusTotalScore": 82,
+        "mitreTTPs": [
+          "T1027",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "230.196.136.28"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-25eb3e"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-002",
+    "type": "actionable",
+    "source": "EDR",
+    "description": "Malware detected in user download folder",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Malware detected in user download folder",
+      "enrichment": {
+        "virusTotalScore": 80,
+        "mitreTTPs": [
+          "T1059",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "101.187.96.140"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-40e3b2"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-108",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Suspicious email with credential harvesting link detected",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Suspicious email with credential harvesting link detected",
+      "enrichment": {
+        "virusTotalScore": 98,
+        "mitreTTPs": [
+          "T1059",
+          "T1027"
+        ],
+        "relatedIPs": [
+          "187.240.56.229"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-949f23"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-080",
+    "type": "actionable",
+    "source": "Firewall",
+    "description": "Data exfiltration over DNS tunneling",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Data exfiltration over DNS tunneling",
+      "enrichment": {
+        "virusTotalScore": 81,
+        "mitreTTPs": [
+          "T1059",
+          "T1027"
+        ],
+        "relatedIPs": [
+          "9.6.17.51"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-3c8051"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-210",
+    "type": "non-actionable",
+    "source": "EDR",
+    "description": "Expired certificate on internal test server",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-058",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Suspicious email with credential harvesting link detected",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Suspicious email with credential harvesting link detected",
+      "enrichment": {
+        "virusTotalScore": 80,
+        "mitreTTPs": [
+          "T1027",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "99.125.251.245"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-0b63ff"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-212",
+    "type": "non-actionable",
+    "source": "EDR",
+    "description": "User accessed public SharePoint file",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-235",
+    "type": "non-actionable",
+    "source": "Internal Scanner",
+    "description": "Expired certificate on internal test server",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-040",
+    "type": "actionable",
+    "source": "XDR",
+    "description": "Data exfiltration over DNS tunneling",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Data exfiltration over DNS tunneling",
+      "enrichment": {
+        "virusTotalScore": 88,
+        "mitreTTPs": [
+          "T1041",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "193.224.130.139"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-ff54cb"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-064",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Unusual PowerShell execution from temp directory",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Unusual PowerShell execution from temp directory",
+      "enrichment": {
+        "virusTotalScore": 98,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "209.37.53.73"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-6d74de"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-036",
+    "type": "actionable",
+    "source": "EDR",
+    "description": "Suspicious email with credential harvesting link detected",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Suspicious email with credential harvesting link detected",
+      "enrichment": {
+        "virusTotalScore": 92,
+        "mitreTTPs": [
+          "T1027",
+          "T1566.001"
+        ],
+        "relatedIPs": [
+          "178.86.23.36"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-bef545"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-216",
+    "type": "non-actionable",
+    "source": "Email Gateway",
+    "description": "User accessed public SharePoint file",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-200",
+    "type": "non-actionable",
+    "source": "Email Gateway",
+    "description": "Expired certificate on internal test server",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-221",
+    "type": "non-actionable",
+    "source": "Okta",
+    "description": "Expired certificate on internal test server",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-085",
+    "type": "actionable",
+    "source": "Firewall",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 81,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "158.252.156.20"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-286738"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-218",
+    "type": "non-actionable",
+    "source": "Internal Scanner",
+    "description": "Scheduled vulnerability scan completed",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-163",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 89,
+        "mitreTTPs": [
+          "T1204.002",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "126.239.136.237"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-b5838f"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-158",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 84,
+        "mitreTTPs": [
+          "T1204.002",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "109.175.7.37"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-a6b58b"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-093",
+    "type": "actionable",
+    "source": "EDR",
+    "description": "Unusual PowerShell execution from temp directory",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Unusual PowerShell execution from temp directory",
+      "enrichment": {
+        "virusTotalScore": 81,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "10.214.27.94"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-c2e3be"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-245",
+    "type": "non-actionable",
+    "source": "Email Gateway",
+    "description": "Scheduled vulnerability scan completed",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-161",
+    "type": "actionable",
+    "source": "XDR",
+    "description": "Unusual PowerShell execution from temp directory",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Unusual PowerShell execution from temp directory",
+      "enrichment": {
+        "virusTotalScore": 95,
+        "mitreTTPs": [
+          "T1027",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "210.113.226.111"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-5fbd58"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-090",
+    "type": "actionable",
+    "source": "XDR",
+    "description": "Malware detected in user download folder",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Malware detected in user download folder",
+      "enrichment": {
+        "virusTotalScore": 94,
+        "mitreTTPs": [
+          "T1059",
+          "T1566.001"
+        ],
+        "relatedIPs": [
+          "63.64.115.226"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-afd364"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-035",
+    "type": "actionable",
+    "source": "Firewall",
+    "description": "Suspicious email with credential harvesting link detected",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Suspicious email with credential harvesting link detected",
+      "enrichment": {
+        "virusTotalScore": 81,
+        "mitreTTPs": [
+          "T1041",
+          "T1566.001"
+        ],
+        "relatedIPs": [
+          "119.10.1.251"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-4af24d"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-078",
+    "type": "actionable",
+    "source": "EDR",
+    "description": "Unusual PowerShell execution from temp directory",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Unusual PowerShell execution from temp directory",
+      "enrichment": {
+        "virusTotalScore": 88,
+        "mitreTTPs": [
+          "T1059",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "103.205.83.34"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-d9d3e5"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-072",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Malware detected in user download folder",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Malware detected in user download folder",
+      "enrichment": {
+        "virusTotalScore": 96,
+        "mitreTTPs": [
+          "T1027",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "106.160.151.61"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-df95d4"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-083",
+    "type": "actionable",
+    "source": "Firewall",
+    "description": "Unusual PowerShell execution from temp directory",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Unusual PowerShell execution from temp directory",
+      "enrichment": {
+        "virusTotalScore": 88,
+        "mitreTTPs": [
+          "T1041",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "222.21.169.153"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-4711b5"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-172",
+    "type": "non-actionable",
+    "source": "Internal Scanner",
+    "description": "User accessed public SharePoint file",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-138",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 97,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1027"
+        ],
+        "relatedIPs": [
+          "215.11.92.138"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-82228e"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-099",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Suspicious email with credential harvesting link detected",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Suspicious email with credential harvesting link detected",
+      "enrichment": {
+        "virusTotalScore": 99,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "116.4.5.88"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-5192a5"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-153",
+    "type": "actionable",
+    "source": "XDR",
+    "description": "Unusual PowerShell execution from temp directory",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Unusual PowerShell execution from temp directory",
+      "enrichment": {
+        "virusTotalScore": 96,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "237.102.1.25"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-26cf5e"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-185",
+    "type": "non-actionable",
+    "source": "Azure AD",
+    "description": "User login from known safe location",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-107",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 97,
+        "mitreTTPs": [
+          "T1059",
+          "T1027"
+        ],
+        "relatedIPs": [
+          "215.218.163.225"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-eeb528"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-217",
+    "type": "non-actionable",
+    "source": "Internal Scanner",
+    "description": "Known benign domain pinged",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-065",
+    "type": "actionable",
+    "source": "Firewall",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 87,
+        "mitreTTPs": [
+          "T1041",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "19.70.191.106"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-521e8c"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-131",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Suspicious email with credential harvesting link detected",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Suspicious email with credential harvesting link detected",
+      "enrichment": {
+        "virusTotalScore": 88,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "167.104.237.192"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-6284cf"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-164",
+    "type": "actionable",
+    "source": "XDR",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 93,
+        "mitreTTPs": [
+          "T1204.002",
+          "T1566.001"
+        ],
+        "relatedIPs": [
+          "38.108.53.147"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-0e036a"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-141",
+    "type": "actionable",
+    "source": "EDR",
+    "description": "Unusual PowerShell execution from temp directory",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Unusual PowerShell execution from temp directory",
+      "enrichment": {
+        "virusTotalScore": 94,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "81.229.177.54"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-546ef5"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-146",
+    "type": "actionable",
+    "source": "EDR",
+    "description": "Malware detected in user download folder",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Malware detected in user download folder",
+      "enrichment": {
+        "virusTotalScore": 90,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "209.242.244.9"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-293b50"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-248",
+    "type": "non-actionable",
+    "source": "Email Gateway",
+    "description": "User login from known safe location",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-091",
+    "type": "actionable",
+    "source": "EDR",
+    "description": "Unusual PowerShell execution from temp directory",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Unusual PowerShell execution from temp directory",
+      "enrichment": {
+        "virusTotalScore": 88,
+        "mitreTTPs": [
+          "T1041",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "80.122.157.110"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-4f4b43"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-019",
+    "type": "actionable",
+    "source": "Firewall",
+    "description": "Malware detected in user download folder",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Malware detected in user download folder",
+      "enrichment": {
+        "virusTotalScore": 88,
+        "mitreTTPs": [
+          "T1204.002",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "161.65.28.90"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-c04685"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-211",
+    "type": "non-actionable",
+    "source": "Email Gateway",
+    "description": "Scheduled vulnerability scan completed",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-176",
+    "type": "non-actionable",
+    "source": "Okta",
+    "description": "User accessed public SharePoint file",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-196",
+    "type": "non-actionable",
+    "source": "Okta",
+    "description": "User login from known safe location",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-049",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Unusual PowerShell execution from temp directory",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Unusual PowerShell execution from temp directory",
+      "enrichment": {
+        "virusTotalScore": 81,
+        "mitreTTPs": [
+          "T1041",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "27.104.116.135"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-935b04"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-181",
+    "type": "non-actionable",
+    "source": "EDR",
+    "description": "Scheduled vulnerability scan completed",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-140",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 94,
+        "mitreTTPs": [
+          "T1204.002",
+          "T1566.001"
+        ],
+        "relatedIPs": [
+          "217.23.147.141"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-eaed58"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-069",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Unusual PowerShell execution from temp directory",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Unusual PowerShell execution from temp directory",
+      "enrichment": {
+        "virusTotalScore": 89,
+        "mitreTTPs": [
+          "T1027",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "144.108.141.170"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-e7f794"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-106",
+    "type": "actionable",
+    "source": "Firewall",
+    "description": "Data exfiltration over DNS tunneling",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Data exfiltration over DNS tunneling",
+      "enrichment": {
+        "virusTotalScore": 85,
+        "mitreTTPs": [
+          "T1059",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "138.151.246.160"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-379bc5"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-222",
+    "type": "non-actionable",
+    "source": "Internal Scanner",
+    "description": "User accessed public SharePoint file",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-232",
+    "type": "non-actionable",
+    "source": "Internal Scanner",
+    "description": "Known benign domain pinged",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-128",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Unusual PowerShell execution from temp directory",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Unusual PowerShell execution from temp directory",
+      "enrichment": {
+        "virusTotalScore": 99,
+        "mitreTTPs": [
+          "T1041",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "104.100.66.100"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-571976"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-039",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Suspicious email with credential harvesting link detected",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Suspicious email with credential harvesting link detected",
+      "enrichment": {
+        "virusTotalScore": 99,
+        "mitreTTPs": [
+          "T1027",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "129.111.238.103"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-a43d02"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-230",
+    "type": "non-actionable",
+    "source": "EDR",
+    "description": "Known benign domain pinged",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-126",
+    "type": "actionable",
+    "source": "EDR",
+    "description": "Data exfiltration over DNS tunneling",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Data exfiltration over DNS tunneling",
+      "enrichment": {
+        "virusTotalScore": 86,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "122.227.43.19"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-0f1b35"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-123",
+    "type": "actionable",
+    "source": "EDR",
+    "description": "Data exfiltration over DNS tunneling",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Data exfiltration over DNS tunneling",
+      "enrichment": {
+        "virusTotalScore": 82,
+        "mitreTTPs": [
+          "T1059",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "5.51.61.10"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-08261e"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-052",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Malware detected in user download folder",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Malware detected in user download folder",
+      "enrichment": {
+        "virusTotalScore": 96,
+        "mitreTTPs": [
+          "T1027",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "222.180.163.149"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-3695c5"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-006",
+    "type": "actionable",
+    "source": "XDR",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 92,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "208.129.198.137"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-be0f4b"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-103",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Data exfiltration over DNS tunneling",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Data exfiltration over DNS tunneling",
+      "enrichment": {
+        "virusTotalScore": 89,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "254.244.84.106"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-b4f7c8"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-007",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Suspicious email with credential harvesting link detected",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Suspicious email with credential harvesting link detected",
+      "enrichment": {
+        "virusTotalScore": 86,
+        "mitreTTPs": [
+          "T1059",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "205.114.134.193"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-e6c422"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-165",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Malware detected in user download folder",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Malware detected in user download folder",
+      "enrichment": {
+        "virusTotalScore": 92,
+        "mitreTTPs": [
+          "T1204.002",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "169.137.159.220"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-a6aa59"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-102",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Data exfiltration over DNS tunneling",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Data exfiltration over DNS tunneling",
+      "enrichment": {
+        "virusTotalScore": 94,
+        "mitreTTPs": [
+          "T1059",
+          "T1027"
+        ],
+        "relatedIPs": [
+          "219.242.43.58"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-7bb4e9"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-233",
+    "type": "non-actionable",
+    "source": "Internal Scanner",
+    "description": "User accessed public SharePoint file",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-038",
+    "type": "actionable",
+    "source": "XDR",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 87,
+        "mitreTTPs": [
+          "T1204.002",
+          "T1566.001"
+        ],
+        "relatedIPs": [
+          "1.12.7.197"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-05586e"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-171",
+    "type": "non-actionable",
+    "source": "EDR",
+    "description": "Known benign domain pinged",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-047",
+    "type": "actionable",
+    "source": "EDR",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 90,
+        "mitreTTPs": [
+          "T1059",
+          "T1566.001"
+        ],
+        "relatedIPs": [
+          "84.14.195.146"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-44e11e"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-193",
+    "type": "non-actionable",
+    "source": "Azure AD",
+    "description": "Expired certificate on internal test server",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-240",
+    "type": "non-actionable",
+    "source": "Email Gateway",
+    "description": "Known benign domain pinged",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-179",
+    "type": "non-actionable",
+    "source": "EDR",
+    "description": "User login from known safe location",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-227",
+    "type": "non-actionable",
+    "source": "Okta",
+    "description": "User login from known safe location",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-032",
+    "type": "actionable",
+    "source": "XDR",
+    "description": "Data exfiltration over DNS tunneling",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Data exfiltration over DNS tunneling",
+      "enrichment": {
+        "virusTotalScore": 96,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "94.123.150.195"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-c1908d"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-026",
+    "type": "actionable",
+    "source": "XDR",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 87,
+        "mitreTTPs": [
+          "T1204.002",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "140.135.148.193"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-001b20"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-063",
+    "type": "actionable",
+    "source": "XDR",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 92,
+        "mitreTTPs": [
+          "T1059",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "155.144.77.69"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-8c4399"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-094",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Malware detected in user download folder",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Malware detected in user download folder",
+      "enrichment": {
+        "virusTotalScore": 91,
+        "mitreTTPs": [
+          "T1059",
+          "T1566.001"
+        ],
+        "relatedIPs": [
+          "222.206.29.2"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-37e314"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-247",
+    "type": "non-actionable",
+    "source": "Email Gateway",
+    "description": "Known benign domain pinged",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-243",
+    "type": "non-actionable",
+    "source": "Okta",
+    "description": "Scheduled vulnerability scan completed",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-109",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Data exfiltration over DNS tunneling",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Data exfiltration over DNS tunneling",
+      "enrichment": {
+        "virusTotalScore": 80,
+        "mitreTTPs": [
+          "T1059",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "58.37.103.75"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-a7861d"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-037",
+    "type": "actionable",
+    "source": "EDR",
+    "description": "Suspicious email with credential harvesting link detected",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Suspicious email with credential harvesting link detected",
+      "enrichment": {
+        "virusTotalScore": 84,
+        "mitreTTPs": [
+          "T1204.002",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "199.12.141.56"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-2bd20a"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-169",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Unusual PowerShell execution from temp directory",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Unusual PowerShell execution from temp directory",
+      "enrichment": {
+        "virusTotalScore": 87,
+        "mitreTTPs": [
+          "T1059",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "229.135.110.149"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-02ecad"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-092",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Suspicious email with credential harvesting link detected",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Suspicious email with credential harvesting link detected",
+      "enrichment": {
+        "virusTotalScore": 99,
+        "mitreTTPs": [
+          "T1027",
+          "T1566.001"
+        ],
+        "relatedIPs": [
+          "160.160.189.45"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-03dc4f"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-191",
+    "type": "non-actionable",
+    "source": "Azure AD",
+    "description": "User accessed public SharePoint file",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-213",
+    "type": "non-actionable",
+    "source": "Internal Scanner",
+    "description": "User login from known safe location",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-003",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Data exfiltration over DNS tunneling",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Data exfiltration over DNS tunneling",
+      "enrichment": {
+        "virusTotalScore": 98,
+        "mitreTTPs": [
+          "T1204.002",
+          "T1566.001"
+        ],
+        "relatedIPs": [
+          "25.128.51.186"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-5a8ceb"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-209",
+    "type": "non-actionable",
+    "source": "Azure AD",
+    "description": "User accessed public SharePoint file",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-022",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 90,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "101.37.232.131"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-ed69f1"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-056",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Data exfiltration over DNS tunneling",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Data exfiltration over DNS tunneling",
+      "enrichment": {
+        "virusTotalScore": 84,
+        "mitreTTPs": [
+          "T1027",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "46.197.156.10"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-cee61a"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-031",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Malware detected in user download folder",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Malware detected in user download folder",
+      "enrichment": {
+        "virusTotalScore": 81,
+        "mitreTTPs": [
+          "T1027",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "171.161.237.225"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-82c98c"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-059",
+    "type": "actionable",
+    "source": "EDR",
+    "description": "Suspicious email with credential harvesting link detected",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Suspicious email with credential harvesting link detected",
+      "enrichment": {
+        "virusTotalScore": 91,
+        "mitreTTPs": [
+          "T1204.002",
+          "T1566.001"
+        ],
+        "relatedIPs": [
+          "78.122.243.87"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-7e2575"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-105",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Data exfiltration over DNS tunneling",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Data exfiltration over DNS tunneling",
+      "enrichment": {
+        "virusTotalScore": 91,
+        "mitreTTPs": [
+          "T1027",
+          "T1566.001"
+        ],
+        "relatedIPs": [
+          "56.236.210.167"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-ce7e1e"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-226",
+    "type": "non-actionable",
+    "source": "Okta",
+    "description": "Known benign domain pinged",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-197",
+    "type": "non-actionable",
+    "source": "EDR",
+    "description": "Scheduled vulnerability scan completed",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-132",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Malware detected in user download folder",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Malware detected in user download folder",
+      "enrichment": {
+        "virusTotalScore": 99,
+        "mitreTTPs": [
+          "T1204.002",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "221.217.4.226"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-6d11c2"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-223",
+    "type": "non-actionable",
+    "source": "EDR",
+    "description": "User login from known safe location",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-231",
+    "type": "non-actionable",
+    "source": "Internal Scanner",
+    "description": "Known benign domain pinged",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-074",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Suspicious email with credential harvesting link detected",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Suspicious email with credential harvesting link detected",
+      "enrichment": {
+        "virusTotalScore": 81,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "61.237.184.107"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-8fd803"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-224",
+    "type": "non-actionable",
+    "source": "EDR",
+    "description": "Scheduled vulnerability scan completed",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-182",
+    "type": "non-actionable",
+    "source": "Azure AD",
+    "description": "Expired certificate on internal test server",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-124",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Suspicious email with credential harvesting link detected",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Suspicious email with credential harvesting link detected",
+      "enrichment": {
+        "virusTotalScore": 88,
+        "mitreTTPs": [
+          "T1204.002",
+          "T1566.001"
+        ],
+        "relatedIPs": [
+          "157.100.185.62"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-88102e"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-024",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Malware detected in user download folder",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Malware detected in user download folder",
+      "enrichment": {
+        "virusTotalScore": 98,
+        "mitreTTPs": [
+          "T1041",
+          "T1566.001"
+        ],
+        "relatedIPs": [
+          "157.209.170.109"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-dc7f79"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-148",
+    "type": "actionable",
+    "source": "Firewall",
+    "description": "Unusual PowerShell execution from temp directory",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Unusual PowerShell execution from temp directory",
+      "enrichment": {
+        "virusTotalScore": 93,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "109.96.1.66"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-fbb9c6"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-149",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Suspicious email with credential harvesting link detected",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Suspicious email with credential harvesting link detected",
+      "enrichment": {
+        "virusTotalScore": 91,
+        "mitreTTPs": [
+          "T1204.002",
+          "T1027"
+        ],
+        "relatedIPs": [
+          "48.135.154.213"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-a69c46"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-204",
+    "type": "non-actionable",
+    "source": "Email Gateway",
+    "description": "Expired certificate on internal test server",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-155",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 92,
+        "mitreTTPs": [
+          "T1027",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "151.77.128.153"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-13e6f1"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-190",
+    "type": "non-actionable",
+    "source": "Email Gateway",
+    "description": "User accessed public SharePoint file",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-025",
+    "type": "actionable",
+    "source": "XDR",
+    "description": "Unusual PowerShell execution from temp directory",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Unusual PowerShell execution from temp directory",
+      "enrichment": {
+        "virusTotalScore": 90,
+        "mitreTTPs": [
+          "T1204.002",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "74.118.129.162"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-e37e5a"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-157",
+    "type": "actionable",
+    "source": "Firewall",
+    "description": "Data exfiltration over DNS tunneling",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Data exfiltration over DNS tunneling",
+      "enrichment": {
+        "virusTotalScore": 94,
+        "mitreTTPs": [
+          "T1204.002",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "56.223.227.158"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-b860b8"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-168",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 84,
+        "mitreTTPs": [
+          "T1059",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "44.31.138.22"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-c01c29"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-237",
+    "type": "non-actionable",
+    "source": "Azure AD",
+    "description": "Expired certificate on internal test server",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-184",
+    "type": "non-actionable",
+    "source": "Internal Scanner",
+    "description": "User accessed public SharePoint file",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-219",
+    "type": "non-actionable",
+    "source": "Okta",
+    "description": "Expired certificate on internal test server",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-192",
+    "type": "non-actionable",
+    "source": "EDR",
+    "description": "Scheduled vulnerability scan completed",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-029",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Unusual PowerShell execution from temp directory",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Unusual PowerShell execution from temp directory",
+      "enrichment": {
+        "virusTotalScore": 97,
+        "mitreTTPs": [
+          "T1041",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "237.208.106.188"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-522d61"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-054",
+    "type": "actionable",
+    "source": "Firewall",
+    "description": "Unusual PowerShell execution from temp directory",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Unusual PowerShell execution from temp directory",
+      "enrichment": {
+        "virusTotalScore": 87,
+        "mitreTTPs": [
+          "T1041",
+          "T1566.001"
+        ],
+        "relatedIPs": [
+          "61.121.67.101"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-5ecdee"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-096",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Unusual PowerShell execution from temp directory",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Unusual PowerShell execution from temp directory",
+      "enrichment": {
+        "virusTotalScore": 96,
+        "mitreTTPs": [
+          "T1041",
+          "T1027"
+        ],
+        "relatedIPs": [
+          "34.85.209.109"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-b92dd7"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-206",
+    "type": "non-actionable",
+    "source": "Okta",
+    "description": "Scheduled vulnerability scan completed",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-142",
+    "type": "actionable",
+    "source": "Firewall",
+    "description": "Malware detected in user download folder",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Malware detected in user download folder",
+      "enrichment": {
+        "virusTotalScore": 80,
+        "mitreTTPs": [
+          "T1204.002",
+          "T1566.001"
+        ],
+        "relatedIPs": [
+          "28.130.44.81"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-d87446"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-046",
+    "type": "actionable",
+    "source": "EDR",
+    "description": "Unusual PowerShell execution from temp directory",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Unusual PowerShell execution from temp directory",
+      "enrichment": {
+        "virusTotalScore": 97,
+        "mitreTTPs": [
+          "T1027",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "16.165.205.61"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-b4fd67"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-177",
+    "type": "non-actionable",
+    "source": "Email Gateway",
+    "description": "Scheduled vulnerability scan completed",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-120",
+    "type": "actionable",
+    "source": "EDR",
+    "description": "Malware detected in user download folder",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Malware detected in user download folder",
+      "enrichment": {
+        "virusTotalScore": 92,
+        "mitreTTPs": [
+          "T1204.002",
+          "T1566.001"
+        ],
+        "relatedIPs": [
+          "40.163.73.244"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-11d272"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-043",
+    "type": "actionable",
+    "source": "XDR",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 96,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "81.199.135.41"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-470d50"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-011",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 96,
+        "mitreTTPs": [
+          "T1059",
+          "T1027"
+        ],
+        "relatedIPs": [
+          "124.56.164.134"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-245160"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-110",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Data exfiltration over DNS tunneling",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Data exfiltration over DNS tunneling",
+      "enrichment": {
+        "virusTotalScore": 84,
+        "mitreTTPs": [
+          "T1204.002",
+          "T1566.001"
+        ],
+        "relatedIPs": [
+          "46.61.148.145"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-7f14a8"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-205",
+    "type": "non-actionable",
+    "source": "EDR",
+    "description": "Scheduled vulnerability scan completed",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-170",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Malware detected in user download folder",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Malware detected in user download folder",
+      "enrichment": {
+        "virusTotalScore": 90,
+        "mitreTTPs": [
+          "T1027",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "41.11.84.85"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-860506"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-160",
+    "type": "actionable",
+    "source": "Firewall",
+    "description": "Malware detected in user download folder",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Malware detected in user download folder",
+      "enrichment": {
+        "virusTotalScore": 98,
+        "mitreTTPs": [
+          "T1059",
+          "T1027"
+        ],
+        "relatedIPs": [
+          "68.65.67.129"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-339518"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-062",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Data exfiltration over DNS tunneling",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Data exfiltration over DNS tunneling",
+      "enrichment": {
+        "virusTotalScore": 80,
+        "mitreTTPs": [
+          "T1041",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "34.227.22.115"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-0f878a"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-173",
+    "type": "non-actionable",
+    "source": "Okta",
+    "description": "Known benign domain pinged",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-012",
+    "type": "actionable",
+    "source": "EDR",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 96,
+        "mitreTTPs": [
+          "T1204.002",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "15.79.220.127"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-cdba27"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-044",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Malware detected in user download folder",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Malware detected in user download folder",
+      "enrichment": {
+        "virusTotalScore": 81,
+        "mitreTTPs": [
+          "T1204.002",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "190.156.69.65"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-13a593"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-147",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Malware detected in user download folder",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Malware detected in user download folder",
+      "enrichment": {
+        "virusTotalScore": 92,
+        "mitreTTPs": [
+          "T1027",
+          "T1566.001"
+        ],
+        "relatedIPs": [
+          "42.255.18.100"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-c7e976"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-234",
+    "type": "non-actionable",
+    "source": "EDR",
+    "description": "Scheduled vulnerability scan completed",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-238",
+    "type": "non-actionable",
+    "source": "Azure AD",
+    "description": "User login from known safe location",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-244",
+    "type": "non-actionable",
+    "source": "Internal Scanner",
+    "description": "Known benign domain pinged",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-113",
+    "type": "actionable",
+    "source": "EDR",
+    "description": "Suspicious email with credential harvesting link detected",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Suspicious email with credential harvesting link detected",
+      "enrichment": {
+        "virusTotalScore": 84,
+        "mitreTTPs": [
+          "T1059",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "163.219.217.113"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-3c3eea"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-241",
+    "type": "non-actionable",
+    "source": "Internal Scanner",
+    "description": "Expired certificate on internal test server",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-098",
+    "type": "actionable",
+    "source": "Firewall",
+    "description": "Unusual PowerShell execution from temp directory",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Unusual PowerShell execution from temp directory",
+      "enrichment": {
+        "virusTotalScore": 88,
+        "mitreTTPs": [
+          "T1059",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "53.87.152.151"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-20dc43"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-016",
+    "type": "actionable",
+    "source": "XDR",
+    "description": "Data exfiltration over DNS tunneling",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Data exfiltration over DNS tunneling",
+      "enrichment": {
+        "virusTotalScore": 85,
+        "mitreTTPs": [
+          "T1041",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "61.62.86.130"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-d47856"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-060",
+    "type": "actionable",
+    "source": "XDR",
+    "description": "Suspicious email with credential harvesting link detected",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Suspicious email with credential harvesting link detected",
+      "enrichment": {
+        "virusTotalScore": 86,
+        "mitreTTPs": [
+          "T1059",
+          "T1566.001"
+        ],
+        "relatedIPs": [
+          "24.7.167.227"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-edf74e"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-079",
+    "type": "actionable",
+    "source": "Firewall",
+    "description": "Unusual PowerShell execution from temp directory",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Unusual PowerShell execution from temp directory",
+      "enrichment": {
+        "virusTotalScore": 86,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "190.128.217.26"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-a33d66"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-143",
+    "type": "actionable",
+    "source": "Firewall",
+    "description": "Data exfiltration over DNS tunneling",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Data exfiltration over DNS tunneling",
+      "enrichment": {
+        "virusTotalScore": 97,
+        "mitreTTPs": [
+          "T1059",
+          "T1204.002"
+        ],
+        "relatedIPs": [
+          "103.202.213.84"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-6b6b47"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-239",
+    "type": "non-actionable",
+    "source": "Email Gateway",
+    "description": "User login from known safe location",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-015",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 89,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1041"
+        ],
+        "relatedIPs": [
+          "59.167.50.32"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-e8b495"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-183",
+    "type": "non-actionable",
+    "source": "Email Gateway",
+    "description": "User accessed public SharePoint file",
+    "severity": "low",
+    "autoTriage": {
+      "actionable": false,
+      "summary": "No action required."
+    }
+  },
+  {
+    "alert_id": "alert-125",
+    "type": "actionable",
+    "source": "EDR",
+    "description": "Unusual PowerShell execution from temp directory",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Unusual PowerShell execution from temp directory",
+      "enrichment": {
+        "virusTotalScore": 98,
+        "mitreTTPs": [
+          "T1027",
+          "T1566.001"
+        ],
+        "relatedIPs": [
+          "188.104.232.195"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-c405b7"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-166",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Suspicious email with credential harvesting link detected",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Suspicious email with credential harvesting link detected",
+      "enrichment": {
+        "virusTotalScore": 82,
+        "mitreTTPs": [
+          "T1204.002",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "20.49.63.180"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-638c95"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-055",
+    "type": "actionable",
+    "source": "Email Gateway",
+    "description": "Data exfiltration over DNS tunneling",
+    "severity": "high",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Data exfiltration over DNS tunneling",
+      "enrichment": {
+        "virusTotalScore": 99,
+        "mitreTTPs": [
+          "T1041",
+          "T1566.001"
+        ],
+        "relatedIPs": [
+          "42.24.6.21"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-5aefc0"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-145",
+    "type": "actionable",
+    "source": "SIEM",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "critical",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 83,
+        "mitreTTPs": [
+          "T1204.002",
+          "T1027"
+        ],
+        "relatedIPs": [
+          "113.197.29.226"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-4b80db"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-051",
+    "type": "actionable",
+    "source": "Firewall",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 84,
+        "mitreTTPs": [
+          "T1566.001",
+          "T1027"
+        ],
+        "relatedIPs": [
+          "237.101.56.11"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-e07bd7"
+      }
+    }
+  },
+  {
+    "alert_id": "alert-117",
+    "type": "actionable",
+    "source": "EDR",
+    "description": "Command-and-control beacon to known malicious IP",
+    "severity": "medium",
+    "autoTriage": {
+      "actionable": true,
+      "summary": "Command-and-control beacon to known malicious IP",
+      "enrichment": {
+        "virusTotalScore": 96,
+        "mitreTTPs": [
+          "T1204.002",
+          "T1059"
+        ],
+        "relatedIPs": [
+          "70.176.44.135"
+        ],
+        "remediation": "Investigate immediately, isolate host, block malicious domain"
+      },
+      "ticket": {
+        "created": true,
+        "id": "ticket-bcdfcd"
       }
     }
   }
