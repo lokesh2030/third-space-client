@@ -160,7 +160,7 @@ export default function App() {
           }
 
           currentIndex++;
-        }, 86400000); // One alert every 24 hours
+        }, 30000); // One alert every 30 seconds
       });
 
     return () => clearInterval(intervalId);
