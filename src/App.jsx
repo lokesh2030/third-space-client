@@ -9,7 +9,7 @@ export default function App() {
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
   const [mode, setMode] = useState("triage");
-  const [selectedTab, setSelectedTab] = useState("CoPilot");
+  const [selectedTab, setSelectedTab] = useState("Security");
   const [timeSavedMsg, setTimeSavedMsg] = useState("");
   const [triageCount, setTriageCount] = useState(0);
   const [threatIntelCount, setThreatIntelCount] = useState(0);
@@ -179,7 +179,7 @@ export default function App() {
       <h1 style={{ fontSize: 28, marginBottom: 20 }}>🛡️ Third Space Security</h1>
 
       <div style={{ marginBottom: 20, display: "flex", gap: 10 }}>
-        {["CoPilot", "Phishing", "Integrations"].map((tab) => (
+        {["Security", "Phishing", "Integrations"].map((tab) => (
           <button
             key={tab}
             onClick={() => setSelectedTab(tab)}
@@ -196,7 +196,7 @@ export default function App() {
         ))}
       </div>
 
-      {selectedTab === "CoPilot" && (
+      {selectedTab === "Security" && (
         <>
           <div style={{ marginBottom: 20 }}>
             <strong>Choose Mode:</strong>
