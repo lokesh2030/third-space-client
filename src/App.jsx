@@ -16,6 +16,9 @@ export default function App() {
   const [kbCount, setKbCount] = useState(0);
   const [ticketCount, setTicketCount] = useState(0);
   const [phishingCount, setPhishingCount] = useState(0);
+  const [actionableCount, setActionableCount] = useState(0);
+  const [nonActionableCount, setNonActionableCount] = useState(0);
+  const [alertProcessedCount, setAlertProcessedCount] = useState(0);
 
   const totalGlobalTimeSaved =
     triageCount * 6 +
@@ -108,64 +111,68 @@ export default function App() {
   };
 
   useEffect(() => {
-  if (mode === "auto-triage") {
-    let intervalId;
-    let currentIndex = 0;
-    let loadedAlerts = [];
+    if (mode === "auto-triage") {
+      let intervalId;
+      let currentIndex = 0;
+      let loadedAlerts = [];
 
-    fetch('/alerts-demo.json')
-      .then(res => res.json())
-      .then(data => {
-        loadedAlerts = data;
+      fetch('/alerts-demo.json')
+        .then(res => res.json())
+        .then(data => {
+          loadedAlerts = data;
 
-        intervalId = setInterval(async () => {
-          if (currentIndex >= loadedAlerts.length) {
-            clearInterval(intervalId);
-            setOutput("✅ All demo alerts have been processed.");
-            return;
-          }
-
-          const alert = loadedAlerts[currentIndex];
-
-          try {
-            const res = await fetch(`${BACKEND_URL}/api/alerts/ingest`, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(alert),
-            });
-
-            const data = await res.json();
-            const result = data.triageResult?.summary || data.result || "Something went wrong.";
-
-            let ticketBlock = "";
-            if (data.ticket) {
-              ticketBlock = `\n\n🎫 Auto-Generated Ticket:\n${data.ticket}`;
-              setTicketCount(prev => prev + 1);
+          intervalId = setInterval(async () => {
+            if (currentIndex >= loadedAlerts.length) {
+              clearInterval(intervalId);
+              setOutput("✅ All demo alerts have been processed.");
+              return;
             }
 
-            let enrichmentBlock = "";
-            if (data.triageResult?.enrichment?.length > 0) {
-              enrichmentBlock = "\n\n🧠 Enrichment Data:\n" +
-                data.triageResult.enrichment
-                  .map(
-                    (e) => `IP: ${e.ip}\nReputation: ${e.reputation}\nMalicious Votes: ${e.maliciousVotes}`
-                  )
-                  .join("\n\n");
+            const alert = loadedAlerts[currentIndex];
+
+            try {
+              const res = await fetch(`${BACKEND_URL}/api/alerts/ingest`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(alert),
+              });
+
+              const data = await res.json();
+              const result = data.triageResult?.summary || data.result || "Something went wrong.";
+
+              let ticketBlock = "";
+              if (data.ticket) {
+                ticketBlock = `\n\n🎫 Auto-Generated Ticket:\n${data.ticket}`;
+                setTicketCount(prev => prev + 1);
+                setActionableCount(prev => prev + 1);
+              } else {
+                setNonActionableCount(prev => prev + 1);
+              }
+
+              let enrichmentBlock = "";
+              if (data.triageResult?.enrichment?.length > 0) {
+                enrichmentBlock = "\n\n🧠 Enrichment Data:\n" +
+                  data.triageResult.enrichment
+                    .map(
+                      (e) => `IP: ${e.ip}\nReputation: ${e.reputation}\nMalicious Votes: ${e.maliciousVotes}`
+                    )
+                    .join("\n\n");
+              }
+
+              setOutput(`[${alert.alert_id}] ${result}${enrichmentBlock}${ticketBlock}`);
+              setTriageCount((prev) => prev + 1);
+              setAlertProcessedCount((prev) => prev + 1);
+            } catch (err) {
+              setOutput("Error: " + err.message);
             }
 
-            setOutput(`[${alert.alert_id}] ${result}${enrichmentBlock}${ticketBlock}`);
-            setTriageCount((prev) => prev + 1);
-          } catch (err) {
-            setOutput("Error: " + err.message);
-          }
+            currentIndex++;
+          }, 30000);
+        });
 
-          currentIndex++;
-        }, 30000); // One alert every 30 seconds
-      });
-
-    return () => clearInterval(intervalId);
-  }
-}, [mode]);
+      return () => clearInterval(intervalId);
+    }
+  }, [mode]);
 
   return (
     <div style={{ background: "#0f172a", color: "white", minHeight: "100vh", padding: 40 }}>
@@ -273,6 +280,23 @@ export default function App() {
 
       {selectedTab === "Phishing" && <PhishingDetection setPhishingCount={setPhishingCount} />}
       {selectedTab === "Integrations" && <Integrations />}
+
+      {mode === "auto-triage" && alertProcessedCount >= 250 && (
+        <div
+          style={{
+            marginTop: 30,
+            backgroundColor: "#1e293b",
+            padding: 20,
+            borderRadius: 8,
+            border: "1px solid #334155",
+          }}
+        >
+          <h3 style={{ fontSize: "1.2rem", marginBottom: 10 }}>📊 Demo Summary</h3>
+          <p>✅ Actionable Alerts: {actionableCount}</p>
+          <p>💤 Non-Actionable Alerts: {nonActionableCount}</p>
+          <p>📦 Total Alerts Processed: {alertProcessedCount}</p>
+        </div>
+      )}
 
       <div
         style={{
