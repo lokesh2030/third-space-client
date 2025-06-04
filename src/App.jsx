@@ -176,7 +176,7 @@ export default function App() {
 
   return (
     <div style={{ background: "#0f172a", color: "white", minHeight: "100vh", padding: 40 }}>
-      <h1 style={{ fontSize: 28, marginBottom: 20 }}>🛡️ Third Space Co-Pilot</h1>
+      <h1 style={{ fontSize: 28, marginBottom: 20 }}>🛡️ Third Space Security</h1>
 
       <div style={{ marginBottom: 20, display: "flex", gap: 10 }}>
         {["CoPilot", "Phishing", "Integrations"].map((tab) => (
