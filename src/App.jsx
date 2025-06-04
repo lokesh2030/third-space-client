@@ -108,51 +108,64 @@ export default function App() {
   };
 
   useEffect(() => {
-    if (mode === "auto-triage") {
-      const interval = setInterval(async () => {
-        try {
-          const res = await fetch(`${BACKEND_URL}/api/alerts/ingest`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              alert_id: `AUTO-${Date.now()}`,
-              description: "CrowdStrike detected failed login attempts from suspicious IP 185.107.56.223.",
-              source: "Auto Ingest",
-              severity: "High",
-            }),
-          });
+  if (mode === "auto-triage") {
+    let intervalId;
+    let currentIndex = 0;
+    let loadedAlerts = [];
 
-          const data = await res.json();
-          const result = data.triageResult?.summary || "Something went wrong.";
+    fetch('/alerts-demo.json')
+      .then(res => res.json())
+      .then(data => {
+        loadedAlerts = data;
 
-          let ticketBlock = "";
-          if (data.ticket) {
-            ticketBlock = `\n\n🎫 Auto-Generated Ticket:\n${data.ticket}`;
+        intervalId = setInterval(async () => {
+          if (currentIndex >= loadedAlerts.length) {
+            clearInterval(intervalId);
+            setOutput("✅ All demo alerts have been processed.");
+            return;
           }
 
-          let enrichmentBlock = "";
-          if (data.triageResult?.enrichment?.length > 0) {
-            enrichmentBlock = "\n\n🧠 Enrichment Data:\n" +
-              data.triageResult.enrichment
-                .map(
-                  (e) => `IP: ${e.ip}\nReputation: ${e.reputation}\nMalicious Votes: ${e.maliciousVotes}`
-                )
-                .join("\n\n");
+          const alert = loadedAlerts[currentIndex];
+
+          try {
+            const res = await fetch(`${BACKEND_URL}/api/alerts/ingest`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(alert),
+            });
+
+            const data = await res.json();
+            const result = data.triageResult?.summary || data.result || "Something went wrong.";
+
+            let ticketBlock = "";
+            if (data.ticket) {
+              ticketBlock = `\n\n🎫 Auto-Generated Ticket:\n${data.ticket}`;
+              setTicketCount(prev => prev + 1);
+            }
+
+            let enrichmentBlock = "";
+            if (data.triageResult?.enrichment?.length > 0) {
+              enrichmentBlock = "\n\n🧠 Enrichment Data:\n" +
+                data.triageResult.enrichment
+                  .map(
+                    (e) => `IP: ${e.ip}\nReputation: ${e.reputation}\nMalicious Votes: ${e.maliciousVotes}`
+                  )
+                  .join("\n\n");
+            }
+
+            setOutput(`[${alert.id}] ${result}${enrichmentBlock}${ticketBlock}`);
+            setTriageCount((prev) => prev + 1);
+          } catch (err) {
+            setOutput("Error: " + err.message);
           }
 
-          setOutput(result + enrichmentBlock + ticketBlock);
+          currentIndex++;
+        }, 8000); // One alert every 8 seconds
+      });
 
-          const savedMin = (6).toFixed(1);
-          const percentFaster = ((6 * 60 - 15) / (6 * 60) * 100).toFixed(1);
-          setTimeSavedMsg(`⏱️ Saved ~${savedMin} min • 🚀 ${percentFaster}% faster • 💵 This Run: ~$${(savedMin * MINUTE_RATE).toFixed(0)}`);
-          setTriageCount((prev) => prev + 1);
-        } catch (err) {
-          setOutput("Error: " + err.message);
-        }
-      }, 86400000);
-      return () => clearInterval(interval);
-    }
-  }, [mode]);
+    return () => clearInterval(intervalId);
+  }
+}, [mode]);
 
   return (
     <div style={{ background: "#0f172a", color: "white", minHeight: "100vh", padding: 40 }}>
