@@ -1,6 +1,6 @@
 [
   {
-    "id": "alert-001",
+    "alert_id": "alert-001",
     "type": "actionable",
     "source": "Email Gateway",
     "description": "Suspicious email with credential harvesting link detected",
@@ -16,12 +16,12 @@
       },
       "ticket": {
         "created": true,
-        "id": "ticket-demo-001"
+        "alert_id": "ticket-demo-001"
       }
     }
   },
   {
-    "id": "alert-002",
+    "alert_id": "alert-002",
     "type": "non-actionable",
     "source": "Okta",
     "description": "User login from known safe location",
