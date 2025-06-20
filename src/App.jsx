@@ -6,6 +6,7 @@ const BACKEND_URL = "https://third-space-backend.onrender.com";
 
 export default function App() {
   const [input, setInput] = useState("");
+  const [decisionStatus, setDecisionStatus] = useState(null);
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
   const [mode, setMode] = useState("triage");
@@ -265,6 +266,32 @@ export default function App() {
             >
               <h3>🔍 Result:</h3>
               <pre style={{ whiteSpace: "pre-wrap" }}>{output}</pre>
+                  {/* 🛠️ Simulated Remediation Block */}
+    <div style={{ marginTop: 20, padding: 16, backgroundColor: "#0f172a", border: "1px solid #334155", borderRadius: 6 }}>
+      <p><strong>🔧 Suggested Fix:</strong> Block sender IP and isolate endpoint</p>
+      <p><strong>🤖 Confidence:</strong> High</p>
+
+      {!decisionStatus ? (
+        <div style={{ marginTop: 10, display: "flex", gap: 10 }}>
+          <button
+            onClick={() => setDecisionStatus("approved")}
+            style={{ backgroundColor: "#16a34a", color: "white", padding: "8px 16px", border: "none", borderRadius: 6 }}
+          >
+            ✅ Approve
+          </button>
+          <button
+            onClick={() => setDecisionStatus("rejected")}
+            style={{ backgroundColor: "#dc2626", color: "white", padding: "8px 16px", border: "none", borderRadius: 6 }}
+          >
+            ❌ Reject
+          </button>
+        </div>
+      ) : (
+        <p style={{ marginTop: 10, fontStyle: "italic", color: "#38bdf8" }}>
+          You {decisionStatus} this remediation. Simulated execution complete ✅
+        </p>
+      )}
+    </div>
               {timeSavedMsg && (
                 <>
                   <p style={{ marginTop: 8, color: "#10b981" }}>{timeSavedMsg}</p>
