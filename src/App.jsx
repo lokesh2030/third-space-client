@@ -6,7 +6,6 @@ const BACKEND_URL = "https://third-space-backend.onrender.com";
 
 export default function App() {
   const [input, setInput] = useState("");
-  const [currentAlertIndex, setCurrentAlertIndex] = useState(0);
   const [decisionStatus, setDecisionStatus] = useState(null);
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -115,7 +114,7 @@ export default function App() {
   useEffect(() => {
     if (mode === "auto-triage") {
       let intervalId;
-      let currentAlertIndex = 0;
+      let currentIndex = 0;
       let loadedAlerts = [];
 
       fetch('/alerts-demo.json')
@@ -124,14 +123,14 @@ export default function App() {
           loadedAlerts = data;
 
           intervalId = setInterval(async () => {
-            if (currentAlertIndex >= loadedAlerts.length) {
+            if (currentIndex >= loadedAlerts.length) {
               clearInterval(intervalId);
               setOutput("✅ All demo alerts have been processed.");
               return;
             }
 
-            const alert = loadedAlerts[currentAlertIndex];
-            setCurrentAlertIndex((prev) => prev + 1);
+            const alert = loadedAlerts[currentIndex];
+
             try {
               const res = await fetch(`${BACKEND_URL}/api/alerts/ingest`, {
                 method: "POST",
@@ -168,7 +167,8 @@ export default function App() {
               setOutput("Error: " + err.message);
             }
 
-          }, 30000);
+            currentIndex++;
+          }, 86400000);
         });
 
       return () => clearInterval(intervalId);
@@ -271,49 +271,26 @@ export default function App() {
       <p><strong>🔧 Suggested Fix:</strong> Block sender IP and isolate endpoint</p>
       <p><strong>🤖 Confidence:</strong> High</p>
 
-{!decisionStatus ? (
-  <div style={{ marginTop: 10, display: "flex", gap: 10 }}>
-    <button
-      onClick={async () => {
-        setDecisionStatus("approved");
-        await new Promise((r) => setTimeout(r, 1000));
-        setDecisionStatus(null);
-        setCurrentAlertIndex((prev) => prev + 1);
-      }}
-      style={{
-        backgroundColor: "#16a34a",
-        color: "white",
-        padding: "8px 16px",
-        border: "none",
-        borderRadius: 6,
-      }}
-    >
-      ✅ Approve
-    </button>
-    <button
-      onClick={async () => {
-        setDecisionStatus("rejected");
-        await new Promise((r) => setTimeout(r, 1000));
-        setDecisionStatus(null);
-
-      }}
-      style={{
-        backgroundColor: "#dc2626",
-        color: "white",
-        padding: "8px 16px",
-        border: "none",
-        borderRadius: 6,
-      }}
-    >
-      ❌ Reject
-    </button>
-  </div>
-) : (
-  <p style={{ marginTop: 10, fontStyle: "italic", color: "#38bdf8" }}>
-    You {decisionStatus} this remediation. Simulated execution complete ✅
-  </p>
-)}
-
+      {!decisionStatus ? (
+        <div style={{ marginTop: 10, display: "flex", gap: 10 }}>
+          <button
+            onClick={() => setDecisionStatus("approved")}
+            style={{ backgroundColor: "#16a34a", color: "white", padding: "8px 16px", border: "none", borderRadius: 6 }}
+          >
+            ✅ Approve
+          </button>
+          <button
+            onClick={() => setDecisionStatus("rejected")}
+            style={{ backgroundColor: "#dc2626", color: "white", padding: "8px 16px", border: "none", borderRadius: 6 }}
+          >
+            ❌ Reject
+          </button>
+        </div>
+      ) : (
+        <p style={{ marginTop: 10, fontStyle: "italic", color: "#38bdf8" }}>
+          You {decisionStatus} this remediation. Simulated execution complete ✅
+        </p>
+      )}
     </div>
               {timeSavedMsg && (
                 <>
