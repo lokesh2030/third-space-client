@@ -168,7 +168,7 @@ export default function App() {
               setOutput("Error: " + err.message);
             }
 
-          }, 86400000);
+          }, 30000);
         });
 
       return () => clearInterval(intervalId);
