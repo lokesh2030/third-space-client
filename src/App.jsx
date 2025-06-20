@@ -168,7 +168,7 @@ export default function App() {
             }
 
             currentIndex++;
-          }, 86400000);
+          }, 30000);
         });
 
       return () => clearInterval(intervalId);
