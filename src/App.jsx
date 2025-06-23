@@ -110,6 +110,15 @@ export default function App() {
 
     setLoading(false);
   };
+useEffect(() => {
+  const handler = (e) => {
+    if (e.key === "n" && mode === "auto-triage") {
+      setAlertProcessedCount((prev) => prev + 1);
+    }
+  };
+  document.addEventListener("keydown", handler);
+  return () => document.removeEventListener("keydown", handler);
+}, [mode]);
 
   useEffect(() => {
     if (mode === "auto-triage") {
@@ -272,20 +281,45 @@ export default function App() {
       <p><strong>🤖 Confidence:</strong> High</p>
 
       {!decisionStatus ? (
-        <div style={{ marginTop: 10, display: "flex", gap: 10 }}>
-          <button
-            onClick={() => setDecisionStatus("approved")}
-            style={{ backgroundColor: "#16a34a", color: "white", padding: "8px 16px", border: "none", borderRadius: 6 }}
-          >
-            ✅ Approve
-          </button>
-          <button
-            onClick={() => setDecisionStatus("rejected")}
-            style={{ backgroundColor: "#dc2626", color: "white", padding: "8px 16px", border: "none", borderRadius: 6 }}
-          >
-            ❌ Reject
-          </button>
-        </div>
+<div style={{ marginTop: 10, display: "flex", gap: 10 }}>
+  <button
+    onClick={() => {
+      setDecisionStatus("approved");
+      if (mode === "auto-triage") {
+        setTimeout(() => setDecisionStatus(null), 100);
+        document.dispatchEvent(new KeyboardEvent("keydown", { key: "n" }));
+      }
+    }}
+    style={{
+      backgroundColor: "#16a34a",
+      color: "white",
+      padding: "8px 16px",
+      border: "none",
+      borderRadius: 6
+    }}
+  >
+    ✅ Approve
+  </button>
+  <button
+    onClick={() => {
+      setDecisionStatus("rejected");
+      if (mode === "auto-triage") {
+        setTimeout(() => setDecisionStatus(null), 100);
+        document.dispatchEvent(new KeyboardEvent("keydown", { key: "n" }));
+      }
+    }}
+    style={{
+      backgroundColor: "#dc2626",
+      color: "white",
+      padding: "8px 16px",
+      border: "none",
+      borderRadius: 6
+    }}
+  >
+    ❌ Reject
+  </button>
+</div>
+
       ) : (
         <p style={{ marginTop: 10, fontStyle: "italic", color: "#38bdf8" }}>
           You {decisionStatus} this remediation. Simulated execution complete ✅
