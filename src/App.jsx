@@ -138,7 +138,7 @@ useEffect(() => {
               return;
             }
 
-            const alert = loadedAlerts[currentIndex];
+            const alert = loadedAlerts[currentAlertIndex];
 
             try {
               const res = await fetch(`${BACKEND_URL}/api/alerts/ingest`, {
@@ -277,51 +277,50 @@ useEffect(() => {
               <h3>🔍 Result:</h3>
               <pre style={{ whiteSpace: "pre-wrap" }}>{output}</pre>
                   {/* 🛠️ Simulated Remediation Block */}
-    {!decisionStatus ? (
-<div style={{ marginTop: 10, display: "flex", gap: 10 }}>
-  <button
-    onClick={() => {
-      setDecisionStatus("approved");
-      if (mode === "auto-triage") {
-        setAlertProcessedCount((prev) => prev + 1);
-        setCurrentAlertIndex((prev) => prev + 1);
-        setTimeout(() => setDecisionStatus(null), 100);
-      }
-    }}
-    style={{
-      backgroundColor: "#16a34a",
-      color: "white",
-      padding: "8px 16px",
-      border: "none",
-      borderRadius: 6,
-    }}
-  >
-    ✅ Approve
-  </button>
+    {!decisionStatus && (
+  <div style={{ marginTop: 10, display: "flex", gap: 10 }}>
+    <button
+      onClick={() => {
+        setDecisionStatus("approved");
+        if (mode === "auto-triage") {
+          setAlertProcessedCount((prev) => prev + 1);
+          setCurrentAlertIndex((prev) => prev + 1);
+          setTimeout(() => setDecisionStatus(null), 100);
+        }
+      }}
+      style={{
+        backgroundColor: "#16a34a",
+        color: "white",
+        padding: "8px 16px",
+        border: "none",
+        borderRadius: 6,
+      }}
+    >
+      ✅ Approve
+    </button>
 
-  <button
-    onClick={() => {
-      setDecisionStatus("rejected");
-      if (mode === "auto-triage") {
-        setAlertProcessedCount((prev) => prev + 1);
-        setCurrentAlertIndex((prev) => prev + 1);
-        setTimeout(() => setDecisionStatus(null), 100);
-      }
-    }}
-    style={{
-      backgroundColor: "#dc2626",
-      color: "white",
-      padding: "8px 16px",
-      border: "none",
-      borderRadius: 6,
-    }}
-  >
-    ❌ Reject
-  </button>
-</div>
+    <button
+      onClick={() => {
+        setDecisionStatus("rejected");
+        if (mode === "auto-triage") {
+          setAlertProcessedCount((prev) => prev + 1);
+          setCurrentAlertIndex((prev) => prev + 1);
+          setTimeout(() => setDecisionStatus(null), 100);
+        }
+      }}
+      style={{
+        backgroundColor: "#dc2626",
+        color: "white",
+        padding: "8px 16px",
+        border: "none",
+        borderRadius: 6,
+      }}
+    >
+      ❌ Reject
+    </button>
+  </div>
+)}
 
-      {!decisionStatus ? (
-              {timeSavedMsg && (
                 <>
                   <p style={{ marginTop: 8, color: "#10b981" }}>{timeSavedMsg}</p>
                   <p style={{ fontSize: "0.9em", color: "#38bdf8", marginTop: "0.25rem" }}>
