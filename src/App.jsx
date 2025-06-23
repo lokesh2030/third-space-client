@@ -283,13 +283,15 @@ useEffect(() => {
       {!decisionStatus ? (
 <div style={{ marginTop: 10, display: "flex", gap: 10 }}>
   <button
-    onClick={() => {
-      setDecisionStatus("approved");
-      if (mode === "auto-triage") {
-        setAlertProcessedCount((prev) => prev + 1); // ← auto-advance
-        setTimeout(() => setDecisionStatus(null), 100);
-      }
-    }}
+onClick={() => {
+  setDecisionStatus("approved");
+  if (mode === "auto-triage") {
+    // Trigger next alert
+    document.dispatchEvent(new KeyboardEvent("keydown", { key: "n" }));
+    setTimeout(() => setDecisionStatus(null), 100);
+  }
+}}
+
     style={{
       backgroundColor: "#16a34a",
       color: "white",
@@ -302,13 +304,15 @@ useEffect(() => {
   </button>
 
   <button
-    onClick={() => {
-      setDecisionStatus("rejected");
-      if (mode === "auto-triage") {
-        setAlertProcessedCount((prev) => prev + 1); // ← auto-advance
-        setTimeout(() => setDecisionStatus(null), 100);
-      }
-    }}
+onClick={() => {
+  setDecisionStatus("rejected");
+  if (mode === "auto-triage") {
+    // Trigger next alert
+    document.dispatchEvent(new KeyboardEvent("keydown", { key: "n" }));
+    setTimeout(() => setDecisionStatus(null), 100);
+  }
+}}
+
     style={{
       backgroundColor: "#dc2626",
       color: "white",
