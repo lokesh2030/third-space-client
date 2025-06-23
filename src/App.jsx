@@ -6,6 +6,7 @@ const BACKEND_URL = "https://third-space-backend.onrender.com";
 
 export default function App() {
   const [input, setInput] = useState("");
+  const [currentAlertIndex, setCurrentAlertIndex] = useState(0);
   const [decisionStatus, setDecisionStatus] = useState(null);
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -123,7 +124,6 @@ useEffect(() => {
   useEffect(() => {
     if (mode === "auto-triage") {
       let intervalId;
-      let currentIndex = 0;
       let loadedAlerts = [];
 
       fetch('/alerts-demo.json')
@@ -132,7 +132,7 @@ useEffect(() => {
           loadedAlerts = data;
 
           intervalId = setInterval(async () => {
-            if (currentIndex >= loadedAlerts.length) {
+            if (currentAlertIndex >= loadedAlerts.length) {
               clearInterval(intervalId);
               setOutput("✅ All demo alerts have been processed.");
               return;
@@ -176,7 +176,8 @@ useEffect(() => {
               setOutput("Error: " + err.message);
             }
 
-            currentIndex++;
+            setCurrentAlertIndex((prev) => prev + 1);
+
           }, 30000);
         });
 
@@ -276,22 +277,17 @@ useEffect(() => {
               <h3>🔍 Result:</h3>
               <pre style={{ whiteSpace: "pre-wrap" }}>{output}</pre>
                   {/* 🛠️ Simulated Remediation Block */}
-    <div style={{ marginTop: 20, padding: 16, backgroundColor: "#0f172a", border: "1px solid #334155", borderRadius: 6 }}>
-      <p><strong>🔧 Suggested Fix:</strong> Block sender IP and isolate endpoint</p>
-      <p><strong>🤖 Confidence:</strong> High</p>
-
-      {!decisionStatus ? (
+    {!decisionStatus ? (
 <div style={{ marginTop: 10, display: "flex", gap: 10 }}>
   <button
-onClick={() => {
-  setDecisionStatus("approved");
-  if (mode === "auto-triage") {
-    // Trigger next alert
-    document.dispatchEvent(new KeyboardEvent("keydown", { key: "n" }));
-    setTimeout(() => setDecisionStatus(null), 100);
-  }
-}}
-
+    onClick={() => {
+      setDecisionStatus("approved");
+      if (mode === "auto-triage") {
+        setAlertProcessedCount((prev) => prev + 1);
+        setCurrentAlertIndex((prev) => prev + 1);
+        setTimeout(() => setDecisionStatus(null), 100);
+      }
+    }}
     style={{
       backgroundColor: "#16a34a",
       color: "white",
@@ -304,15 +300,14 @@ onClick={() => {
   </button>
 
   <button
-onClick={() => {
-  setDecisionStatus("rejected");
-  if (mode === "auto-triage") {
-    // Trigger next alert
-    document.dispatchEvent(new KeyboardEvent("keydown", { key: "n" }));
-    setTimeout(() => setDecisionStatus(null), 100);
-  }
-}}
-
+    onClick={() => {
+      setDecisionStatus("rejected");
+      if (mode === "auto-triage") {
+        setAlertProcessedCount((prev) => prev + 1);
+        setCurrentAlertIndex((prev) => prev + 1);
+        setTimeout(() => setDecisionStatus(null), 100);
+      }
+    }}
     style={{
       backgroundColor: "#dc2626",
       color: "white",
@@ -325,13 +320,7 @@ onClick={() => {
   </button>
 </div>
 
-
-      ) : (
-        <p style={{ marginTop: 10, fontStyle: "italic", color: "#38bdf8" }}>
-          You {decisionStatus} this remediation. Simulated execution complete ✅
-        </p>
-      )}
-    </div>
+      {!decisionStatus ? (
               {timeSavedMsg && (
                 <>
                   <p style={{ marginTop: 8, color: "#10b981" }}>{timeSavedMsg}</p>
