@@ -286,8 +286,8 @@ useEffect(() => {
     onClick={() => {
       setDecisionStatus("approved");
       if (mode === "auto-triage") {
+        setAlertProcessedCount((prev) => prev + 1); // ← auto-advance
         setTimeout(() => setDecisionStatus(null), 100);
-        document.dispatchEvent(new KeyboardEvent("keydown", { key: "n" }));
       }
     }}
     style={{
@@ -295,17 +295,18 @@ useEffect(() => {
       color: "white",
       padding: "8px 16px",
       border: "none",
-      borderRadius: 6
+      borderRadius: 6,
     }}
   >
     ✅ Approve
   </button>
+
   <button
     onClick={() => {
       setDecisionStatus("rejected");
       if (mode === "auto-triage") {
+        setAlertProcessedCount((prev) => prev + 1); // ← auto-advance
         setTimeout(() => setDecisionStatus(null), 100);
-        document.dispatchEvent(new KeyboardEvent("keydown", { key: "n" }));
       }
     }}
     style={{
@@ -313,12 +314,13 @@ useEffect(() => {
       color: "white",
       padding: "8px 16px",
       border: "none",
-      borderRadius: 6
+      borderRadius: 6,
     }}
   >
     ❌ Reject
   </button>
 </div>
+
 
       ) : (
         <p style={{ marginTop: 10, fontStyle: "italic", color: "#38bdf8" }}>
